@@ -1,0 +1,339 @@
+/*
+
+@media only screen and (min-width: 768px){
+  div.cll_link_list{
+    display: inline-block !important;
+    width: 25% !important;
+    min-width: 165px !important;
+    margin-top: 0px !important;
+  }
+}
+
+@media only screen and (min-width: 1168px){
+  input.cll_search_form_input {
+    width: 100% !important;
+    text-align: center !important;
+    position: center !important;
+    border: solid 2.5px !important;
+  }
+}
+
+*/
+
+
+.link-list-style-1 {
+  border-top: 3px solid;
+  border-bottom: 3px solid;
+  display: inline-block;
+  vertical-align: top;
+  margin-right: 10% !important;
+  margin-bottom: 5% !important;
+}
+
+.link-list-style-1 li {
+ padding: 1.5%;
+ border-color: #000;
+ list-style: none;
+ background: #fff;
+ margin: 5% 0%;
+ border-style: outset;
+ border-width: 1px;
+ box-shadow: 2.5px 5px;
+ position: relative;
+ right: 12%;
+ min-width: 164px;
+ display:grid;
+}
+
+.link-list-item a.link-list-title {
+  text-decoration: none !important;
+  color: #000;
+  display: block;
+  grid-column: 1 / span 3;
+  grid-row: 1;
+  max-width: 80%;
+  font-size: 80%;
+}
+
+/*
+.link-list-style-1 li:hover { 
+  color: #fff;
+
+}
+*/
+
+.link-list-style-1 input{
+ 	width: 100%;
+	margin-bottom: 5%;
+}
+
+.link-list-style-1 select{
+  width: 100%;
+  margin-bottom: 5%;
+}
+
+button.adminDeleteBtn:hover{
+  opacity:.5 !important;
+}
+
+.button{
+  color:white;
+}
+
+.cll_link_list button.delete_list_btn:hover{
+  color: #fff;
+  background-color: #0C808E;
+  background-size: 1.5em;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 1;
+ }
+
+.cll_link_list button.cll_edit_category_btn:hover{
+  color: #fff;
+  background-color: #0C808E;
+  background-size: 1.5em;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 1;
+ }
+
+ input.add_to_list_input{
+   width:100%;
+ }
+
+ .cll_link_list button.add_to_list_btn:hover{
+  color: #fff;
+  background-color: #0C808E;
+  background-size: 1.5em;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 1;
+ }
+
+ .cll_link_list button.add_to_list_btn:focus{
+  color: #fff;
+  background-color: #0C808E;
+  background-size: 1.5em;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 1;
+ }
+
+
+.link-list-style-1 button:hover{
+ background-color: unset;
+ background-size: 1.5em;
+ background-repeat: no-repeat;
+ background-position: center;
+ opacity: .5;
+}
+
+
+.link-list-style-1 li.add_to_list_btn:hover{
+
+  background-color: #0C808E;
+  color: white;
+ }
+
+ button.add_to_list_btn {
+  bottom: 10px;
+}
+
+
+.link-list-style-1 button:focus{
+  background-color: unset;
+  background-size: 1.5em;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: .5;
+ }
+
+
+
+
+button.adminDeleteBtn{
+  grid-column: 3;
+  grid-row: 1;
+  background-color:unset;
+  background-image: url("../images/cancelBtn.png") !important;
+  background-size: 1.5em;
+  background-repeat: no-repeat;
+  background-position: top right !important;
+}
+
+
+.cancelBtn {
+	padding: 8.5% 10% 8.5% 10%;
+  position: relative;
+  background-color: #F42E2B;
+  margin-left: 14%;
+
+  background-color:unset;
+  background-image: url("../images/cancelBtn.png") !important;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+button.up_vote_button {
+  background-image: url("../images/thumb-up.png") !important;
+  background-color:unset;
+  background-size: 1.5em;
+  background-repeat: no-repeat;
+	grid-column: 1;
+	grid-row: 2;
+  background-position: center;
+  bottom: 5px;
+  position: relative;
+}
+button.down_vote_button {
+  background-image: url("../images/dislike-thumb.png") !important;
+  background-color:unset;
+  background-size: 1.5em;
+  background-repeat: no-repeat;
+	background-position: center;
+	grid-column: 3;
+	grid-row: 2;
+}
+button.neutral_vote_button {
+  background-image: url("../images/emoticon-neutral-face-outline.png") !important;
+  background-color:unset;
+  background-size: 1.5em;
+  background-repeat: no-repeat;
+	background-position: center;
+	grid-column: 2;
+	grid-row: 2;
+}
+
+p.up_votes_counter {
+	grid-column: 3;
+	grid-row: 2;
+	color: #000;
+	position: relative;
+	top: 30px;
+}
+p.down_votes_counter {
+	grid-column: 1;
+	grid-row: 2;
+	color: #000;
+	position: relative;
+	top: 25px;
+}
+
+p.submitted_by {
+  grid-row: 3;
+  grid-column: 1 / span 3;
+  font-size: 70%;
+  margin: 0px;
+}
+
+button.submitBtn {
+    padding: 4%;
+    border-color: #000;
+    background: #fff;
+    color: #000;
+    border-style: outset;
+    border-width: 1px;
+    box-shadow: 1.5px 1px;
+    position: relative;
+    border-radius: 10px;
+}
+
+#checkmark_symbol{
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 60%;
+}
+
+input.cll_search_form_input {
+    width: 100%;
+    text-align: center;
+    border: solid 2.5px !important;
+}
+
+div.search-result-element {
+    border: solid 1.5px;
+    cursor: pointer;
+}
+
+button.newListBtn{
+  padding: 1.5%;
+  border-color: #000;
+  background: #fff;
+  color: #000;
+  margin: 5% 0%;
+  border-style: outset;
+  border-width: 1px;
+  box-shadow: 2.5px 5px;
+  position: relative;
+  display: block;
+  border-radius: 10px;
+}
+
+button.newListBtn:hover { 
+  background-color: #0C808E;
+  color: #fff;
+}
+
+div.cll_link_list{
+  display: inline-block;
+  vertical-align: top;
+  width: 25%;
+  min-width: 192.3px;
+  max-width: 200px !important;
+  margin-right: 3% !important;
+  margin-top: 0px !important;
+  border: solid 3px;
+  border-radius: 10px;
+}
+
+ul.link-list-style-1 {
+  width: 100%;
+}
+
+.cll_link_list > button {
+  margin-left: 16%;
+  padding: 1.5%;
+  border-color: #000;
+  background: #fff;
+  color: #000;
+  border-style: outset;
+  border-width: 1px;
+  box-shadow: 2.5px 5px;
+  position: relative;
+  border-radius: 10px;
+  width: 90%;
+  right: 12%;
+}
+
+h4.list_title {
+  margin: 10px 0px 0px 0px;
+  text-align: center;
+  font-size: 90%;
+}
+
+/* CONTROL SCROLLING OF LISTS */
+ul.link-list-style-1::-webkit-scrollbar {
+      background-color: #fff;
+}
+
+ul.link-list-style-1::-webkit-scrollbar-track {
+	  box-shadow: inset 0 0 5px grey; 
+}
+
+ul.link-list-style-1::-webkit-scrollbar-thumb{
+    background: #000;
+		border-radius: 10px
+}
+
+ul.link-list-style-1::-webkit-scrollbar-thumb:hover{
+      background: gray;	
+}
+
+ul.link-list-style-1{
+	overflow-y:scroll;
+	overflow-x:hidden;
+	max-height:350px;
+	min-width:182px;
+}
+/* END SCROLL*/

@@ -1,0 +1,15 @@
+h1#cll-link-manager-page-title{
+    text-align: center;
+}
+
+td.pending-link-data{
+	text-align: center;
+}
+
+td.pending-list-data{
+	text-align: center;
+}
+
+#cllApproveBtn{
+	left: 10%;
+}
