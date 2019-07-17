@@ -18,11 +18,13 @@ if ( ! defined( 'CLL_PLUGIN_DIR' ) ) {
 	define( 'CLL_PLUGIN_DIR', plugin_dir_url(__FILE__) );
 }
 
+/* Will eventually convert plugin to use React.js
 function cll_root(){
 	return '<div id="root"></div>';
 
 }
 add_shortcode( 'cll_root', 'cll_root');
+*/
 
 add_action('rest_api_init', function () {
 	register_rest_route( 'cll-submitted_by/v1', '/cll-link/(?P<id>\d+)',array(
@@ -375,10 +377,13 @@ function cll_list_shortcode($atts){
 
 				$style_template = cll_list_style_processor($atts["style"], $final_category_data);
 				if (isset($style_template)){
+
+					ob_start();
 					include $style_template;
 					wp_localize_script('cll-mainjs','current_page_id', $current_page_id);
 					wp_localize_script('cll-commonUserJs','current_page_id', $current_page_id);
-
+					$output = ob_get_clean();
+					return $output;
 				}
 				return;
 			}
@@ -393,7 +398,10 @@ function cll_list_shortcode($atts){
 			));
 			$style_template = cll_list_style_processor($atts["style"], $final_category_data);
 			if (isset($style_template)){
+				ob_start();
 				include $style_template;
+				$output = ob_get_clean();
+				return $output;
 			}
 		}
 	}
@@ -413,8 +421,8 @@ function cll_main_plugin_page(){
 <h1>Welcome to Crowd Curation Link Library</h1>
 
 <h2> Links </h2>
-<p>Links are the foundation of what we do here. However, to get started you'll be placing a couple shortcodes onto the page of your choice.</p>
-<p>The shortcodes are: <strong>[cll_list]</strong> & <strong>[cll_root]</strong></p>
+<p>Links are the foundation of what we do here. However, to get started you'll be placing a shortcode onto the page of your choice.</p>
+<p>The shortcodes is: <strong>[cll_list]</strong> </p>
 <p>This shortcode takes attributes like [cll_list style="1" category="pink"] </p>
 <p>For now there is only one style, which is the default. Categories can be made from the frontend, or backend.</p>
 <p>If you view the page this shortcode is on, you will see that you now have a default list that you can easily delete/edit, or add to.</p>
