@@ -16,4 +16,10 @@ $sql = "DROP TABLE IF EXISTS ".$table_name;
 $wpdb->query($sql);
 delete_option("cll_link_manager_db_version");
 
+global $wpdb;
+$table_name = $wpdb->prefix .'cll_pending_list_data';
+$sql = "DROP TABLE IF EXISTS ".$table_name;
+$wpdb->query($sql);
+delete_option("cll_link_manager_db_version");
+
 ?> 
