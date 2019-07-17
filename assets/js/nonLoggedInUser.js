@@ -261,9 +261,9 @@ function createNewListRequestBtn(){
 	newListRequestBtn.innerHTML = "Request New Category +";
 
 
-	var entryContent = document.querySelector('.entry-content');
+	var cllRoot = document.querySelector('div#root');
 
-	entryContent.insertBefore(newListRequestBtn, entryContent.firstChild);
+	cllRoot.parentElement.insertBefore(newListRequestBtn, cllRoot.parentElement.firstChild);
 
 	newListRequestBtn.addEventListener("click", function(){
         alert("You must be logged in to request a new category!");
