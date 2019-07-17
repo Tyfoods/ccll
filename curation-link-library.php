@@ -488,6 +488,8 @@ function add_library_manager_role() {
 
 function cll_activate() {
 
+	add_library_manager_role();
+
     //register taxonomies/post types here
     
     //Create Custom Database Table
