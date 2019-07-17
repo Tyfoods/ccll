@@ -279,7 +279,10 @@ function cll_list_style_processor($style, $final_category_data)
 }
 
 function cll_search_engine_shortcode(){
+	ob_start(); 
 	include dirname(__FILE__).'/templates/cllSearchEngine.php';
+	$output = ob_get_clean();
+	return $output;
 
 }
 add_shortcode( 'cll_search_engine', 'cll_search_engine_shortcode');
@@ -347,10 +350,12 @@ function cll_list_shortcode($atts){
 
 				$style_template = cll_list_style_processor($atts["style"], $final_category_data);
 				if (isset($style_template)){
+					ob_start(); 
 					include $style_template;
+					$output = ob_get_clean();
 					wp_localize_script('cll-mainjs','current_page_id', $current_page_id);
 					wp_localize_script('cll-commonUserJs','current_page_id', $current_page_id);
-
+					return $output;
 				}
 				return;
 			}
