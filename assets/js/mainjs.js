@@ -751,9 +751,9 @@ function createNewListBtn(){
 
 	
 
-	var cllRoot = document.querySelector('div#root');
+	var cll_link_list = document.querySelector('.cll_link_list');
 	//entryContent.parentNode.insertBefore(newListBtn, entryContent);
-	cllRoot.parentElement.insertBefore(newListBtn, cllRoot.parentElement.firstChild);
+	cll_link_list.parentElement.insertBefore(newListBtn, cll_link_list.parentElement.firstChild);
 	//entryContent.appendChild(newListBtn);
 
 	newListBtn.addEventListener("click", function(){
