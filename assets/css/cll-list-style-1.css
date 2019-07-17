@@ -45,7 +45,6 @@ input[name="newCategoryRequestElement"] {
  border-width: 1px;
  box-shadow: 2.5px 5px;
  position: relative;
- right: 12%;
  min-width: 164px;
  display:grid;
 }
@@ -190,6 +189,7 @@ button.up_vote_button {
   background-position: center;
   bottom: 5px;
   position: relative;
+  border: none;
 }
 button.down_vote_button {
   background-image: url("../images/dislike-thumb.png") !important;
@@ -198,7 +198,8 @@ button.down_vote_button {
   background-repeat: no-repeat;
 	background-position: center;
 	grid-column: 3;
-	grid-row: 2;
+  grid-row: 2;
+  border: none;
 }
 button.neutral_vote_button {
   background-image: url("../images/emoticon-neutral-face-outline.png") !important;
@@ -207,7 +208,8 @@ button.neutral_vote_button {
   background-repeat: no-repeat;
 	background-position: center;
 	grid-column: 2;
-	grid-row: 2;
+  grid-row: 2;
+  border: none;
 }
 
 p.up_votes_counter {
@@ -292,9 +294,6 @@ div.cll_link_list{
   border-radius: 10px;
 }
 
-ul.link-list-style-1 {
-  width: 100%;
-}
 
 .cll_link_list > button {
   margin-left: 16%;
@@ -339,6 +338,8 @@ ul.link-list-style-1{
 	overflow-y:scroll;
 	overflow-x:hidden;
 	max-height:350px;
-	min-width:182px;
+  min-width:182px;
+  width: 100%;
+  padding: 5px;
 }
 /* END SCROLL*/
