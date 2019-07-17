@@ -27,8 +27,8 @@ input[name="newCategoryRequestElement"] {
 
 
 .link-list-style-1 {
-  border-top: 3px solid;
-  border-bottom: 3px solid;
+  border-top: 3px solid #000;
+  border-bottom: 3px solid #000;
   display: inline-block;
   vertical-align: top;
   margin-right: 10% !important;
@@ -253,11 +253,11 @@ button.submitBtn {
 input.cll_search_form_input {
     width: 100%;
     text-align: center;
-    border: solid 2.5px !important;
+    border: solid 2.5px #000!important;
 }
 
 div.search-result-element {
-    border: solid 1.5px;
+    border: solid 1.5px #000;
     cursor: pointer;
 }
 
@@ -288,7 +288,7 @@ div.cll_link_list{
   max-width: 200px !important;
   margin-right: 3% !important;
   margin-top: 0px !important;
-  border: solid 3px;
+  border: solid 3px #000;
   border-radius: 10px;
 }
 
