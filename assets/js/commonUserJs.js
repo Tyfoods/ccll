@@ -577,9 +577,9 @@ function createNewListRequestBtn(){
 	newListRequestBtn.innerHTML = "Request New Category +";
 
 
-	var entryContent = document.querySelector('.entry-content');
+	var cllRoot = document.querySelector('div#root');
 
-	entryContent.insertBefore(newListRequestBtn, entryContent.firstChild);
+	cllRoot.parentElement.insertBefore(newListRequestBtn, cllRoot.parentElement.firstChild);
 
 	newListRequestBtn.addEventListener("click", function(){
 		var requestMsg= prompt("What category would you like to add?");
