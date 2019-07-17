@@ -463,6 +463,29 @@ function my_function($hook) {
 }
 add_action( 'admin_enqueue_scripts', 'my_function' );
 
+/*delete_posts
+delete_published_posts
+edit_posts
+edit_published_posts
+publish_posts
+*/
+function add_library_manager_role() {
+	add_role( 'library_manager', 'Library Manager', array( 'read' => true,
+														   'publish_pages' => true,
+														   'manage_categories' => true,
+														   'delete_pages' => true,
+														   'delete_others_pages' => true,
+														   'delete_published_pages'=> true,
+														   'edit_posts' => true,
+														   'publish_posts' => true,
+														   'delete_posts' => true,
+														   'delete_others_posts' => true,
+														   'edit_published_posts' => true,
+														   'delete_published_posts' => true,
+														   
+														   ) );
+}
+
 function cll_activate() {
 
     //register taxonomies/post types here
@@ -516,13 +539,21 @@ register_activation_hook( __FILE__, 'cll_activate' );
 
 
 
+
 function cll_deactivate() {
+
+	if( get_role('library_manager') ){
+		remove_role( 'library_manager' );
+    }
+
+	/*
 	global $wpdb;
 	$table_name = $wpdb->prefix .'cll_pending_links_data';
 	$sql = "DROP TABLE IF EXISTS ".$table_name;
 	$wpdb->query($sql);
 	delete_option("cll_link_manager_db_version");
-    flush_rewrite_rules();
+	flush_rewrite_rules();
+	*/
 }
 
 register_deactivation_hook( __FILE__, 'cll_deactivate' );
