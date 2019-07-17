@@ -751,9 +751,9 @@ function createNewListBtn(){
 
 	
 
-	var entryContent = document.querySelector('.entry-content');
+	var cllRoot = document.querySelector('div#root');
 	//entryContent.parentNode.insertBefore(newListBtn, entryContent);
-	entryContent.insertBefore(newListBtn, entryContent.firstChild);
+	cllRoot.parentElement.insertBefore(newListBtn, cllRoot.parentElement.firstChild);
 	//entryContent.appendChild(newListBtn);
 
 	newListBtn.addEventListener("click", function(){
@@ -1707,6 +1707,8 @@ function cllCreateSettingsForm()
 		////console.log("Search bar doesn't exist");
 	}
 
+
+	//cllRoot.parentElement.firstChild = cllRoot;
 
 	//createListTitles(); deprecated
 
