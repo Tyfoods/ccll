@@ -13,6 +13,11 @@ if(!defined('ABSPATH')){
 	exit;
 }
 
+// Define CLL_PLUGIN_FILE.
+if ( ! defined( 'CLL_PLUGIN_DIR' ) ) {
+	define( 'CLL_PLUGIN_DIR', plugin_dir_url(__FILE__) );
+}
+
 add_action('rest_api_init', function () {
 	register_rest_route( 'cll-submitted_by/v1', '/cll-link/(?P<id>\d+)',array(
 				  'methods'  => WP_REST_Server::READABLE,
@@ -131,7 +136,7 @@ register_meta('post', 'submitted_by', [
 
 
  function cll_enqueue_styles(){
- 	wp_enqueue_style( 'cll-list-style-1',plugin_dir_url( __DIR__).'curation-link-library/assets/css/cll-list-style-1.css');
+ 	wp_enqueue_style( 'cll-list-style-1',CLL_PLUGIN_DIR.'/assets/css/cll-list-style-1.css');
  }
 
 
@@ -273,6 +278,8 @@ add_shortcode( 'cll_search_engine', 'cll_search_engine_shortcode');
 
 
 function cll_list_shortcode($atts){
+
+
 	$atts = shortcode_atts( array(
 		'style' => '1',
 		'category_name' => '' //Shortcode master must seperate with +'s for valid'
@@ -312,7 +319,7 @@ function cll_list_shortcode($atts){
 		if( array_intersect($allowed_roles, $user->roles ) ) 
 		{
 			//LOAD ADMIN JAVASCRIPT mainjs.js
-			wp_enqueue_script( 'cll-mainjs',plugin_dir_url( __DIR__).'curation-link-library/assets/js/mainjs.js');
+			wp_enqueue_script( 'cll-mainjs',CLL_PLUGIN_DIR.'/assets/js/mainjs.js');
 			//pass "magicalData" to cll-main JS by echoing data through HTML
 			wp_localize_script('cll-mainjs','magicalData',array(
 				'nonce' => wp_create_nonce('wp_rest'),
@@ -341,7 +348,7 @@ function cll_list_shortcode($atts){
 		else
 		{
 			//Load commonUserJS.js
-			wp_enqueue_script( 'cll-commonUserJs',plugin_dir_url( __DIR__).'curation-link-library/assets/js/commonUserJs.js');
+			wp_enqueue_script( 'cll-commonUserJs', CLL_PLUGIN_DIR.'/assets/js/commonUserJs.js');
 			wp_localize_script('cll-commonUserJs','magicalData',array(
 				'nonce' => wp_create_nonce('wp_rest'),
 				//'cllUserId' => get_current_user_id(),
@@ -361,7 +368,7 @@ function cll_list_shortcode($atts){
 		}
 	}
 	else{
-		wp_enqueue_script( 'cll-nonLoggedInUser.js',plugin_dir_url( __DIR__).'curation-link-library/assets/js/nonLoggedInUser.js');
+		wp_enqueue_script( 'cll-nonLoggedInUser.js',CLL_PLUGIN_DIR.'/assets/js/nonLoggedInUser.js');
 		wp_localize_script('cll-nonLoggedInUser.js','magicalData',array(
 			'nonce' => wp_create_nonce('wp_rest'),
 		));
@@ -432,8 +439,8 @@ function load_link_manager_css_and_js($hook)
    {
    		return;
    }
-	wp_enqueue_style( 'cll-list-manager-page',plugin_dir_url( __DIR__).'curation-link-library/assets/css/cll-link-manager-page.css');
-	wp_enqueue_script( 'cll-adminApprovalJs',plugin_dir_url( __DIR__).'curation-link-library/assets/js/adminApproval.js');
+	wp_enqueue_style( 'cll-list-manager-page',CLL_PLUGIN_DIR.'/assets/css/cll-link-manager-page.css');
+	wp_enqueue_script( 'cll-adminApprovalJs',CLL_PLUGIN_DIR.'/assets/js/adminApproval.js');
 	wp_localize_script('cll-adminApprovalJs','magicalData',array(
 		'nonce' => wp_create_nonce('wp_rest')
 	));
