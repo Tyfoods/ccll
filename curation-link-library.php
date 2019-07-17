@@ -142,7 +142,9 @@ register_meta('post', 'submitted_by', [
 
 
  function cll_enqueue_styles(){
- 	wp_enqueue_style( 'cll-list-style-1',CLL_PLUGIN_DIR.'/assets/css/cll-list-style-1.css');
+	if(is_front_page()){
+	 wp_enqueue_style( 'cll-list-style-1',CLL_PLUGIN_DIR.'/assets/css/cll-list-style-1.css');
+	}
  }
 
 
@@ -324,63 +326,70 @@ function cll_list_shortcode($atts){
 	if(is_user_logged_in() === true){
 		if( array_intersect($allowed_roles, $user->roles ) ) 
 		{
-			//LOAD ADMIN JAVASCRIPT mainjs.js
-			wp_enqueue_script( 'cll-mainjs',CLL_PLUGIN_DIR.'/assets/js/mainjs.js');
-			//pass "magicalData" to cll-main JS by echoing data through HTML
-			wp_localize_script('cll-mainjs','magicalData',array(
-				'nonce' => wp_create_nonce('wp_rest'),
-				//'cllUserId' => get_current_user_id()
-			));
-
-			wp_localize_script('cll-mainjs', 'cllUserId', get_current_user_id());
-
-			/*
-			wp_localize_script( 'cll-mainjs', 'cllAjaxUrl', array(
-					'ajax_url' => admin_url( 'admin-ajax.php' )
+			if(is_front_page()){
+				//LOAD ADMIN JAVASCRIPT mainjs.js
+				wp_enqueue_script( 'cll-mainjs',CLL_PLUGIN_DIR.'/assets/js/mainjs.js');
+				//pass "magicalData" to cll-main JS by echoing data through HTML
+				wp_localize_script('cll-mainjs','magicalData',array(
+					'nonce' => wp_create_nonce('wp_rest'),
+					//'cllUserId' => get_current_user_id()
 				));
-			*/
+
+				wp_localize_script('cll-mainjs', 'cllUserId', get_current_user_id());
+
+				/*
+				wp_localize_script( 'cll-mainjs', 'cllAjaxUrl', array(
+						'ajax_url' => admin_url( 'admin-ajax.php' )
+					));
+				*/
 
 
 
-			$style_template = cll_list_style_processor($atts["style"], $final_category_data);
-			if (isset($style_template)){
-				include $style_template;
-				wp_localize_script('cll-mainjs','current_page_id', $current_page_id);
-				wp_localize_script('cll-commonUserJs','current_page_id', $current_page_id);
+				$style_template = cll_list_style_processor($atts["style"], $final_category_data);
+				if (isset($style_template)){
+					include $style_template;
+					wp_localize_script('cll-mainjs','current_page_id', $current_page_id);
+					wp_localize_script('cll-commonUserJs','current_page_id', $current_page_id);
 
+				}
+				return;
 			}
-			return;
 		}
 		else
 		{
 			//Load commonUserJS.js
-			wp_enqueue_script( 'cll-commonUserJs', CLL_PLUGIN_DIR.'/assets/js/commonUserJs.js');
-			wp_localize_script('cll-commonUserJs','magicalData',array(
-				'nonce' => wp_create_nonce('wp_rest'),
-				//'cllUserId' => get_current_user_id(),
-			));
+			if(is_front_page()){
+				wp_enqueue_script( 'cll-commonUserJs', CLL_PLUGIN_DIR.'/assets/js/commonUserJs.js');
+				wp_localize_script('cll-commonUserJs','magicalData',array(
+					'nonce' => wp_create_nonce('wp_rest'),
+					//'cllUserId' => get_current_user_id(),
+				));
 
-			wp_localize_script('cll-commonUserJs', 'cllUserId', get_current_user_id());
-			
+				wp_localize_script('cll-commonUserJs', 'cllUserId', get_current_user_id());
+				
 
-			$style_template = cll_list_style_processor($atts["style"], $final_category_data);
-			if (isset($style_template)){
-				include $style_template;
-				wp_localize_script('cll-mainjs','current_page_id', $current_page_id);
-				wp_localize_script('cll-commonUserJs','current_page_id', $current_page_id);
+				$style_template = cll_list_style_processor($atts["style"], $final_category_data);
+				if (isset($style_template)){
+					include $style_template;
+					wp_localize_script('cll-mainjs','current_page_id', $current_page_id);
+					wp_localize_script('cll-commonUserJs','current_page_id', $current_page_id);
 
+				}
+				return;
 			}
-			return;
 		}
 	}
 	else{
-		wp_enqueue_script( 'cll-nonLoggedInUser.js',CLL_PLUGIN_DIR.'/assets/js/nonLoggedInUser.js');
-		wp_localize_script('cll-nonLoggedInUser.js','magicalData',array(
-			'nonce' => wp_create_nonce('wp_rest'),
-		));
-		$style_template = cll_list_style_processor($atts["style"], $final_category_data);
-		if (isset($style_template)){
-			include $style_template;
+		if(is_front_page()){
+
+			wp_enqueue_script( 'cll-nonLoggedInUser.js',CLL_PLUGIN_DIR.'/assets/js/nonLoggedInUser.js');
+			wp_localize_script('cll-nonLoggedInUser.js','magicalData',array(
+				'nonce' => wp_create_nonce('wp_rest'),
+			));
+			$style_template = cll_list_style_processor($atts["style"], $final_category_data);
+			if (isset($style_template)){
+				include $style_template;
+			}
 		}
 	}
 
