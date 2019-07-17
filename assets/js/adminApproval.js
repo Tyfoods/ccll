@@ -10,7 +10,7 @@ var makeRequest = function (url, method, sendData, refresh) {
 	var refreshInput = refresh || '';
 
 
-	console.log("request made");
+	//console.log("request made");
 	// Create the XHR request
 	var request = new XMLHttpRequest();
 
@@ -31,7 +31,7 @@ var makeRequest = function (url, method, sendData, refresh) {
 				if(typeof sendData !== 'undefined')
 				{
 					//document.location.reload(true);
-					console.log('sendData was present!');
+					//console.log('sendData was present!');
 				}
 
 				if(refreshInput === false){
@@ -59,10 +59,10 @@ var makeRequest = function (url, method, sendData, refresh) {
 		// Send the request
 		if(typeof sendData === 'undefined'){
 			request.send();	
-			//console.log("Data is undefined! No data was sent");
+			////console.log("Data is undefined! No data was sent");
 		}
 		else{
-			console.log(sendData);
+			//console.log(sendData);
 			request.send(sendData);
 		}
 
@@ -77,14 +77,14 @@ function createNewCategoryRequest(newCategoryValue)
 		"slug": newCategoryValue.replace(" ","-")
 	}
 
-	console.log("Submit Button was clicked, now I'll post");
+	//console.log("Submit Button was clicked, now I'll post");
 	makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/categories/', 'POST', JSON.stringify(NewCategoryData))
 		.then(function(){
-			console.log("Request for new category has been made successfully");
+			//console.log("Request for new category has been made successfully");
 		})
 		.catch(function(error){
-			console.log("Failed to make the new category request");
-			console.log(error);
+			//console.log("Failed to make the new category request");
+			//console.log(error);
 		});
 
 }
@@ -96,8 +96,8 @@ function deletePendingListRequest(newListItemData){
 			if(this.readyState == 4 && this.status == 200)
 			{
 				//Nothing below gets called :O ready state is NEVER 4!!!
-				console.log('Successful Pending List Deletion - Hello');
-				console.log(deletePendingListRequest.responseText);
+				//console.log('Successful Pending List Deletion - Hello');
+				//console.log(deletePendingListRequest.responseText);
 			}
 				//if request fails...?
 		}
@@ -129,34 +129,34 @@ function addOnClickToListApproveBtn(){
 		     	{
 					if(row.cells[j].title === 'listId'){
 						newListItemData['listId'] = row.cells[j].innerHTML;
-						console.log("This listId was found: "+row.cells[j].title);
-						console.log("This is the InnerHTML: "+newListItemData['listId']);
+						//console.log("This listId was found: "+row.cells[j].title);
+						//console.log("This is the InnerHTML: "+newListItemData['listId']);
 					}
 					else if(row.cells[j].title === 'userId'){
 						newListItemData['commonUserId'] = row.cells[j].innerHTML;
-		     			console.log("This userId was found: "+row.cells[j].title);
-		     			console.log("This is the InnerHTML: "+newListItemData['commonUserId']);
+		     			//console.log("This userId was found: "+row.cells[j].title);
+		     			//console.log("This is the InnerHTML: "+newListItemData['commonUserId']);
 		     		}
 
 		     		else if(row.cells[j].title === 'list_category'){
 						newListItemData['list_category'] = row.cells[j].innerHTML;
-		     			console.log("The list_category was found: "+row.cells[j].title);
-		     			console.log("This is the InnerHTML: "+newListItemData['list_category']);
-		     			//console.log("The elements ID is: "+row.cells[j].id);
+		     			//console.log("The list_category was found: "+row.cells[j].title);
+		     			//console.log("This is the InnerHTML: "+newListItemData['list_category']);
+		     			////console.log("The elements ID is: "+row.cells[j].id);
 						//row.cells[j].parentNode.removeChild(row.cells[j]);
 					 }
 		     		else if(row.cells[j].title === 'pageId'){
 						newListItemData['pageId'] = row.cells[j].innerHTML;
-		     			console.log("The pageId was found: "+row.cells[j].title);
-		     			console.log("This is the InnerHTML: "+newListItemData['pageId']);
-		     			//console.log("The elements ID is: "+row.cells[j].id);
+		     			//console.log("The pageId was found: "+row.cells[j].title);
+		     			//console.log("This is the InnerHTML: "+newListItemData['pageId']);
+		     			////console.log("The elements ID is: "+row.cells[j].id);
 						//row.cells[j].parentNode.removeChild(row.cells[j]);
 					 }
 		     		else if(row.cells[j].title === 'list_page_orgin'){
 						newListItemData['list_page_orgin'] = row.cells[j].innerHTML;
-		     			console.log("The pageId was found: "+row.cells[j].title);
-		     			console.log("This is the InnerHTML: "+newListItemData['list_page_orgin']);
-		     			//console.log("The elements ID is: "+row.cells[j].id);
+		     			//console.log("The pageId was found: "+row.cells[j].title);
+		     			//console.log("This is the InnerHTML: "+newListItemData['list_page_orgin']);
+		     			////console.log("The elements ID is: "+row.cells[j].id);
 						//row.cells[j].parentNode.removeChild(row.cells[j]);
 		     		}
 		     	}
@@ -172,7 +172,7 @@ function addOnClickToListApproveBtn(){
 
 		var list_page_orgin_id = newListItemData['list_page_orgin'].replace(/\s/g, '').replace(/%20/g, '');
 		if (confirm("Are you sure you would like to add this new list?")) {
-			//console.log("You pressed YES!");
+			////console.log("You pressed YES!");
 			makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/pages/'+list_page_orgin_id, "POST")
 				.then(function(request){
 					var rawResponse = request.responseText.split('{"id":'+list_page_orgin_id).pop();
@@ -188,23 +188,23 @@ function addOnClickToListApproveBtn(){
 
 					makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/pages/'+list_page_orgin_id, "POST", JSON.stringify(newPageContent))
 						.then(function(request){
-							console.log("Successfully updated page!");
-							console.log(request.responseText);
+							//console.log("Successfully updated page!");
+							//console.log(request.responseText);
 						})
 						.catch(function(error){
-							console.log(error);
-							console.log("Unsuccesful page update!");
+							//console.log(error);
+							//console.log("Unsuccesful page update!");
 						});
 				})
 				.catch(function(error){
-					console.log(error);
-					console.log("Unable to get page with given ID");
+					//console.log(error);
+					//console.log("Unable to get page with given ID");
 				});
 
 		}
 		else
 		{
-			//console.log("You pressed NO");
+			////console.log("You pressed NO");
 		}
 
 		});
@@ -236,20 +236,20 @@ function addOnClickToListDeclineBtn()
 		     	{
 					if(row.cells[j].title === 'listId'){
 						newListItemData['listId'] = row.cells[j].innerHTML;
-						console.log("This userId was found: "+row.cells[j].title);
-						console.log("This is the InnerHTML: "+newListItemData['listId']);
+						//console.log("This userId was found: "+row.cells[j].title);
+						//console.log("This is the InnerHTML: "+newListItemData['listId']);
 					}
 					else if(row.cells[j].title === 'userId'){
 						newListItemData['commonUserId'] = row.cells[j].innerHTML;
-		     			console.log("This userId was found: "+row.cells[j].title);
-		     			console.log("This is the InnerHTML: "+newListItemData['commonUserId']);
+		     			//console.log("This userId was found: "+row.cells[j].title);
+		     			//console.log("This is the InnerHTML: "+newListItemData['commonUserId']);
 		     		}
 
 		     		else if(row.cells[j].title === 'list_category'){
 						newListItemData['list_category'] = row.cells[j].innerHTML;
-		     			console.log("The content was found: "+row.cells[j].title);
-		     			console.log("This is the InnerHTML: "+newListItemData['list_category']);
-		     			//console.log("The elements ID is: "+row.cells[j].id);
+		     			//console.log("The content was found: "+row.cells[j].title);
+		     			//console.log("This is the InnerHTML: "+newListItemData['list_category']);
+		     			////console.log("The elements ID is: "+row.cells[j].id);
 						//row.cells[j].parentNode.removeChild(row.cells[j]);
 		     		}
 		     	}
@@ -291,32 +291,32 @@ function addOnClickToDeclineBtn()
 		     	{
 		     		if(row.cells[j].title === 'linkId'){ //check if element.title is equal to 'string'
 		     			newLinkItemData['pendingLinkId'] = row.cells[j].innerHTML;
-		     			console.log("This linkID was found: "+row.cells[j].title);
-		     			console.log("This is the InnerHTML: "+newLinkItemData['pendingLinkId']);
+		     			//console.log("This linkID was found: "+row.cells[j].title);
+		     			//console.log("This is the InnerHTML: "+newLinkItemData['pendingLinkId']);
 		     		}
 		     		else if(row.cells[j].title === 'userId'){ //check if element.title is equal to 'string'
 						 newLinkItemData['commonUserId'] = row.cells[j].innerHTML;
-		     			console.log("This userId was found: "+row.cells[j].title);
-		     			console.log("This is the InnerHTML: "+newLinkItemData['commonUserId']);
+		     			//console.log("This userId was found: "+row.cells[j].title);
+		     			//console.log("This is the InnerHTML: "+newLinkItemData['commonUserId']);
 		     		}
 		     		else if(row.cells[j].title === 'linkTitle'){
 		     			newLinkItemData['title'] = row.cells[j].innerHTML;
-		     			console.log("The linkTitle was found: "+row.cells[j].title);
-		     			console.log("This is the InnerHTML: "+newLinkItemData['title']);
+		     			//console.log("The linkTitle was found: "+row.cells[j].title);
+		     			//console.log("This is the InnerHTML: "+newLinkItemData['title']);
 						//row.cells[j].parentNode.removeChild(row.cells[j]);
 		     		}
 		     		else if(row.cells[j].title === 'content'){
 		     			newLinkItemData['content'] = row.cells[j].innerHTML;
-		     			console.log("The content was found: "+row.cells[j].title);
-		     			console.log("This is the InnerHTML: "+newLinkItemData['content']);
-		     			//console.log("The elements ID is: "+row.cells[j].id);
+		     			//console.log("The content was found: "+row.cells[j].title);
+		     			//console.log("This is the InnerHTML: "+newLinkItemData['content']);
+		     			////console.log("The elements ID is: "+row.cells[j].id);
 						//row.cells[j].parentNode.removeChild(row.cells[j]);
 		     		}
 		     		else if(row.cells[j].title === 'categories'){
 		     			newLinkItemData['categories'] = row.cells[j].innerHTML;
-		     			console.log("The content was found: "+row.cells[j].title);
-		     			console.log("This is the InnerHTML: "+newLinkItemData['categories']);
-		     			//console.log("The elements ID is: "+row.cells[j].id);
+		     			//console.log("The content was found: "+row.cells[j].title);
+		     			//console.log("This is the InnerHTML: "+newLinkItemData['categories']);
+		     			////console.log("The elements ID is: "+row.cells[j].id);
 						//row.cells[j].parentNode.removeChild(row.cells[j]);
 		     		}
 		     	}
@@ -338,8 +338,8 @@ function addOnClickToDeclineBtn()
 					if(this.readyState == 4 && this.status == 200)
 					{
 						//Nothing below gets called :O ready state is NEVER 4!!!
-						console.log('Successful Pending Link Deletion - Hello');
-						console.log(deletePendingLinkRequest.responseText);
+						//console.log('Successful Pending Link Deletion - Hello');
+						//console.log(deletePendingLinkRequest.responseText);
 					}
 						//if request fails...?
 				}
@@ -376,33 +376,33 @@ function addOnClickToApproveBtn()
 
 		     	if(row.cells[j].getAttribute('cllid') === cllApproveBtnCllId)
 		     	{
-					//console.log(row.cells[j].title);
+					////console.log(row.cells[j].title);
 		     		if(row.cells[j].title === 'linkId'){
 		     			newLinkItemData['pendingLinkId'] = row.cells[j].innerHTML;
-		     			//console.log("This linkID was found: "+row.cells[j].title);
-		     			//console.log("This is the InnerHTML: "+newLinkItemData['pendingLinkId']);
+		     			////console.log("This linkID was found: "+row.cells[j].title);
+		     			////console.log("This is the InnerHTML: "+newLinkItemData['pendingLinkId']);
 		     		}
 		     		else if(row.cells[j].title === 'userId'){
 						 newLinkItemData['commonUserId'] = row.cells[j].innerHTML;
-		     			//console.log("This userId was found: "+row.cells[j].title);
-		     			//console.log("This is the InnerHTML: "+newLinkItemData['commonUserId']);
+		     			////console.log("This userId was found: "+row.cells[j].title);
+		     			////console.log("This is the InnerHTML: "+newLinkItemData['commonUserId']);
 		     		}
 		     		else if(row.cells[j].title === 'linkTitle'){
 		     			newLinkItemData['title'] = row.cells[j].innerHTML;
-		     			//console.log("The linkTitle was found: "+row.cells[j].title);
-		     			//console.log("This is the InnerHTML: "+newLinkItemData['title']);
+		     			////console.log("The linkTitle was found: "+row.cells[j].title);
+		     			////console.log("This is the InnerHTML: "+newLinkItemData['title']);
 
 		     		}
 		     		else if(row.cells[j].title === 'content'){
 		     			newLinkItemData['content'] = row.cells[j].innerHTML;
-		     			//console.log("The content was found: "+row.cells[j].title);
-		     			//console.log("This is the InnerHTML: "+newLinkItemData['content']);
+		     			////console.log("The content was found: "+row.cells[j].title);
+		     			////console.log("This is the InnerHTML: "+newLinkItemData['content']);
 
 		     		}
 		     		else if(row.cells[j].title === 'category'){
 		     			newLinkItemData['categories'] = row.cells[j].innerHTML;
-		     			//console.log("The content was found: "+row.cells[j].title);
-		     			//console.log("This is the InnerHTML: "+newLinkItemData['categories']);
+		     			////console.log("The content was found: "+row.cells[j].title);
+		     			////console.log("This is the InnerHTML: "+newLinkItemData['categories']);
 
 		     		}
 		     	}
@@ -428,18 +428,18 @@ function addOnClickToApproveBtn()
 			.then(function(request){
 				makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link', 'POST', JSON.stringify(newLinkItemData))
 					.then(function(request){
-						console.log("Successful Link Addition");
+						//console.log("Successful Link Addition");
 						alert("You have approved a link!");
 						makeRequest(cllGlobals.currentProtocalDomain+'/wp-content/plugins/curation-link-library/cll-core/approve-link-item-handler.php', 'POST', "json_string="+JSON.stringify(newLinkItemData))
 							.then(function(request){
-								console.log(request.responseText);
-								console.log("Successful pending link deletion");
+								//console.log(request.responseText);
+								//console.log("Successful pending link deletion");
 							});
 					});
 				
 			})
 			.catch(function(error){
-				console.log(error)
+				//console.log(error)
 			});
 /*
 		var deletePendingLinkRequest = new XMLHttpRequest();

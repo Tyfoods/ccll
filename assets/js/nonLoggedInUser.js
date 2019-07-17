@@ -15,7 +15,7 @@ var makeRequest = function (url, method, sendData, refresh) {
 	var refreshInput = refresh || '';
 
 
-	//console.log("request made");
+	////console.log("request made");
 	// Create the XHR request
 	var request = new XMLHttpRequest();
 
@@ -36,7 +36,7 @@ var makeRequest = function (url, method, sendData, refresh) {
 				if(typeof sendData !== 'undefined')
 				{
 					//document.location.reload(true);
-					//console.log('sendData was present!');
+					////console.log('sendData was present!');
 				}
 
 				if(refreshInput === false){
@@ -64,10 +64,10 @@ var makeRequest = function (url, method, sendData, refresh) {
 		// Send the request
 		if(typeof sendData === 'undefined'){
 			request.send();	
-			//console.log("Data is undefined! No data was sent");
+			////console.log("Data is undefined! No data was sent");
 		}
 		else{
-			//console.log(sendData);
+			////console.log(sendData);
 			request.send(sendData);
 		}
 
@@ -107,16 +107,16 @@ function displayVotesPerItem(){
 			var linkListTitleArray = document.querySelectorAll('.link-list-title');
 			var incrementer = 0;
 
-			//console.log(cllLinkArray);
+			////console.log(cllLinkArray);
 
 			cllLinkArray.forEach(function(cllLink){
 				linkListTitleArray.forEach(function(linkListTitle){
 					var post_slug = linkListTitle.textContent.trim().replace(/\s/g, '-').toLowerCase();
 					if(cllLink.slug === post_slug){
 						/*
-						console.log("Matched a slug!");
-						console.log(cllLinkArray[incrementer].meta.up_votes);
-						console.log(cllLinkArray[incrementer].meta.down_votes);
+						//console.log("Matched a slug!");
+						//console.log(cllLinkArray[incrementer].meta.up_votes);
+						//console.log(cllLinkArray[incrementer].meta.down_votes);
 						*/
 						var upVotesElement = document.createElement('p');
 						upVotesElement.setAttribute('class','up_votes_counter');
@@ -139,17 +139,17 @@ function displayVotesPerItem(){
 						var submittedByElement = document.createElement('p');
 						submittedByElement.setAttribute('class','submitted_by');
 
-						//console.log(cllLinkArray[incrementer].meta);
+						////console.log(cllLinkArray[incrementer].meta);
 
 						submittedByElement.innerHTML = "Submitted by: "+cllLinkArray[incrementer].meta.submitted_by;
 
-						//console.log(currentLinkItemId);
+						////console.log(currentLinkItemId);
 						var linkListItem = document.querySelector('.link-list-item[cllId="'+currentLinkItemId+'"]');
 						try{
 							linkListItem.appendChild(submittedByElement);
 						}
 						catch(error){
-							//console.log(error);
+							////console.log(error);
 						}
 
 					}
@@ -298,7 +298,7 @@ function handleSearchInput(){
 					loadingElement.setAttribute('id','cll-loading');
 					loadingElement.innerHTML = 'LOADING';
 					if(loadingElementCollection.length === 0){
-						//console.log("Adding Loading Element");
+						////console.log("Adding Loading Element");
 						cllSuggestions.appendChild(loadingElement);
 					}
 
@@ -312,7 +312,7 @@ function handleSearchInput(){
 				//If the input is nothing then clear search results
 				if(cllSearchFormInput.value === ' ' || cllSearchFormInput.value === '')
 				{
-					//console.log("No value was entered");
+					////console.log("No value was entered");
 					cllSuggestions.innerHTML = '';
 
 
@@ -332,8 +332,8 @@ function handleSearchInput(){
 						searchResultsObj.forEach(function(searchResult){
 							if(cllSuggestions.childElementCount < 5)
 							{
-								//console.log("Search result below!");
-								//console.log(searchResult);
+								////console.log("Search result below!");
+								////console.log(searchResult);
 								var searchResultElement = document.createElement("div");
 								searchResultElement.setAttribute('class','search-result-element');
 
@@ -354,7 +354,7 @@ function handleSearchInput(){
 
 					})
 					.catch(function(error){
-						//console.log(error);
+						////console.log(error);
 					});
 				}	
 			}, 1000);

@@ -25,6 +25,22 @@ function createAddToListBtn(){
 	});
 }
 
+function replaceOccurrence(string, regex, n, replace) {
+	var i = 0; //set up incrementer
+	return string.replace(regex, function(match) {
+		//i+=1;
+		if(i===n){
+			//console.log(replace);
+			i+=1;
+			return replace;
+		}
+		i+=1;
+		//console.log(match);
+		return match;
+	});
+}
+
+
 
 //after buttons are created, run this function
 function displayVotesPerItem(){
@@ -42,11 +58,7 @@ function displayVotesPerItem(){
 				linkListTitleArray.forEach(function(linkListTitle){
 					var post_slug = linkListTitle.textContent.trim().replace(/\s/g, '-').toLowerCase();
 					if(cllLink.slug === post_slug){
-						/*
-						console.log("Matched a slug!");
-						console.log(cllLinkArray[incrementer].meta.up_votes);
-						console.log(cllLinkArray[incrementer].meta.down_votes);
-						*/
+
 						var upVotesElement = document.createElement('p');
 						upVotesElement.setAttribute('class','up_votes_counter');
 						upVotesElement.innerHTML = cllLinkArray[incrementer].meta.up_votes;
@@ -68,17 +80,17 @@ function displayVotesPerItem(){
 						var submittedByElement = document.createElement('p');
 						submittedByElement.setAttribute('class','submitted_by');
 
-						console.log(cllLinkArray[incrementer].meta);
+						//console.log(cllLinkArray[incrementer].meta);
 
 						submittedByElement.innerHTML = "Submitted by: "+cllLinkArray[incrementer].meta.submitted_by;
 
-						console.log(currentLinkItemId);
+						//console.log(currentLinkItemId);
 						var linkListItem = document.querySelector('.link-list-item[cllId="'+currentLinkItemId+'"]');
 						try{
 							linkListItem.appendChild(submittedByElement);
 						}
 						catch(error){
-							console.log(error);
+							//console.log(error);
 						}
 
 					}
@@ -121,29 +133,29 @@ function createDownVoteBtn(){
 		downVoteBtn.addEventListener('click', function(){
 			linkListTitleArray.forEach(function(linkListTitle){
 				var post_slug = linkListTitle.textContent.trim().replace(/\s/g, '-').toLowerCase();
-				console.log(post_slug);
+				//console.log(post_slug);
 				if(linkListTitle.getAttribute('cllId') === downVoteBtn.getAttribute('cllId')){
 
 					makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link?slug='+post_slug, 'GET')
 						.then(function(request){
 							var objResponse = JSON.parse(request.responseText);
 							var currentLinkItemId = downVoteBtn.getAttribute('cllId');
-							console.log(objResponse);
+							//console.log(objResponse);
 
 							var metaObj = objResponse[0].meta;
 							
 							try {
 								var voteRecordObj = JSON.parse(metaObj.voteRecord);
-								console.log(voteRecordObj[cllUserId]);
+								//console.log(voteRecordObj[cllUserId]);
 
 								if(voteRecordObj[cllUserId]  !== "") //if current user status is not empty
 								{
-									console.log("There is information on record, here's the information: ");
-									console.log(metaObj.voteRecord);
-									console.log("Here is the current users vote status: ");
-									console.log(parseInt(voteRecordObj[cllUserId]));
+									//console.log("There is information on record, here's the information: ");
+									//console.log(metaObj.voteRecord);
+									//console.log("Here is the current users vote status: ");
+									//console.log(parseInt(voteRecordObj[cllUserId]));
 									var currentUserVoteStatus = parseInt(voteRecordObj[cllUserId]);
-									//console.log(JSON.parse(metaObj.voteRecord))
+									////console.log(JSON.parse(metaObj.voteRecord))
 
 									if(currentUserVoteStatus === 0)
 									{
@@ -174,7 +186,7 @@ function createDownVoteBtn(){
 
 										makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link/'+objResponse[0].id, 'POST', newPostMetaData)
 											.then(function(request){
-												console.log(request.responseText);
+												//console.log(request.responseText);
 												//get appropriate upVoteBtn + DownVoteBtn and change their values
 
 												var downVoteElement = document.querySelector('.down_votes_counter[cllId="'+currentLinkItemId+'"]');
@@ -191,7 +203,7 @@ function createDownVoteBtn(){
 
 											})
 											.catch(function(error){
-												console.log(error);
+												//console.log(error);
 											});
 									}
 									else if(currentUserVoteStatus === 3)
@@ -215,7 +227,7 @@ function createDownVoteBtn(){
 
 										makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link/'+objResponse[0].id, 'POST', newPostMetaData)
 											.then(function(request){
-												console.log(request.responseText);
+												//console.log(request.responseText);
 
 												var downVoteElement = document.querySelector('.down_votes_counter[cllId="'+currentLinkItemId+'"]');
 
@@ -225,7 +237,7 @@ function createDownVoteBtn(){
 
 											})
 											.catch(function(error){
-												console.log(error);
+												//console.log(error);
 											});
 			
 
@@ -239,15 +251,15 @@ function createDownVoteBtn(){
 							}
 							catch(error) {
 								if(voteRecordObj[cllUserId]  !== ""){ //if current user status is not empty
-									console.log("There is information on record, here's the information: ");
+									//console.log("There is information on record, here's the information: ");
 								} else {
-									console.log(error);
-									console.log("Could not parse voteRecord");
-									console.log("There is no information on record *assertion");
+									//console.log(error);
+									//console.log("Could not parse voteRecord");
+									//console.log("There is no information on record *assertion");
 									
-									//console.log("Change voter status to 0");
+									////console.log("Change voter status to 0");
 									metaObj.voteRecord = '{"'+cllUserId+'":'+'"0"}';
-									//console.log("add downvote to post");
+									////console.log("add downvote to post");
 									metaObj.down_votes+=1;
 	
 									//visually down vote
@@ -255,13 +267,11 @@ function createDownVoteBtn(){
 									var downVoteElement = document.querySelector('.down_votes_counter[cllId="'+currentLinkItemId+'"]');
 	
 									var currentDownVoteValue = parseInt(downVoteElement.textContent);
-									console.log(downVoteElement.textContent);
-									console.log(currentDownVoteValue);
-									console.log(typeof currentDownVoteValue);
+									//console.log(downVoteElement.textContent);
+									//console.log(currentDownVoteValue);
+									//console.log(typeof currentDownVoteValue);
 									currentDownVoteValue+=1;
 									downVoteElement.innerHTML = currentDownVoteValue;
-	
-	
 	
 									var newPostMetaData = JSON.stringify({
 										"meta" : metaObj
@@ -270,17 +280,17 @@ function createDownVoteBtn(){
 	
 									makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link/'+objResponse[0].id, 'POST', newPostMetaData)
 										.then(function(request){
-											console.log(request.responseText);
+											//console.log(request.responseText);
 										})
 										.catch(function(error){
-											console.log(error);
+											//console.log(error);
 										});
 								}
 
 							}
 						})
 						.catch(function(error){
-							console.log(error);
+							//console.log(error);
 						});
 					}
 			})
@@ -314,20 +324,20 @@ function createNeutralVoteBtn(){
 		neutralVoteBtn.addEventListener('click', function(){
 			linkListTitleArray.forEach(function(linkListTitle){
 				var post_slug = linkListTitle.textContent.trim().replace(/\s/g, '-').toLowerCase();
-				console.log(post_slug);
+				//console.log(post_slug);
 				if(linkListTitle.getAttribute('cllId') === neutralVoteBtn.getAttribute('cllId')){
 
 					makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link?slug='+post_slug, 'GET')
 						.then(function(request){
 							var objResponse = JSON.parse(request.responseText);
 							var currentLinkItemId = neutralVoteBtn.getAttribute('cllId');
-							console.log(objResponse);
+							//console.log(objResponse);
 
 							var metaObj = objResponse[0].meta;
 							
 							try {
 								var voteRecordObj = JSON.parse(metaObj.voteRecord);
-								console.log(voteRecordObj[cllUserId]);
+								//console.log(voteRecordObj[cllUserId]);
 
 								//decrement appropriate vote
 								if(voteRecordObj[cllUserId] === "1"){
@@ -371,18 +381,18 @@ function createNeutralVoteBtn(){
 
 								makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link/'+objResponse[0].id, 'POST', newPostMetaData)
 									.then(function(request){
-										console.log(request.responseText);
+										//console.log(request.responseText);
 									})
 									.catch(function(error){
-										console.log(error);
+										//console.log(error);
 									});
 							}
 							catch(error) {
 								if(voteRecordObj[cllUserId]  !== ""){ //if current user status is not empty
-									console.log("There is information on record, here's the information: ");
+									//console.log("There is information on record, here's the information: ");
 								} else {
-									console.log(error);
-									//console.log("Could not parse voteRecord");
+									//console.log(error);
+									////console.log("Could not parse voteRecord");
 									//console.log("There is no information on record *assertion");
 									
 									//console.log(metaObj.voteRecord);
@@ -458,8 +468,8 @@ function createUpVoteBtn(){
 								if(voteRecordObj[cllUserId]  !== "") //if current user status is not empty
 								{
 									
-									console.log("There is information on record, here's the information: ");
-									console.log(metaObj.voteRecord);
+									//console.log("There is information on record, here's the information: ");
+									//console.log(metaObj.voteRecord);
 
 									var currentUserVoteStatus = parseInt(voteRecordObj[cllUserId]);
 									
@@ -472,7 +482,7 @@ function createUpVoteBtn(){
 									}
 									else if(currentUserVoteStatus === 0)
 									{
-										console.log("Voter status was 0, incrementing up vote /removing downvote (visually too), changing status to 1");
+										//console.log("Voter status was 0, incrementing up vote /removing downvote (visually too), changing status to 1");
 										//Set voter status to 1
 										var voteRecordObj = JSON.parse(metaObj.voteRecord);
 										
@@ -516,7 +526,7 @@ function createUpVoteBtn(){
 									}
 									else if(currentUserVoteStatus === 3)
 									{
-										console.log("Voter status was 3, incrementing up vote (visually too), changing status to 1");
+										//console.log("Voter status was 3, incrementing up vote (visually too), changing status to 1");
 										//Increment up_votes in metaObj
 										metaObj.up_votes+=1;
 										//visually increment up vote
@@ -553,16 +563,20 @@ function createUpVoteBtn(){
 
 							}
 							catch(error) {
-								console.log(error);
-								console.log("Could not parse voteRecord");
-								console.log("There is no information on record *assertion");
+								//console.log(error);
+								//console.log("Could not parse voteRecord");
+								//console.log("There is no information on record *assertion");
 
 								metaObj.voteRecord = '{"'+cllUserId+'":'+'"1"}';
 								//console.log("add UpVote to post");
 								metaObj.up_votes+=1;
 								//visually increment upvote
+
+
 								var upVoteButton = document.querySelector('.up_vote_button[cllId="'+currentLinkItemId+'"]');
-								upVoteButton.style.backgroundColor = '#16C60C';
+								//upVoteButton.style.backgroundColor = '#16C60C';
+
+								//console.log(currentLinkItemId);
 
 								var upVoteElement = document.querySelector('.up_votes_counter[cllId="'+currentLinkItemId+'"]');
 								var currentUpVoteValue = parseInt(upVoteElement.textContent);
@@ -584,7 +598,7 @@ function createUpVoteBtn(){
 							}
 						})
 						.catch(function(error){
-							console.log(error);
+							//console.log(error);
 						});
 					}
 			})
@@ -695,12 +709,12 @@ function createDeleteListBtn(){
 					const cllListShortCodeArray = objResponse.content.raw.match(cllListRegex);
 		
 		
-					console.log(cllListShortCodeArray);
-					console.log(cllListShortCodeArray[deleteListBtn.getAttribute('cllId')]);
+					//console.log(cllListShortCodeArray);
+					//console.log(cllListShortCodeArray[deleteListBtn.getAttribute('cllId')]);
 
-					console.log(objResponse.content.raw);
+					//console.log(objResponse.content.raw);
 					var newPageContent = objResponse.content.raw.replace(cllListShortCodeArray[deleteListBtn.getAttribute('cllId')], '');
-					console.log(newPageContent);
+					//console.log(newPageContent);
 
 					var newPageData = {
 						"content": newPageContent
@@ -856,8 +870,8 @@ function handleSearchInput(){
 						searchResultsObj.forEach(function(searchResult){
 							if(cllSuggestions.childElementCount < 5)
 							{
-								console.log("Search result below!");
-								console.log(searchResult);
+								//console.log("Search result below!");
+								//console.log(searchResult);
 								var searchResultElement = document.createElement("div");
 								searchResultElement.setAttribute('class','search-result-element');
 
@@ -878,7 +892,7 @@ function handleSearchInput(){
 
 					})
 					.catch(function(error){
-						console.log(error);
+						//console.log(error);
 					});
 				}	
 			}, 1000);
@@ -928,73 +942,73 @@ function createAdminRemoveBtn(){
 
 					//console.log(listItem.textContent.trim().replace(/ /g, '-').toLowerCase());
 					var listItemSlug = listItem.textContent.trim().replace(/\s/g, '-').toLowerCase();
-					console.log(listItemSlug);
-					console.log(listItem.innerHTML);
+					//console.log(listItemSlug);
+					//console.log(listItem.innerHTML);
 
 					//deletePage if it exists
 					makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/pages?slug='+listItemSlug, "GET")
 						.then(function(request){
 
 							var objResponse = JSON.parse(request.responseText);
-							console.log(objResponse);
+							//console.log(objResponse);
 							//console.log(objResponse[0].id);
 
 							//get ID
 
 							if(isObjEmpty(objResponse) === true){
-								console.log("A page with a slug of that type was unable to be found. (Response was empty)");
+								//console.log("A page with a slug of that type was unable to be found. (Response was empty)");
 								
 								
 							}
 							else
 							{
-								console.log(objResponse[0].id);
-								console.log("Response was not empty");
-								console.log("deleting the associated page");
+								//console.log(objResponse[0].id);
+								//console.log("Response was not empty");
+								//console.log("deleting the associated page");
 								makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/pages/'+objResponse[0].id, "DELETE")
 									.then(function(){
-										console.log("Successfully deleted page!");
+										//console.log("Successfully deleted page!");
 									})
 									.catch(function(error){
-										console.log("Failed to delete page");
-										console.log(error);
+										//console.log("Failed to delete page");
+										//console.log(error);
 									});
 							}
 						})
 						.catch(function(error){
-							console.log("Unable to get page information about list item");
-							console.log(error);
+							//console.log("Unable to get page information about list item");
+							//console.log(error);
 						});
 
 						//Delete post if it exists
 						makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link?slug='+listItemSlug, 'GET')
 							.then(function(request){
 								var objResponse = JSON.parse(request.responseText);
-								console.log(objResponse);
+								//console.log(objResponse);
 
 								if(isObjEmpty(objResponse) === true){
-									console.log("A post with a slug of that type was unable to be found. (Response was empty)");
+									//console.log("A post with a slug of that type was unable to be found. (Response was empty)");
 									
 									
 								}
 								else
 								{
-									console.log(objResponse[0].id);
-									console.log("Response was not empty");
-									console.log("deleting the associated post");
+									//console.log(objResponse[0].id);
+									//console.log("Response was not empty");
+									//console.log("deleting the associated post");
 									makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link/'+objResponse[0].id, 'DELETE')
 										.then(function(){
-											console.log("Successfully deleted post!");
+											//console.log("Successfully deleted post!");
 										})
 										.catch(function(error){
-											console.log("Failed to delete post");
-											console.log(error);
+											//console.log("Failed to delete post");
+											//console.log(error);
 										});
 								}
 							})
 							.catch(function(error){
-								console.log("unable to get post information about list item");
-								console.log(error);
+								//console.log("unable to get post information about list item");
+								//console.log(error);
 							});
 							allListItemsArray.forEach(function(listItemToRemove){
 								if(listItemToRemove.getAttribute('cllId') === adminDeleteBtn.getAttribute('cllId'))
@@ -1007,7 +1021,7 @@ function createAdminRemoveBtn(){
 							});
 				}
 				else{
-					console.log("No match was found!");
+					//console.log("No match was found!");
 				}
 			});
 
@@ -1023,7 +1037,7 @@ var makeRequest = function (url, method, sendData, refresh) {
 	var refreshInput = refresh || '';
 
 
-	console.log("request made");
+	//console.log("request made");
 	// Create the XHR request
 	var request = new XMLHttpRequest();
 
@@ -1044,7 +1058,7 @@ var makeRequest = function (url, method, sendData, refresh) {
 				if(typeof sendData !== 'undefined')
 				{
 					//document.location.reload(true);
-					console.log('sendData was present!');
+					//console.log('sendData was present!');
 				}
 
 				if(refreshInput === false){
@@ -1075,7 +1089,7 @@ var makeRequest = function (url, method, sendData, refresh) {
 			//console.log("Data is undefined! No data was sent");
 		}
 		else{
-			console.log(sendData);
+			//console.log(sendData);
 			request.send(sendData);
 		}
 
@@ -1083,7 +1097,7 @@ var makeRequest = function (url, method, sendData, refresh) {
 };
 
 
-
+/*
 function addNewListItemJS(jsDataArray){
 
 	var newListItemTitle = jsDataArray.newListItemTitle;
@@ -1096,6 +1110,7 @@ function addNewListItemJS(jsDataArray){
 
  
 }
+*/
 
 function cllCreateForm()
 {
@@ -1119,7 +1134,7 @@ function cllCreateForm()
 			if(cllGlobals.isAddToListBtnClicked === false)
 			{
 
-				console.log("form created");
+				//console.log("form created");
 				var f = document.createElement("form");
 				f.setAttribute('id','addToListForm');
 
@@ -1217,12 +1232,19 @@ function addClickToSettingsCancelBtn()
 		{
 			cancelBtn.addEventListener("click", function()
 			{
+
 				var dropDownBox = document.querySelector(".listCategorySelector");
 				var settingsSubmitBtn = document.querySelector(".settingsSubmitBtn");
 
+				//var editCategoryBtnArray = document.querySelectorAll('.cll_edit_category_btn');
+
+				var newCategoryInput = document.querySelector("input[name='newCategoryRequestElement']");
+								
 				dropDownBox.parentNode.removeChild(dropDownBox);
 				settingsSubmitBtn.parentNode.removeChild(settingsSubmitBtn);
 				cancelBtn.parentNode.removeChild(cancelBtn);
+				newCategoryInput.parentNode.removeChild(newCategoryInput);
+				
 
 				event.stopPropagation(); //prevent parent element from being clicked
 				cllGlobals.isSettingsFormClicked = false;
@@ -1230,7 +1252,7 @@ function addClickToSettingsCancelBtn()
 		}
 		else
 		{
-			console.log('settings cancelBtn is not defined');
+			//console.log('settings cancelBtn is not defined');
 		}
 	});
 }
@@ -1254,7 +1276,7 @@ function cllAddOnClickToCancelBtn()
 		}
 		else
 		{
-			console.log('cancelBtn is not defined');
+			//console.log('cancelBtn is not defined');
 		}
 	});
 }
@@ -1267,13 +1289,13 @@ function cllAddOnClickToSubmitBtn(currentAddToListBtn){
 
 	if (typeof submitBtn !== 'undefined')
 	{
-		console.log("Submit Button Existance Verified");
+		//console.log("Submit Button Existance Verified");
 		submitBtn.addEventListener("click", function()
 		{
 			var x = document.getElementById("linkTypeSelecter").selectedIndex;
 			var linkType = document.getElementsByTagName("option")[x].value;
 
-			console.log(document.querySelector('[name="newListItemTitle"].add_to_list_input'));
+			//console.log(document.querySelector('[name="newListItemUrl"].add_to_list_input'));
 
 			if(document.querySelector('[name="newListItemTitle"].add_to_list_input').value === ''){
 				alert("You must submit a title!");
@@ -1289,20 +1311,16 @@ function cllAddOnClickToSubmitBtn(currentAddToListBtn){
 				}
 				else
 				{
-					if(linkType.toLowerCase() !== 'internal link' && linkType.toLowerCase() !== 'external link')
-					{
-						alert("You must select a Link Type!");
-					}
-					else if(linkType.toLowerCase() === 'external link')
-					{
-						//console.log("hi");
-						endLinkRequest(currentAddToListBtn);
-					}
+					endLinkRequest(currentAddToListBtn);
 				}
 			}
 			else if(linkType.toLowerCase() === 'internal link')
 			{
 				throughLinkRequest(currentAddToListBtn);
+			}
+			else if(linkType.toLowerCase() !== 'internal link' && linkType.toLowerCase() !== 'external link')
+			{
+				alert("You must select a Link Type!");
 			}
 		});
 	return;
@@ -1324,7 +1342,7 @@ function throughLinkRequest(currentAddToListBtn)
 		//createLinkPage
 		makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/pages', 'POST', JSON.stringify(NewLinkPageData))
 			.then(function(){
-				console.log("Success, new page created!");
+				//console.log("Success, new page created!");
 				//document.location.reload(true);
 			});
 
@@ -1334,7 +1352,7 @@ function throughLinkRequest(currentAddToListBtn)
 	makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/users/'+cllUserId, 'GET')
 		.then(function(request){
 			var objResponse = JSON.parse(request.responseText);
-			console.log(objResponse.name);
+			//console.log(objResponse.name);
 			return objResponse.name;
 		})
 		.then(function(username){
@@ -1349,12 +1367,12 @@ function throughLinkRequest(currentAddToListBtn)
 				//create new link post type
 				makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link', 'POST', JSON.stringify(NewLinkItemData), true)
 					.then(function(){
-						console.log("Success, new post created");
+						//console.log("Success, new post created");
 						//document.location.reload(true);
 					});
 		})
 		.catch(function(error){
-			console.log(error);
+			//console.log(error);
 		});
 
 
@@ -1375,32 +1393,35 @@ function endLinkRequest(currentAddToListBtn)
 	var multiListPageCategoryIds = "cll_category_ids"+"_"+currentAddToListBtn.getAttribute('cllid');
 
 
-	console.log(window[multiListPageCategoryIds]);
+	//console.log(window[multiListPageCategoryIds]);
 		
 	makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/users/'+cllUserId, 'GET')
 		.then(function(request){
 			var objResponse = JSON.parse(request.responseText);
-			console.log(objResponse.name);
+			//console.log(objResponse.name);
 			return objResponse.name;
 		})
 		.then(function(username){
+
 			var NewLinkItemData = {
 				"title": document.querySelector('[name="newListItemTitle"].add_to_list_input').value,
 				"slug": "/"+document.querySelector('[name="newListItemTitle"].add_to_list_input').value.replace(/ /g,'-').toLowerCase(),
-				"meta" : {"URL" : cllGlobals.currentProtocalDomain+'/'+document.querySelector('[name="newListItemTitle"].add_to_list_input').value.replace(/ /g, '-').replace(/%20/g,'-'), "link_type" : "external link", "submitted_by": username },
+				"meta" : {"URL" : document.querySelector('[name="newListItemUrl"].add_to_list_input').value.replace(/ /g, '-').replace(/%20/g,'-'), "link_type" : "external link", "submitted_by": username },
 				"status": "publish",
 				"categories": [window[multiListPageCategoryIds]]
 			}
+
+			//console.log(NewLinkItemData);
 		
 				//create new link post type
 				makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link', 'POST', JSON.stringify(NewLinkItemData), true)
 					.then(function(){
-						console.log("Success, new post created");
+						//console.log("Success, new post created");
 						//document.location.reload(true);
 					});
 		})
 		.catch(function(error){
-			console.log(error);
+			//console.log(error);
 		});
 	alert("Thank you for submitting!");
 
@@ -1423,6 +1444,9 @@ function updateCllListRequest(cllRequestData)
 	var selectedCategory = cllRequestData['selectedCategory'];
 	var currentCllId = parseInt(cllRequestData['currentCllId']);
 
+	//console.log(selectedCategory);
+	//console.log(currentCllId);
+
 	makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/pages/'+current_page_id, "POST")
 		.then(function (request) {
 
@@ -1436,22 +1460,30 @@ function updateCllListRequest(cllRequestData)
 			const cllListShortCodeArray = objResponse.content.raw.match(cllListRegex);
 
 
-			console.log(cllListShortCodeArray);
-			console.log(cllListShortCodeArray[currentCllId]);
+			//console.log(cllListShortCodeArray);
+			//console.log(cllListShortCodeArray[currentCllId]);
 
 			//strreplace on this -> = cllListShortCodeArray[currentClassName]
-			console.log("WIN");
+			//console.log("WIN");
 
-			if(cllListShortCodeArray[currentCllId] === '[cll_list]' || cllListShortCodeArray[currentCllId] === '[cll_list  ]')
+			if(cllListShortCodeArray[currentCllId] === '[cll_list]' ||
+			   cllListShortCodeArray[currentCllId] === '[cll_list  ]' ||
+			   cllListShortCodeArray[currentCllId] === '[cll_list] ')
 			{
 
 				//else{
-					const cllReplacementRegex = /\[cll_list]?\s?\]/g;
+					const cllReplacementRegex = /\[cll_list]?\s?\]?/g;
 					var pageContent = objResponse.content.raw;
-					var newPageContent = pageContent.replace(cllReplacementRegex,'[cll_list category_name="'+selectedCategory+'"]');
-					console.log("selected category is: "+selectedCategory);
-					console.log(pageContent);
-					console.log(newPageContent);
+
+
+					//replace ONLY the correctly numbered short code using INDEX
+					var newPageContent = replaceOccurrence(pageContent, cllReplacementRegex, parseInt(currentCllId), '[cll_list category_name="'+selectedCategory+'"]');
+					//var newPageContent = pageContent.replace(cllReplacementRegex,'[cll_list category_name="'+selectedCategory+'"]');
+
+
+					//console.log("selected category is: "+selectedCategory);
+					//console.log(pageContent);
+					//console.log(newPageContent);
 						
 					var NewShortCodeData = {
 						"content": newPageContent
@@ -1462,24 +1494,13 @@ function updateCllListRequest(cllRequestData)
 			}
 			else
 			{
-				console.log("Short Code with New Category FOUND!");
+				//console.log("Short Code with New Category FOUND!");
 
 				const cllPopulatedReplacementRegex = /category_name\s?=\s?"(.*?)"/g;
-				//var categoryRegex = /category_name\s?=\s?"(.*?)"/g;
 				var pageContent = objResponse.content.raw;
 
-
 				//replace ONLY the correctly numbered short code using INDEX
-				function replaceOccurrence(string, regex, n, replace) {
-				   var i = 0; //set up incrementer
-				   return string.replace(regex, function(match) {
-						i+=1;
-						if(i===n) return replace;
-						console.log(match);
-				        return match;
-				    });
-				}
-				var newPageContent = replaceOccurrence(pageContent, cllPopulatedReplacementRegex, parseInt(currentCllId)+1, 'category_name="'+selectedCategory+'"');
+				var newPageContent = replaceOccurrence(pageContent, cllPopulatedReplacementRegex, parseInt(currentCllId), 'category_name="'+selectedCategory+'"');
 						
 				var NewShortCodeData = {
 					"content": newPageContent
@@ -1489,13 +1510,13 @@ function updateCllListRequest(cllRequestData)
 			}
 		})
 		.then(function (newShortCodeData) {
-			console.log("WIN NUMBER TWO");
-			console.log(newShortCodeData);
+			//console.log("WIN NUMBER TWO");
+			//console.log(newShortCodeData);
 			return makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/pages/'+current_page_id, "POST", JSON.stringify(newShortCodeData), true);
 		})
 		.catch(function (error){
-			console.log("FAILED");
-			console.log(error);
+			//console.log("FAILED");
+			//console.log(error);
 		});
 }
 
@@ -1508,14 +1529,14 @@ function createNewCategoryRequest(newCategoryValue)
 		"slug": newCategoryValue.replace(" ","-")
 	}
 
-	console.log("Submit Button was clicked, now I'll post");
+	//console.log("Submit Button was clicked, now I'll post");
 	makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/categories/', 'POST', JSON.stringify(NewCategoryData))
 		.then(function(){
-			console.log("Request for new category has been made successfully");
+			//console.log("Request for new category has been made successfully");
 		})
 		.catch(function(error){
-			console.log("Failed to make the new category request");
-			console.log(error);
+			//console.log("Failed to make the new category request");
+			//console.log(error);
 		});
 
 }
@@ -1530,7 +1551,7 @@ function addClickToSettingsSubmitBtn(cllSettingsForm)
 		if (typeof settingsSubmitBtn !== 'undefined')
 		{
 
-			console.log("Settings Submit Button Existance Verified");
+			//console.log("Settings Submit Button Existance Verified");
 
 			var isCategoryInputCreated = false;
 
@@ -1557,7 +1578,7 @@ function addClickToSettingsSubmitBtn(cllSettingsForm)
 					else if(isCategoryInputCreated === true)
 					{
 						var newCategoryValue = document.querySelector('[name="newCategoryRequestElement"]').value
-						console.log(newCategoryValue);
+						//console.log(newCategoryValue);
 						createNewCategoryRequest(newCategoryValue.toLowerCase());
 						//create new category with this value and change page to this category
 						updateCllListRequest(newCategoryValue);
@@ -1573,7 +1594,7 @@ function addClickToSettingsSubmitBtn(cllSettingsForm)
 						}
 						else if(selectedCategory !== '')
 						{
-							console.log("Successfully adding "+selectedCategory);
+							//console.log("Successfully adding "+selectedCategory);
 							//HTTP Request to update page FUNCTION
 							var cllRequestData = {
 								"selectedCategory":selectedCategory,
@@ -1591,9 +1612,6 @@ function addClickToSettingsSubmitBtn(cllSettingsForm)
 
 function cllCreateSettingsForm()
 {
-
-
-
 	var settingsFormInc = 0;
 
 	//createElementandAppendIt
@@ -1668,7 +1686,7 @@ function cllCreateSettingsForm()
 				cllSettingsForm.appendChild(cancelBtn);
 
 
-				console.log("Create Settings Form has Run");
+				//console.log("Create Settings Form has Run");
 				cllGlobals.isSettingsFormClicked = true;
 
 				addClickToSettingsSubmitBtn(cllSettingsForm);
@@ -1681,12 +1699,12 @@ function cllCreateSettingsForm()
 
 
 	if(document.querySelector(".cll_search_form_input")){
-		console.log("Search bar exists");
+		//console.log("Search bar exists");
 		handleSearchInput();
 	}
 	else
 	{
-		//console.log("Search bar doesn't exist");
+		////console.log("Search bar doesn't exist");
 	}
 
 

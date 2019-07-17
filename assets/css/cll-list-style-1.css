@@ -20,6 +20,11 @@
 
 */
 
+input[name="newCategoryRequestElement"] {
+  width: 100%;
+  border-radius: 10px;
+}
+
 
 .link-list-style-1 {
   border-top: 3px solid;

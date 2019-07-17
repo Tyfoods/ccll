@@ -74,17 +74,17 @@ function displayVotesPerItem(){
 						var submittedByElement = document.createElement('p');
 						submittedByElement.setAttribute('class','submitted_by');
 
-						console.log(cllLinkArray[incrementer].meta);
+						//console.log(cllLinkArray[incrementer].meta);
 
 						submittedByElement.innerHTML = "Submitted by: "+cllLinkArray[incrementer].meta.submitted_by;
 
-						console.log(currentLinkItemId);
+						//console.log(currentLinkItemId);
 						var linkListItem = document.querySelector('.link-list-item[cllId="'+currentLinkItemId+'"]');
 						try{
 							linkListItem.appendChild(submittedByElement);
 						}
 						catch(error){
-							console.log(error);
+							//console.log(error);
 						}
 
 					}
@@ -127,29 +127,29 @@ function createDownVoteBtn(){
 		downVoteBtn.addEventListener('click', function(){
 			linkListTitleArray.forEach(function(linkListTitle){
 				var post_slug = linkListTitle.textContent.trim().replace(/\s/g, '-').toLowerCase();
-				console.log(post_slug);
+				//console.log(post_slug);
 				if(linkListTitle.getAttribute('cllId') === downVoteBtn.getAttribute('cllId')){
 
 					makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link?slug='+post_slug, 'GET')
 						.then(function(request){
 							var objResponse = JSON.parse(request.responseText);
 							var currentLinkItemId = downVoteBtn.getAttribute('cllId');
-							console.log(objResponse);
+							//console.log(objResponse);
 
 							var metaObj = objResponse[0].meta;
 							
 							try {
 								var voteRecordObj = JSON.parse(metaObj.voteRecord);
-								console.log(voteRecordObj[cllUserId]);
+								//console.log(voteRecordObj[cllUserId]);
 
 								if(voteRecordObj[cllUserId]  !== "") //if current user status is not empty
 								{
-									console.log("There is information on record, here's the information: ");
-									console.log(metaObj.voteRecord);
-									console.log("Here is the current users vote status: ");
-									console.log(parseInt(voteRecordObj[cllUserId]));
+									//console.log("There is information on record, here's the information: ");
+									//console.log(metaObj.voteRecord);
+									//console.log("Here is the current users vote status: ");
+									//console.log(parseInt(voteRecordObj[cllUserId]));
 									var currentUserVoteStatus = parseInt(voteRecordObj[cllUserId]);
-									//console.log(JSON.parse(metaObj.voteRecord))
+									////console.log(JSON.parse(metaObj.voteRecord))
 
 									if(currentUserVoteStatus === 0)
 									{
@@ -177,7 +177,7 @@ function createDownVoteBtn(){
 
 										makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/cll-vote/v1/cll-link/'+objResponse[0].id, 'POST', newPostMetaData)
 											.then(function(request){
-												console.log(request.responseText);
+												//console.log(request.responseText);
 												//get appropriate upVoteBtn + DownVoteBtn and change their values
 
 												var downVoteElement = document.querySelector('.down_votes_counter[cllId="'+currentLinkItemId+'"]');
@@ -194,7 +194,7 @@ function createDownVoteBtn(){
 
 											})
 											.catch(function(error){
-												console.log(error);
+												//console.log(error);
 											});
 									}
 									else if(currentUserVoteStatus === 3)
@@ -215,7 +215,7 @@ function createDownVoteBtn(){
 
 										makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/cll-vote/v1/cll-link/'+objResponse[0].id, 'POST', newPostMetaData)
 											.then(function(request){
-												console.log(request.responseText);
+												//console.log(request.responseText);
 
 												var downVoteElement = document.querySelector('.down_votes_counter[cllId="'+currentLinkItemId+'"]');
 
@@ -225,12 +225,12 @@ function createDownVoteBtn(){
 
 											})
 											.catch(function(error){
-												console.log(error);
+												//console.log(error);
 											});
 			
 
-										//console.log("Switch vote status to 1");
-										//console.log("Add UpVote to Post");
+										////console.log("Switch vote status to 1");
+										////console.log("Add UpVote to Post");
 										
 									}
 
@@ -238,13 +238,13 @@ function createDownVoteBtn(){
 
 							}
 							catch(error) {
-								console.log(error);
-								console.log("Could not parse voteRecord");
-								console.log("There is no information on record *assertion");
+								//console.log(error);
+								//console.log("Could not parse voteRecord");
+								//console.log("There is no information on record *assertion");
 								
-								//console.log("Change voter status to 0");
+								////console.log("Change voter status to 0");
 								metaObj.voteRecord = '{"'+cllUserId+'":'+'"0"}';
-								//console.log("add downvote to post");
+								////console.log("add downvote to post");
 								metaObj.down_votes+=1;
 
 								//visually down vote
@@ -252,9 +252,9 @@ function createDownVoteBtn(){
 								var downVoteElement = document.querySelector('.down_votes_counter[cllId="'+currentLinkItemId+'"]');
 
 								var currentDownVoteValue = parseInt(downVoteElement.textContent);
-								console.log(downVoteElement.textContent);
-								console.log(currentDownVoteValue);
-								console.log(typeof currentDownVoteValue);
+								//console.log(downVoteElement.textContent);
+								//console.log(currentDownVoteValue);
+								//console.log(typeof currentDownVoteValue);
 								currentDownVoteValue+=1;
 								downVoteElement.innerHTML = currentDownVoteValue;
 
@@ -264,16 +264,16 @@ function createDownVoteBtn(){
 
 								makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/cll-vote/v1/cll-link/'+objResponse[0].id, 'POST', newPostMetaData)
 									.then(function(request){
-										console.log(request.responseText);
+										//console.log(request.responseText);
 									})
 									.catch(function(error){
-										console.log(error);
+										//console.log(error);
 									});
 
 							}
 						})
 						.catch(function(error){
-							console.log(error);
+							//console.log(error);
 						});
 					}
 			})
@@ -307,20 +307,20 @@ function createNeutralVoteBtn(){
 		neutralVoteBtn.addEventListener('click', function(){
 			linkListTitleArray.forEach(function(linkListTitle){
 				var post_slug = linkListTitle.textContent.trim().replace(/\s/g, '-').toLowerCase();
-				console.log(post_slug);
+				//console.log(post_slug);
 				if(linkListTitle.getAttribute('cllId') === neutralVoteBtn.getAttribute('cllId')){
 
 					makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link?slug='+post_slug, 'GET')
 						.then(function(request){
 							var objResponse = JSON.parse(request.responseText);
 							var currentLinkItemId = neutralVoteBtn.getAttribute('cllId');
-							console.log(objResponse);
+							//console.log(objResponse);
 
 							var metaObj = objResponse[0].meta;
 							
 							try {
 								var voteRecordObj = JSON.parse(metaObj.voteRecord);
-								console.log(voteRecordObj[cllUserId]);
+								//console.log(voteRecordObj[cllUserId]);
 
 								//decrement appropriate vote
 								if(voteRecordObj[cllUserId] === "1"){
@@ -361,38 +361,38 @@ function createNeutralVoteBtn(){
 
 								makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/cll-vote/v1/cll-link/'+objResponse[0].id, 'POST', newPostMetaData)
 									.then(function(request){
-										console.log(request.responseText);
+										//console.log(request.responseText);
 									})
 									.catch(function(error){
-										console.log(error);
+										//console.log(error);
 									});
 							}
 							catch(error) {
 								if(voteRecordObj[cllUserId]  !== ""){ //if current user status is not empty
-									console.log("There is information on record, here's the information: ");
+									//console.log("There is information on record, here's the information: ");
 								} else {
-									console.log(error);
-									//console.log("Could not parse voteRecord");
-									//console.log("There is no information on record *assertion");
+									//console.log(error);
+									////console.log("Could not parse voteRecord");
+									////console.log("There is no information on record *assertion");
 									
-									//console.log(metaObj.voteRecord);
-									//console.log("Change voter status to 3");
+									////console.log(metaObj.voteRecord);
+									////console.log("Change voter status to 3");
 									metaObj.voteRecord = '{"'+cllUserId+'":'+'"3"}';
 
 									var newPostMetaData = JSON.stringify(metaObj);
 
 									makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/cll-vote/v1/cll-link/'+objResponse[0].id, 'POST', newPostMetaData)
 										.then(function(request){
-											//console.log(request.responseText);
+											////console.log(request.responseText);
 										})
 										.catch(function(error){
-											//console.log(error);
+											////console.log(error);
 										});
 								}
 							}
 						})
 						.catch(function(error){
-							//console.log(error);
+							////console.log(error);
 						});
 					}
 			})
@@ -428,7 +428,7 @@ function createUpVoteBtn(){
 		upVoteBtn.addEventListener('click', function(){
 			linkListTitleArray.forEach(function(linkListTitle){
 				var post_slug = linkListTitle.textContent.trim().replace(/\s/g, '-').toLowerCase();
-				//console.log(post_slug);
+				////console.log(post_slug);
 				if(linkListTitle.getAttribute('cllId') === upVoteBtn.getAttribute('cllId')){
 
 					makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link?slug='+post_slug, 'GET')
@@ -440,17 +440,17 @@ function createUpVoteBtn(){
 							
 							try {
 								var voteRecordObj = JSON.parse(metaObj.voteRecord);
-								//console.log(voteRecordObj[cllUserId]);
+								////console.log(voteRecordObj[cllUserId]);
 
 								if(voteRecordObj[cllUserId]  !== "") //if current user status is not empty
 								{
 									
-									console.log("There is information on record, here's the information: ");
-									console.log(metaObj.voteRecord);
+									//console.log("There is information on record, here's the information: ");
+									//console.log(metaObj.voteRecord);
 
 									var currentUserVoteStatus = parseInt(voteRecordObj[cllUserId]);
 									
-									//console.log(JSON.parse(metaObj.voteRecord))
+									////console.log(JSON.parse(metaObj.voteRecord))
 
 									if(currentUserVoteStatus === 1)
 									{
@@ -459,7 +459,7 @@ function createUpVoteBtn(){
 									}
 									else if(currentUserVoteStatus === 0)
 									{
-										console.log("Voter status was 0, incrementing up vote /removing downvote (visually too), changing status to 1");
+										//console.log("Voter status was 0, incrementing up vote /removing downvote (visually too), changing status to 1");
 										//Set voter status to 1
 										var voteRecordObj = JSON.parse(metaObj.voteRecord);
 										
@@ -492,15 +492,15 @@ function createUpVoteBtn(){
 
 										makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/cll-vote/v1/cll-link/'+objResponse[0].id, 'POST', newPostMetaData)
 											.then(function(request){
-												//console.log(request.responseText);
+												////console.log(request.responseText);
 											})
 											.catch(function(error){
-												//console.log(error);
+												////console.log(error);
 											});
 									}
 									else if(currentUserVoteStatus === 3)
 									{
-										console.log("Voter status was 3, incrementing up vote (visually too), changing status to 1");
+										//console.log("Voter status was 3, incrementing up vote (visually too), changing status to 1");
 										//Increment up_votes in metaObj
 										metaObj.up_votes+=1;
 										//visually increment up vote
@@ -522,10 +522,10 @@ function createUpVoteBtn(){
 
 										makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/cll-vote/v1/cll-link/'+objResponse[0].id, 'POST', newPostMetaData)
 											.then(function(request){
-												//console.log(request.responseText);
+												////console.log(request.responseText);
 											})
 											.catch(function(error){
-												//console.log(error);
+												////console.log(error);
 											});
 										
 									}
@@ -534,12 +534,12 @@ function createUpVoteBtn(){
 
 							}
 							catch(error) {
-								console.log(error);
-								console.log("Could not parse voteRecord");
-								console.log("There is no information on record *assertion");
+								//console.log(error);
+								//console.log("Could not parse voteRecord");
+								//console.log("There is no information on record *assertion");
 
 								metaObj.voteRecord = '{"'+cllUserId+'":'+'"1"}';
-								//console.log("add UpVote to post");
+								////console.log("add UpVote to post");
 								metaObj.up_votes+=1;
 								//visually increment upvote
 								var upVoteButton = document.querySelector('.up_vote_button[cllId="'+currentLinkItemId+'"]');
@@ -554,15 +554,15 @@ function createUpVoteBtn(){
 
 								makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/cll-vote/v1/cll-link/'+objResponse[0].id, 'POST', newPostMetaData)
 									.then(function(request){
-										//console.log(request.responseText);
+										////console.log(request.responseText);
 									})
 									.catch(function(error){
-										//console.log(error);
+										////console.log(error);
 									});
 							}
 						})
 						.catch(function(error){
-							console.log(error);
+							//console.log(error);
 						});
 					}
 			})
@@ -586,7 +586,7 @@ function createNewListRequestBtn(){
 		if (requestMsg != null || requestMsg != '')
 		{
 
-			console.log(requestMsg);
+			//console.log(requestMsg);
 			
 			var NewPendingListItemData = {
 				"list_category": requestMsg,
@@ -598,16 +598,16 @@ function createNewListRequestBtn(){
 			makeRequest(cllGlobals.currentProtocalDomain+'/wp-content/plugins/curation-link-library/cll-core/common-user-list-request-handler.php', "POST", NewPendingListItemData)
 				.then(function(request){
 
-					console.log(request.responseText);
+					//console.log(request.responseText);
 				})
 				.catch(function(error){
 
-					console.log(error);
+					//console.log(error);
 				});
 		}
 		else
 		{
-			console.log("User Canceled");
+			//console.log("User Canceled");
 		}
 	});
 
@@ -623,7 +623,7 @@ var makeRequest = function (url, method, sendData, refresh) {
 	var refreshInput = refresh || '';
 
 
-	console.log("request made");
+	//console.log("request made");
 	// Create the XHR request
 	var request = new XMLHttpRequest();
 
@@ -644,7 +644,7 @@ var makeRequest = function (url, method, sendData, refresh) {
 				if(typeof sendData !== 'undefined')
 				{
 					//document.location.reload(true);
-					console.log('sendData was present!');
+					//console.log('sendData was present!');
 				}
 
 				if(refreshInput === false){
@@ -672,10 +672,10 @@ var makeRequest = function (url, method, sendData, refresh) {
 		// Send the request
 		if(typeof sendData === 'undefined'){
 			request.send();	
-			//console.log("Data is undefined! No data was sent");
+			////console.log("Data is undefined! No data was sent");
 		}
 		else{
-			console.log(sendData);
+			//console.log(sendData);
 			request.send(sendData);
 		}
 
@@ -710,7 +710,7 @@ function handleSearchInput(){
 					loadingElement.setAttribute('id','cll-loading');
 					loadingElement.innerHTML = 'LOADING';
 					if(loadingElementCollection.length === 0){
-						//console.log("Adding Loading Element");
+						////console.log("Adding Loading Element");
 						cllSuggestions.appendChild(loadingElement);
 					}
 
@@ -724,7 +724,7 @@ function handleSearchInput(){
 				//If the input is nothing then clear search results
 				if(cllSearchFormInput.value === ' ' || cllSearchFormInput.value === '')
 				{
-					//console.log("No value was entered");
+					////console.log("No value was entered");
 					cllSuggestions.innerHTML = '';
 
 
@@ -744,8 +744,8 @@ function handleSearchInput(){
 						searchResultsObj.forEach(function(searchResult){
 							if(cllSuggestions.childElementCount < 5)
 							{
-								console.log("Search result below!");
-								console.log(searchResult);
+								//console.log("Search result below!");
+								//console.log(searchResult);
 								var searchResultElement = document.createElement("div");
 								searchResultElement.setAttribute('class','search-result-element');
 
@@ -766,7 +766,7 @@ function handleSearchInput(){
 
 					})
 					.catch(function(error){
-						console.log(error);
+						//console.log(error);
 					});
 				}	
 			}, 1000);
@@ -780,12 +780,12 @@ function isUrl(str)
   regexp =  /^(?:(?:https?|ftp):\/\/)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:\/\S*)?$/;
         if (regexp.test(str))
         {
-        console.log('returned true');
+        //console.log('returned true');
           return true;
         }
         else
         {
-        console.log('returned false')
+        //console.log('returned false')
           return false;
         }
 }
@@ -797,7 +797,7 @@ function cllCreateForm()
 	add_to_list_btn_array.forEach(function(add_to_list_btn)
 	{
 		//check if Class is set if not set then set it
-		//console.log(add_to_list_btn.className);
+		////console.log(add_to_list_btn.className);
 
 		var cllId = document.createAttribute("cllId");       // Create a "class" attribute
 		add_to_list_btn.setAttributeNode(cllId);
@@ -810,7 +810,7 @@ function cllCreateForm()
 		{//if button has not been clicked, create form
 			if(cllGlobals.isAddToListBtnClicked === false)
 			{
-				console.log("form created");
+				//console.log("form created");
 				var f = document.createElement("form");
 				f.setAttribute('id','addToListForm');
 
@@ -870,7 +870,7 @@ function cllAddOnClickToCancelBtn()
 			});
 		}
 		else{
-			console.log('cancelBtn is not defined');
+			//console.log('cancelBtn is not defined');
 		}
 	});
 }
@@ -889,7 +889,7 @@ function fadeOut(element) {
 }
 
 function fadeIn($element) {
-	console.log(element);
+	//console.log(element);
 	/*
     var op = 0.1;  // initial opacity
     element.style.display = 'block';
@@ -913,7 +913,7 @@ function cllAddOnClickToSubmitBtn(currentAddToListBtn){
 		var submitBtn = document.querySelector('.submitBtn');
 		if (typeof submitBtn !== 'undefined')
 		{
-			console.log("Submit Button Existance Verified");
+			//console.log("Submit Button Existance Verified");
 			submitBtn.addEventListener("click", function()
 			{
 				if(document.querySelector('[name="newListItemTitle"].add_to_list_input').value === ''){
@@ -941,9 +941,9 @@ function cllAddOnClickToSubmitBtn(currentAddToListBtn){
 							if(this.readyState == 4 && this.status == 200)
 							{
 								//Nothing below gets called :O ready state is NEVER 4!!!
-								console.log('Success - Hello');
-								console.log(createLinkItemQuery.responseText);
-								//console.log(commonUserId);
+								//console.log('Success - Hello');
+								//console.log(createLinkItemQuery.responseText);
+								////console.log(commonUserId);
 							}
 								//if request fails...?
 						
@@ -982,7 +982,7 @@ function cllAddOnClickToSubmitBtn(currentAddToListBtn){
 }
 
 if(document.querySelector(".cll_search_form_input")){
-	console.log("Search bar exists");
+	//console.log("Search bar exists");
 	handleSearchInput();
 }
 else
