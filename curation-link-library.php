@@ -306,7 +306,7 @@ function cll_list_shortcode($atts){
 	}
 
 	$user = wp_get_current_user();
-	$allowed_roles = array('library manager', 'administrator');
+	$allowed_roles = array('library_manager', 'administrator');
 	//checkUserPermissions if admin, or if Library Manager then execute following, else load "commonUserJS.js"
 	if(is_user_logged_in() === true){
 		if( array_intersect($allowed_roles, $user->roles ) ) 
@@ -414,7 +414,7 @@ function cll_main_plugin_page(){
 	<?php
 }
 
-function cll_link_manager_page()
+function cll_pending_manager_page()
 {
 	require_once (dirname(__FILE__).'/templates/cll-link-manager-page.php');
 	//How do I load CSS on this specific menu?
@@ -428,7 +428,7 @@ function cll_link_manager_page()
 add_action( 'admin_enqueue_scripts', 'load_link_manager_css_and_js' );
 function load_link_manager_css_and_js($hook)
 {
-   if($hook != 'crowd-curation-link-library_page_cll_link_manager_page')
+   if($hook != 'crowd-curation-link-library_page_cll_pending_manager_page')
    {
    		return;
    }
@@ -446,12 +446,12 @@ function load_link_manager_css_and_js($hook)
 add_action( 'admin_menu', 'cll_create_menu' );
 function cll_create_menu()
 { 
-	$cllLinkManagerMenu = add_menu_page( 'Crowd Curation Link Library Plugin Page', 'Crowd Curation Link Library', 'manage_options', 'cll_main_menu', 'cll_main_plugin_page','','3');
+	$cllLinkManagerMenu = add_menu_page( 'Crowd Curation Link Library Plugin Page', 'Crowd Curation Link Library', 'edit_others_posts', 'cll_main_menu', 'cll_main_plugin_page','','3');
   
   	//Params = $parent_slug, $page_title, $menu_title, $capability, $menu_slug, $function = ''
-	$cllLinkManagerMainSubMenu = add_submenu_page( 'cll_main_menu', 'Link Manager Page',
-	'Link Manager', 'manage_options', 'cll_link_manager_page',
-	'cll_link_manager_page' );
+	$cllLinkManagerMainSubMenu = add_submenu_page( 'cll_main_menu', 'Pending Link/List Manager Page',
+	'Pending Link/List Manager', 'edit_others_posts', 'cll_pending_manager_page',
+	'cll_pending_manager_page' );
 
 }
 
@@ -472,21 +472,48 @@ publish_posts
 function add_library_manager_role() {
 	add_role( 'library_manager', 'Library Manager', array( 'read' => true,
 														   'publish_pages' => true,
-														   'manage_categories' => true,
-														   'delete_pages' => true,
-														   'delete_others_pages' => true,
-														   'delete_published_pages'=> true,
-														   'edit_posts' => true,
 														   'publish_posts' => true,
+
+														   'manage_categories' => true,
+
 														   'delete_posts' => true,
+														   'delete_pages' => true,
 														   'delete_others_posts' => true,
+														   'delete_others_pages' => true,
+														   'delete_published_posts'=> true,
+														   'delete_published_pages' => true,
+
+														   'edit_plugins' => true,
+														   'edit_posts' => true,
+														   'edit_posts' => true,
+														   'edit_others_posts' => true,
+														   'edit_others_pages' => true,
 														   'edit_published_posts' => true,
-														   'delete_published_posts' => true,
+														   'edit_published_pages' => true,
+
 														   
 														   ) );
 }
 
+add_action( 'admin_init', 'cll_remove_menu_pages' );
+function cll_remove_menu_pages() {
+
+	//if the user is library_manager then remove these items
+	$user = wp_get_current_user();
+	$allowed_roles = array('library_manager');
+	if( array_intersect($allowed_roles, $user->roles ) ) 
+	{
+		remove_menu_page( 'index.php' );
+		remove_menu_page( 'edit-comments.php' );
+		remove_menu_page( 'edit.php' );
+		remove_menu_page( 'profile.php' );
+		remove_menu_page( 'tools.php' );
+	}
+}
+
 function cll_activate() {
+
+
 
 	add_library_manager_role();
 
