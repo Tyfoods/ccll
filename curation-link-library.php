@@ -373,7 +373,7 @@ function cll_list_shortcode($atts){
 					//'cllUserId' => get_current_user_id()
 				));
 
-				wp_localize_script('cll-mainjs', 'cllUserId', get_current_user_id());
+				wp_localize_script('cll-mainjs', 'cllUserId', array(get_current_user_id()));
 
 				/*
 				wp_localize_script( 'cll-mainjs', 'cllAjaxUrl', array(
@@ -388,8 +388,8 @@ function cll_list_shortcode($atts){
 					ob_start(); 
 					include $style_template;
 					$output = ob_get_clean();
-					wp_localize_script('cll-mainjs','current_page_id', $current_page_id);
-					wp_localize_script('cll-commonUserJs','current_page_id', $current_page_id);
+					wp_localize_script('cll-mainjs','current_page_id', array($current_page_id));
+					wp_localize_script('cll-commonUserJs','current_page_id', array($current_page_id));
 					return $output;
 				}
 				return;
