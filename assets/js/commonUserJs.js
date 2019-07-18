@@ -151,7 +151,37 @@ function createDownVoteBtn(){
 									var currentUserVoteStatus = parseInt(voteRecordObj[cllUserId]);
 									////console.log(JSON.parse(metaObj.voteRecord))
 
-									if(currentUserVoteStatus === 0)
+									if(isNaN(currentUserVoteStatus)){
+										////console.log("Change voter status to 0");
+										metaObj.voteRecord = '{"'+cllUserId+'":'+'"0"}';
+										////console.log("add downvote to post");
+										metaObj.down_votes+=1;
+
+										//visually down vote
+
+										var downVoteElement = document.querySelector('.down_votes_counter[cllId="'+currentLinkItemId+'"]');
+
+										var currentDownVoteValue = parseInt(downVoteElement.textContent);
+										//console.log(downVoteElement.textContent);
+										//console.log(currentDownVoteValue);
+										//console.log(typeof currentDownVoteValue);
+										currentDownVoteValue+=1;
+										downVoteElement.innerHTML = currentDownVoteValue;
+
+
+
+										var newPostMetaData = JSON.stringify(metaObj);
+
+										makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/cll-vote/v1/cll-link/'+objResponse[0].id, 'POST', newPostMetaData)
+											.then(function(request){
+												//console.log(request.responseText);
+											})
+											.catch(function(error){
+												//console.log(error);
+											});
+
+									}
+									else if(currentUserVoteStatus === 0)
 									{
 										alert("You've already down voted this post!");
 										return;
@@ -322,7 +352,20 @@ function createNeutralVoteBtn(){
 								//console.log(voteRecordObj[cllUserId]);
 
 								//decrement appropriate vote
-								if(voteRecordObj[cllUserId] === "1"){
+								if (isNaN(voteRecordObj[cllUserId])){
+									metaObj.voteRecord = '{"'+cllUserId+'":'+'"3"}';
+
+									var newPostMetaData = JSON.stringify(metaObj);
+
+									makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/cll-vote/v1/cll-link/'+objResponse[0].id, 'POST', newPostMetaData)
+										.then(function(request){
+											////console.log(request.responseText);
+										})
+										.catch(function(error){
+											////console.log(error);
+										});
+								}
+								else if(voteRecordObj[cllUserId] === "1"){
 									metaObj.up_votes-=1;
 									//visually remove users up vote
 									var upVoteElement = document.querySelector('.up_votes_counter[cllId="'+currentLinkItemId+'"]');
@@ -367,9 +410,8 @@ function createNeutralVoteBtn(){
 									});
 							}
 							catch(error) {
-								if(voteRecordObj[cllUserId]  !== ""){ //if current user status is not empty
+									 //if current user status is not empty
 									//console.log("There is information on record, here's the information: ");
-								} else {
 									//console.log(error);
 									////console.log("Could not parse voteRecord");
 									////console.log("There is no information on record *assertion");
@@ -387,7 +429,6 @@ function createNeutralVoteBtn(){
 										.catch(function(error){
 											////console.log(error);
 										});
-								}
 							}
 						})
 						.catch(function(error){
@@ -439,26 +480,54 @@ function createUpVoteBtn(){
 							
 							try {
 								var voteRecordObj = JSON.parse(metaObj.voteRecord);
-								////console.log(voteRecordObj[cllUserId]);
+								console.log(voteRecordObj[cllUserId]);
 
 								if(voteRecordObj[cllUserId]  !== "") //if current user status is not empty
 								{
 									
-									//console.log("There is information on record, here's the information: ");
-									//console.log(metaObj.voteRecord);
+									console.log("There is information on record, here's the information: ");
+									console.log(metaObj.voteRecord);
+
 
 									var currentUserVoteStatus = parseInt(voteRecordObj[cllUserId]);
 									
-									////console.log(JSON.parse(metaObj.voteRecord))
+									console.log(JSON.parse(metaObj.voteRecord))
 
-									if(currentUserVoteStatus === 1)
+									console.log(currentUserVoteStatus)
+
+									if(isNaN(currentUserVoteStatus)){
+										//If isNan returns true, then user info doesn't exist, time to create some.
+										metaObj.voteRecord = '{"'+cllUserId+'":'+'"1"}';
+										////console.log("add UpVote to post");
+										metaObj.up_votes+=1;
+										//visually increment upvote
+										var upVoteButton = document.querySelector('.up_vote_button[cllId="'+currentLinkItemId+'"]');
+										upVoteButton.style.backgroundColor = '#16C60C';
+		
+										var upVoteElement = document.querySelector('.up_votes_counter[cllId="'+currentLinkItemId+'"]');
+										var currentUpVoteValue = parseInt(upVoteElement.textContent);
+										currentUpVoteValue+=1;
+										upVoteElement.innerHTML = currentUpVoteValue;
+		
+										var newPostMetaData = JSON.stringify(metaObj);
+		
+										makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/cll-vote/v1/cll-link/'+objResponse[0].id, 'POST', newPostMetaData)
+											.then(function(request){
+												console.log(request.responseText);
+											})
+											.catch(function(error){
+												console.log(error);
+											});
+										return;
+									}
+									else if(currentUserVoteStatus === 1)
 									{
 										alert("You've already up voted this post!");
 										return;
 									}
 									else if(currentUserVoteStatus === 0)
 									{
-										//console.log("Voter status was 0, incrementing up vote /removing downvote (visually too), changing status to 1");
+										console.log("Voter status was 0, incrementing up vote /removing downvote (visually too), changing status to 1");
 										//Set voter status to 1
 										var voteRecordObj = JSON.parse(metaObj.voteRecord);
 										
@@ -491,15 +560,16 @@ function createUpVoteBtn(){
 
 										makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/cll-vote/v1/cll-link/'+objResponse[0].id, 'POST', newPostMetaData)
 											.then(function(request){
-												////console.log(request.responseText);
+												console.log(request.responseText);
 											})
 											.catch(function(error){
-												////console.log(error);
+												console.log(error);
 											});
+										return;
 									}
 									else if(currentUserVoteStatus === 3)
 									{
-										//console.log("Voter status was 3, incrementing up vote (visually too), changing status to 1");
+										console.log("Voter status was 3, incrementing up vote (visually too), changing status to 1");
 										//Increment up_votes in metaObj
 										metaObj.up_votes+=1;
 										//visually increment up vote
@@ -521,11 +591,12 @@ function createUpVoteBtn(){
 
 										makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/cll-vote/v1/cll-link/'+objResponse[0].id, 'POST', newPostMetaData)
 											.then(function(request){
-												////console.log(request.responseText);
+												console.log(request.responseText);
 											})
 											.catch(function(error){
-												////console.log(error);
+												console.log(error);
 											});
+										return;
 										
 									}
 
@@ -533,9 +604,9 @@ function createUpVoteBtn(){
 
 							}
 							catch(error) {
-								//console.log(error);
-								//console.log("Could not parse voteRecord");
-								//console.log("There is no information on record *assertion");
+								console.log(error);
+								console.log("Could not parse voteRecord");
+								console.log("There is no information on record *assertion");
 
 								metaObj.voteRecord = '{"'+cllUserId+'":'+'"1"}';
 								////console.log("add UpVote to post");
@@ -553,15 +624,16 @@ function createUpVoteBtn(){
 
 								makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/cll-vote/v1/cll-link/'+objResponse[0].id, 'POST', newPostMetaData)
 									.then(function(request){
-										////console.log(request.responseText);
+										console.log(request.responseText);
 									})
 									.catch(function(error){
-										////console.log(error);
+										console.log(error);
 									});
+								return;
 							}
 						})
 						.catch(function(error){
-							//console.log(error);
+							console.log(error);
 						});
 					}
 			})
