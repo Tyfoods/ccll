@@ -1243,7 +1243,9 @@ function addClickToSettingsCancelBtn()
 				dropDownBox.parentNode.removeChild(dropDownBox);
 				settingsSubmitBtn.parentNode.removeChild(settingsSubmitBtn);
 				cancelBtn.parentNode.removeChild(cancelBtn);
-				newCategoryInput.parentNode.removeChild(newCategoryInput);
+				if(newCategoryInput){
+					newCategoryInput.parentNode.removeChild(newCategoryInput);
+				}
 				
 
 				event.stopPropagation(); //prevent parent element from being clicked
@@ -1447,6 +1449,8 @@ function updateCllListRequest(cllRequestData)
 	//console.log(selectedCategory);
 	//console.log(currentCllId);
 
+	
+
 	makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/pages/'+current_page_id, "POST")
 		.then(function (request) {
 
@@ -1530,13 +1534,17 @@ function createNewCategoryRequest(newCategoryValue)
 	}
 
 	//console.log("Submit Button was clicked, now I'll post");
-	makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/categories/', 'POST', JSON.stringify(NewCategoryData))
+	
+	
+
+
+	makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/cll-link-category/v1/cll-link/', 'POST', JSON.stringify(NewCategoryData), false)
 		.then(function(){
-			//console.log("Request for new category has been made successfully");
+			console.log("Request for new category has been made successfully");
 		})
 		.catch(function(error){
-			//console.log("Failed to make the new category request");
-			//console.log(error);
+			console.log("Failed to make the new category request");
+			console.log(error);
 		});
 
 }
@@ -1544,7 +1552,6 @@ function createNewCategoryRequest(newCategoryValue)
 //Function for creating on-click functionality and information to UPDATE page
 function addClickToSettingsSubmitBtn(cllSettingsForm)
 {
-
 	var settingsSubmitBtnArray = document.querySelectorAll('.settingsSubmitBtn');
 	settingsSubmitBtnArray.forEach(function(settingsSubmitBtn)
 	{
@@ -1557,6 +1564,7 @@ function addClickToSettingsSubmitBtn(cllSettingsForm)
 
 			settingsSubmitBtn.addEventListener("click", function()
 			{
+				event.preventDefault();
 				var x = document.querySelector(".listCategorySelector").selectedIndex;
 				var selectedCategory = document.getElementsByTagName("option")[x].value;
 

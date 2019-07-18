@@ -26,6 +26,9 @@ function cll_root(){
 add_shortcode( 'cll_root', 'cll_root');
 */
 
+
+
+
 add_action('rest_api_init', function () {
 	register_rest_route( 'cll-submitted_by/v1', '/cll-link/(?P<id>\d+)',array(
 				  'methods'  => WP_REST_Server::READABLE,
@@ -74,6 +77,21 @@ function vote_against_link($data){
 
 }
 
+/*
+add_action('rest_api_init', function () {
+	register_rest_route( 'cll-link-category/v1', '/cll-link/(?P<id>\d+)',array(
+				  'methods'  => WP_REST_Server::READABLE,
+				  'callback' => 'create_new_link_category'
+		));
+  });
+  */
+
+/*
+function create_new_link_category($data){
+	return $data['id'];
+}
+*/
+
 
 function cll_register_link_post_type() {
 		$labels = array(
@@ -97,7 +115,7 @@ function cll_register_link_post_type() {
   					 'rest_controller_class' => 'WP_REST_Posts_Controller',
 					 'has_archive' => true,
 					 'labels' => $labels,
-					 'taxonomies' => array( 'category' ),
+					 'taxonomies' => array( 'link_category' ),
 					 'rewrite' => array( 'slug' => 'link' ), 
 					 'supports' => array( 'title', 'editor', 'author', 'thumbnail', 'comments', 'custom-fields')
 					 );
@@ -169,9 +187,9 @@ function shortcode_master_category_input_handler($shortcode_master_input)
 
 	$cll_link_existing_categories = get_terms(
 	    array(
-	        //'taxonomy' => 'custom_tax',
+	        'taxonomy' => 'link_category',
 			"hide_empty" => 0,
-	        'object_ids' => $cll_links
+	        'object_ids' => $cll_link
 	    )
 	);
 
@@ -410,7 +428,7 @@ function cll_list_shortcode($atts){
 add_shortcode( 'cll_list', 'cll_list_shortcode');
 add_action( 'wp_enqueue_scripts', 'cll_enqueue_styles'); //LOADS CSS
 add_action( 'init', 'cll_register_link_post_type');
-add_action('init', 'cll_register_link_list_post_type');
+
 
 
 
@@ -546,9 +564,52 @@ function cll_remove_menu_pages() {
 	}
 }
 
+add_action( 'init', 'create_link_taxonomies', 0 );
+
+function create_link_taxonomies() {
+	// Add new taxonomy, make it hierarchical (like categories)
+	$labels = array(
+		'name'              => _x( 'Link Category', 'taxonomy general name', 'textdomain' ),
+		'singular_name'     => _x( 'Link Category', 'taxonomy singular name', 'textdomain' ),
+		'search_items'      => __( 'Search Link Categories', 'textdomain' ),
+		'all_items'         => __( 'All Link Categories', 'textdomain' ),
+		'parent_item'       => __( 'Parent Category', 'textdomain' ),
+		'parent_item_colon' => __( 'Parent Category:', 'textdomain' ),
+		'edit_item'         => __( 'Edit Category', 'textdomain' ),
+		'update_item'       => __( 'Update Category', 'textdomain' ),
+		'add_new_item'      => __( 'Add New Category', 'textdomain' ),
+		'new_item_name'     => __( 'New Category Name', 'textdomain' ),
+		'menu_name'         => __( 'Link Category', 'textdomain' ),
+	);
+
+	$args = array(
+		'hierarchical'      => true,
+		'labels'            => $labels,
+		'show_ui'           => true,
+		'show_in_rest'      => true,
+	    //'rest_base'         => 'link_category',
+		'show_admin_column' => true,
+		'query_var'         => true,
+		'rewrite'           => array( 'slug' => 'link_category' ),
+	);
+
+	register_taxonomy( 'link_category', array( 'cll_link' ), $args );
+}
+
+function cll_create_default_category(){
+	$catarr = array(
+		'cat_ID' => 0,
+		'cat_name' => "uncategorized link",
+		'category_description' => "This is the default category for uncategorized links",
+		'category_nicename' => "uncategorized link",
+		'category_parent' => "",
+		'taxonomy' => 'link_category' );
+	wp_insert_category( $catarr );
+}
+
 function cll_activate() {
 
-
+	cll_create_default_category();
 
 	add_library_manager_role();
 

@@ -174,7 +174,6 @@ function createDownVoteBtn(){
 										metaObj.up_votes-=1;
 
 										var newPostMetaData = JSON.stringify(metaObj);
-
 										makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/cll-vote/v1/cll-link/'+objResponse[0].id, 'POST', newPostMetaData)
 											.then(function(request){
 												//console.log(request.responseText);

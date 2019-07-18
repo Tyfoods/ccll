@@ -35,6 +35,16 @@ input[name="newCategoryRequestElement"] {
   margin-bottom: 5% !important;
 }
 
+
+select#linkTypeSelecter {
+  background-color: #fff;
+}
+
+select.listCategorySelector {
+  width: 100%;
+  background-color: #fff;
+}
+
 .link-list-style-1 li {
  padding: 1.5%;
  border-color: #000;
@@ -164,6 +174,7 @@ button.adminDeleteBtn{
   background-size: 1.5em;
   background-repeat: no-repeat;
   background-position: top right !important;
+  border:none;
 }
 
 
@@ -172,6 +183,7 @@ button.adminDeleteBtn{
   position: relative;
   background-color: #F42E2B;
   margin-left: 14%;
+  border:none;
 
   background-color:unset;
   background-image: url("../images/cancelBtn.png") !important;
@@ -244,6 +256,18 @@ button.submitBtn {
     box-shadow: 1.5px 1px;
     position: relative;
     border-radius: 10px;
+}
+
+button.settingsSubmitBtn {
+  padding: 4%;
+  border-color: #000;
+  background: #fff;
+  color: #000;
+  border-style: outset;
+  border-width: 1px;
+  box-shadow: 1.5px 1px;
+  position: relative;
+  border-radius: 10px;
 }
 
 #checkmark_symbol{
