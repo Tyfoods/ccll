@@ -27,7 +27,7 @@
 		<?php $list_item_incrementer = 0; ?>
 		<?php if ( $link_list_query->have_posts() ) : while ( $link_list_query->have_posts() ) : $link_list_query->the_post(); ?>
 
-		<li class="link-list-item"> <a class = "link-list-title" href="<?php echo get_post_meta(get_the_id(), URL)[0]; ?>"> <?php the_title(); ?> </a></li>
+		<li class="link-list-item"> <a class = "link-list-title" href="<?php echo get_post_meta(get_the_id(), 'URL')[0]; ?>"> <?php the_title(); ?> </a></li>
 		<?php $list_item_incrementer+=1; ?>
 
 
