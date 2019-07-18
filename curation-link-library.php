@@ -77,20 +77,20 @@ function vote_against_link($data){
 
 }
 
-/*
+
 add_action('rest_api_init', function () {
 	register_rest_route( 'cll-link-category/v1', '/cll-link/(?P<id>\d+)',array(
 				  'methods'  => WP_REST_Server::READABLE,
 				  'callback' => 'create_new_link_category'
 		));
   });
-  */
+  
 
-/*
+
 function create_new_link_category($data){
 	return $data['id'];
 }
-*/
+
 
 
 function cll_register_link_post_type() {
@@ -184,12 +184,12 @@ function shortcode_master_category_input_handler($shortcode_master_input)
 	        )
 	    );
 
-
+	
 	$cll_link_existing_categories = get_terms(
 	    array(
 	        'taxonomy' => 'link_category',
 			"hide_empty" => 0,
-	        'object_ids' => $cll_link
+	        //'object_ids' => $cll_link
 	    )
 	);
 
@@ -272,24 +272,39 @@ function cll_list_style_processor($style, $final_category_data)
 	if($my_array_response === true )
 	{
 		//This allows us to assosciate localized data with specific shortcodes.
+		$GLOBALS['cll_include_count'] = 0;
 		$GLOBALS['cll_include_count'] +=1;
 
 		wp_localize_script('cll-mainjs','cll_category_ids'.'_'.$GLOBALS['cll_include_count'], $final_category_id);
-		wp_localize_script('cll-mainjs','cll_category_names'.'_'.$GLOBALS['cll_include_count'], $final_category);
+
+		if(!empty($final_category)){
+			wp_localize_script('cll-mainjs','cll_category_names'.'_'.$GLOBALS['cll_include_count'], $final_category);
+		}
 
 		wp_localize_script('cll-commonUserJs','cll_category_ids'.'_'.$GLOBALS['cll_include_count'], $final_category_id);
-		wp_localize_script('cll-commonUserJs','cll_category_names'.'_'.$GLOBALS['cll_include_count'], $final_category);
+
+		if(!empty($final_category)){
+			wp_localize_script('cll-commonUserJs','cll_category_names'.'_'.$GLOBALS['cll_include_count'], $final_category);
+		}
 
 		return $cll_php_template_path;
 
 	}
 	else{
 		wp_localize_script('cll-mainjs','cll_category_ids_0', $final_category_id);
-		wp_localize_script('cll-mainjs','cll_category_names_0', $final_category);
+
+		if(!empty($final_category)){
+			wp_localize_script('cll-mainjs','cll_category_names_0', $final_category);
+		}
+
 		wp_localize_script('cll-mainjs','existing_category_names_array', $processed_existing_category_name_array);
 
 		wp_localize_script('cll-commonUserJs','cll_category_ids_0', $final_category_id);
-		wp_localize_script('cll-commonUserJs','cll_category_names_0', $final_category);
+
+		if(!empty($final_category)){
+			wp_localize_script('cll-commonUserJs','cll_category_names_0', $final_category);
+		}
+
 		wp_localize_script('cll-commonUserJs','existing_category_names_array', $processed_existing_category_name_array);
 
 		return $cll_php_template_path;
