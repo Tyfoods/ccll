@@ -90,7 +90,7 @@ function displayVotesPerItem(){
 							linkListItem.appendChild(submittedByElement);
 						}
 						catch(error){
-							//console.log(error);
+							console.log(error);
 						}
 
 					}
@@ -178,7 +178,7 @@ function createDownVoteBtn(){
 											//console.log(request.responseText);
 										})
 										.catch(function(error){
-											//console.log(error);
+											console.log(error);
 										});
 									return;
 								}
@@ -237,7 +237,7 @@ function createDownVoteBtn(){
 
 											})
 											.catch(function(error){
-												//console.log(error);
+												console.log(error);
 											});
 									}
 									else if(currentUserVoteStatus === 3)
@@ -271,7 +271,7 @@ function createDownVoteBtn(){
 
 											})
 											.catch(function(error){
-												//console.log(error);
+												console.log(error);
 											});
 			
 
@@ -284,7 +284,7 @@ function createDownVoteBtn(){
 
 							}
 							catch(error) {
-								//console.log(error);
+								console.log(error);
 								//console.log("Could not parse voteRecord");
 								//console.log("There is no information on record *assertion");
 								
@@ -314,13 +314,13 @@ function createDownVoteBtn(){
 										//console.log(request.responseText);
 									})
 									.catch(function(error){
-										//console.log(error);
+										console.log(error);
 									});
 								return;
 							}
 						})
 						.catch(function(error){
-							//console.log(error);
+							console.log(error);
 						});
 					}
 			})
@@ -389,7 +389,7 @@ function createNeutralVoteBtn(){
 											//console.log(request.responseText);
 										})
 										.catch(function(error){
-											//console.log(error);
+											console.log(error);
 										});
 									return;
 								}
@@ -437,7 +437,7 @@ function createNeutralVoteBtn(){
 										//console.log(request.responseText);
 									})
 									.catch(function(error){
-										//console.log(error);
+										console.log(error);
 									});
 							}
 							catch(error) {
@@ -459,13 +459,13 @@ function createNeutralVoteBtn(){
 											//console.log(request.responseText);
 										})
 										.catch(function(error){
-											//console.log(error);
+											console.log(error);
 										});
 									return;
 							}
 						})
 						.catch(function(error){
-							//console.log(error);
+							console.log(error);
 						});
 					}
 			})
@@ -551,7 +551,7 @@ function createUpVoteBtn(){
 												//console.log(request.responseText);
 											})
 											.catch(function(error){
-												//console.log(error);
+												console.log(error);
 											});
 										return;
 									}
@@ -601,7 +601,7 @@ function createUpVoteBtn(){
 												//console.log(request.responseText);
 											})
 											.catch(function(error){
-												//console.log(error);
+												console.log(error);
 											});
 									}
 									else if(currentUserVoteStatus === 3)
@@ -634,7 +634,7 @@ function createUpVoteBtn(){
 												//console.log(request.responseText);
 											})
 											.catch(function(error){
-												//console.log(error);
+												console.log(error);
 											});
 										
 									}
@@ -679,7 +679,7 @@ function createUpVoteBtn(){
 							}
 						})
 						.catch(function(error){
-							//console.log(error);
+							console.log(error);
 						});
 					}
 			})
@@ -830,12 +830,33 @@ function createNewListBtn(){
 	newListBtn.setAttribute("class", "newListBtn");
 	newListBtn.innerHTML = "Add New List +";
 
+	/*
+	// Debugging script
+	var testElement = document.createElement('button');
+	testElement.setAttribute('type', 'button');
+	
+	testElement.addEventListener('click', function(event){
+		event.preventDefault();
+		//working one
+		makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/cll-link-category/v1/cll-link/'+"Flower Sticks", 'POST')
+			.then(function(request){
+				console.log(request.responseText);
+
+			});
+	
+		
+	});
+	cll_link_list.parentElement.insertBefore(testElement, cll_link_list.parentElement.firstChild);
+	*/
+
 	
 
 	var cll_link_list = document.querySelector('.cll_link_list');
 	//entryContent.parentNode.insertBefore(newListBtn, entryContent);
 	cll_link_list.parentElement.insertBefore(newListBtn, cll_link_list.parentElement.firstChild);
 	//entryContent.appendChild(newListBtn);
+
+
 
 	newListBtn.addEventListener("click", function(){
 		if (confirm("Are you sure you would like to add a new list?")) {
@@ -858,7 +879,7 @@ function createNewListBtn(){
 						});
 				})
 				.catch(function(error){
-					//console.log(error);
+					console.log(error);
 					//console.log("Unable to get page with given ID");
 				});
 
@@ -973,7 +994,7 @@ function handleSearchInput(){
 
 					})
 					.catch(function(error){
-						//console.log(error);
+						console.log(error);
 					});
 				}	
 			}, 1000);
@@ -1052,13 +1073,13 @@ function createAdminRemoveBtn(){
 									})
 									.catch(function(error){
 										//console.log("Failed to delete page");
-										//console.log(error);
+										console.log(error);
 									});
 							}
 						})
 						.catch(function(error){
 							//console.log("Unable to get page information about list item");
-							//console.log(error);
+							console.log(error);
 						});
 
 						//Delete post if it exists
@@ -1083,13 +1104,13 @@ function createAdminRemoveBtn(){
 										})
 										.catch(function(error){
 											//console.log("Failed to delete post");
-											//console.log(error);
+											console.log(error);
 										});
 								}
 							})
 							.catch(function(error){
 								//console.log("unable to get post information about list item");
-								//console.log(error);
+								console.log(error);
 							});
 							allListItemsArray.forEach(function(listItemToRemove){
 								if(listItemToRemove.getAttribute('cllId') === adminDeleteBtn.getAttribute('cllId'))
@@ -1444,7 +1465,7 @@ function throughLinkRequest(currentAddToListBtn)
 				"slug": "/"+document.querySelector('[name="newListItemTitle"].add_to_list_input').value.replace(/ /g,'-').toLowerCase(),
 				"meta" : {"URL" : cllGlobals.currentProtocalDomain+'/'+document.querySelector('[name="newListItemTitle"].add_to_list_input').value.replace(/ /g, '-').replace(/%20/g,'-'), "link_type" : "internal link", "submitted_by": username },
 				"status": "publish",
-				"categories": [window[multiListPageCategoryIds]]
+				"link_category": [window[multiListPageCategoryIds]]
 			}
 		
 				//create new link post type
@@ -1455,7 +1476,7 @@ function throughLinkRequest(currentAddToListBtn)
 					});
 		})
 		.catch(function(error){
-			//console.log(error);
+			console.log(error);
 		});
 
 
@@ -1491,20 +1512,21 @@ function endLinkRequest(currentAddToListBtn)
 				"slug": "/"+document.querySelector('[name="newListItemTitle"].add_to_list_input').value.replace(/ /g,'-').toLowerCase(),
 				"meta" : {"URL" : document.querySelector('[name="newListItemUrl"].add_to_list_input').value.replace(/ /g, '-').replace(/%20/g,'-'), "link_type" : "external link", "submitted_by": username },
 				"status": "publish",
-				"categories": [window[multiListPageCategoryIds]]
+				"link_category": [window[multiListPageCategoryIds]]
 			}
 
 			//console.log(NewLinkItemData);
 		
 				//create new link post type
 				makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link', 'POST', JSON.stringify(NewLinkItemData), true)
-					.then(function(){
+					.then(function(request){
+						//console.log(request.responseText);
 						//console.log("Success, new post created");
 						//document.location.reload(true);
 					});
 		})
 		.catch(function(error){
-			//console.log(error);
+			console.log(error);
 		});
 	alert("Thank you for submitting!");
 
@@ -1601,7 +1623,7 @@ function updateCllListRequest(cllRequestData)
 		})
 		.catch(function (error){
 			//console.log("FAILED");
-			//console.log(error);
+			console.log(error);
 		});
 }
 
@@ -1617,17 +1639,16 @@ function createNewCategoryRequest(newCategoryValue)
 	//console.log("Submit Button was clicked, now I'll post");
 	
 	
-
-
-	makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/cll-link-category/v1/cll-link/', 'POST')
+	makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/cll-link-category/v1/cll-link/'+NewCategoryData.name, 'POST')
 		.then(function(request){
-			console.log("Request for new category has been made successfully");
+			//console.log("Request for new category has been made successfully");
 			console.log(request.responseText);
 		})
 		.catch(function(error){
-			console.log("Failed to make the new category request");
+			//console.log("Failed to make the new category request");
 			console.log(error);
 		});
+
 
 }
 
