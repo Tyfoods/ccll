@@ -29,24 +29,9 @@ add_shortcode( 'cll_root', 'cll_root');
 
 
 
-add_action('rest_api_init', function () {
-	register_rest_route( 'cll-submitted_by/v1', '/cll-link/(?P<id>\d+)',array(
-				  'methods'  => WP_REST_Server::READABLE,
-				  'callback' => 'show_submitted_by'
-		));
-  });
-
-  function show_submitted_by($data){
+function show_submitted_by($data){
 	return get_userdata($data['id'])->data->user_login;
-  }
-
-
-add_action('rest_api_init', function () {
-	register_rest_route( 'cll-vote/v1', '/cll-link/(?P<id>\d+)',array(
-				  'methods'  => WP_REST_Server::EDITABLE,
-				  'callback' => 'vote_against_link'
-		));
-  });
+}
 
 function vote_against_link($data){
 
@@ -77,19 +62,26 @@ function vote_against_link($data){
 
 }
 
-
-add_action('rest_api_init', function () {
-	register_rest_route( 'cll-link-category/v1', '/cll-link/(?P<id>\d+)',array(
-				  'methods'  => WP_REST_Server::READABLE,
-				  'callback' => 'create_new_link_category'
-		));
-  });
-  
-
-
 function create_new_link_category($data){
 	return $data['id'];
 }
+
+add_action('rest_api_init', function(){
+	register_rest_route( 'cll-submitted_by/v1', '/cll-link/(?P<id>\d+)',array(
+		'methods'  => WP_REST_Server::READABLE,
+		'callback' => 'show_submitted_by'
+	));
+
+	register_rest_route( 'cll-vote/v1', '/cll-link/(?P<id>\d+)',array(
+		'methods'  => WP_REST_Server::EDITABLE,
+		'callback' => 'vote_against_link'
+	));
+
+	register_rest_route( 'cll-link-category/v1', '/cll-link/(?P<id>\d+)',array(
+		'methods'  => WP_REST_Server::EDITABLE,
+		'callback' => 'create_new_link_category'
+	));
+});
 
 
 
