@@ -40,6 +40,10 @@ select#linkTypeSelecter {
   background-color: #fff;
 }
 
+select.listCategorySelector:not([multiple]) {
+  background-color: #fff;
+}
+
 select.listCategorySelector {
   width: 100%;
   background-color: #fff;
