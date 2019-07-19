@@ -1572,14 +1572,7 @@ function updateCllListRequest(cllRequestData)
 
 
 			var plainCllListRegex = /\[cll_list]?(\s+)?]/g;
-			console.log(typeof currentShortCode);
 
-			console.log(currentShortCode.match(plainCllListRegex));
-
-
-
-			//strreplace on this -> = cllListShortCodeArray[currentClassName]
-			//console.log("WIN");
 			
 			var plainShortCodeArray = currentShortCode.match(plainCllListRegex)
 			if(plainShortCodeArray !== null)
@@ -1626,7 +1619,7 @@ function updateCllListRequest(cllRequestData)
 		.then(function (newShortCodeData) {
 			//console.log("WIN NUMBER TWO");
 			//console.log(newShortCodeData);
-			return makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/pages/'+current_page_id, "POST", JSON.stringify(newShortCodeData), false);
+			return makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/pages/'+current_page_id, "POST", JSON.stringify(newShortCodeData), true);
 		})
 		.catch(function (error){
 			//console.log("FAILED");
