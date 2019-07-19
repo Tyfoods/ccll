@@ -264,7 +264,8 @@ function cll_list_style_processor($style, $final_category_data)
 	if($my_array_response === true )
 	{
 		//This allows us to assosciate localized data with specific shortcodes.
-		$GLOBALS['cll_include_count'] = 0;
+		
+		//$GLOBALS['cll_include_count'] = 0; initilizing as 0 makes global immutable
 		$GLOBALS['cll_include_count'] +=1;
 
 		wp_localize_script('cll-mainjs','cll_category_ids'.'_'.$GLOBALS['cll_include_count'], $final_category_id);
