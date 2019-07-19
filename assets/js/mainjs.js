@@ -147,8 +147,42 @@ function createDownVoteBtn(){
 							try {
 								var voteRecordObj = JSON.parse(metaObj.voteRecord);
 								//console.log(voteRecordObj[cllUserId]);
+								if(isNaN(voteRecordObj)){
+									//console.log(error);
+									//console.log("Could not parse voteRecord");
+									//console.log("There is no information on record *assertion");
+									
+									////console.log("Change voter status to 0");
+									metaObj.voteRecord = '{"'+cllUserId+'":'+'"0"}';
+									////console.log("add downvote to post");
+									metaObj.down_votes+=1;
 
-								if(voteRecordObj[cllUserId]  !== "") //if current user status is not empty
+									//visually down vote
+
+									var downVoteElement = document.querySelector('.down_votes_counter[cllId="'+currentLinkItemId+'"]');
+
+									var currentDownVoteValue = parseInt(downVoteElement.textContent);
+									//console.log(downVoteElement.textContent);
+									//console.log(currentDownVoteValue);
+									//console.log(typeof currentDownVoteValue);
+									currentDownVoteValue+=1;
+									downVoteElement.innerHTML = currentDownVoteValue;
+
+									var newPostMetaData = JSON.stringify({
+										"meta" : metaObj
+
+									});
+
+									makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link/'+objResponse[0].id, 'POST', newPostMetaData)
+										.then(function(request){
+											//console.log(request.responseText);
+										})
+										.catch(function(error){
+											//console.log(error);
+										});
+									return;
+								}
+								else if(voteRecordObj[cllUserId]  !== "") //if current user status is not empty
 								{
 									//console.log("There is information on record, here's the information: ");
 									//console.log(metaObj.voteRecord);
@@ -250,43 +284,39 @@ function createDownVoteBtn(){
 
 							}
 							catch(error) {
-								if(voteRecordObj[cllUserId]  !== ""){ //if current user status is not empty
-									//console.log("There is information on record, here's the information: ");
-								} else {
-									//console.log(error);
-									//console.log("Could not parse voteRecord");
-									//console.log("There is no information on record *assertion");
-									
-									////console.log("Change voter status to 0");
-									metaObj.voteRecord = '{"'+cllUserId+'":'+'"0"}';
-									////console.log("add downvote to post");
-									metaObj.down_votes+=1;
-	
-									//visually down vote
-	
-									var downVoteElement = document.querySelector('.down_votes_counter[cllId="'+currentLinkItemId+'"]');
-	
-									var currentDownVoteValue = parseInt(downVoteElement.textContent);
-									//console.log(downVoteElement.textContent);
-									//console.log(currentDownVoteValue);
-									//console.log(typeof currentDownVoteValue);
-									currentDownVoteValue+=1;
-									downVoteElement.innerHTML = currentDownVoteValue;
-	
-									var newPostMetaData = JSON.stringify({
-										"meta" : metaObj
-	
-									});
-	
-									makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link/'+objResponse[0].id, 'POST', newPostMetaData)
-										.then(function(request){
-											//console.log(request.responseText);
-										})
-										.catch(function(error){
-											//console.log(error);
-										});
-								}
+								//console.log(error);
+								//console.log("Could not parse voteRecord");
+								//console.log("There is no information on record *assertion");
+								
+								////console.log("Change voter status to 0");
+								metaObj.voteRecord = '{"'+cllUserId+'":'+'"0"}';
+								////console.log("add downvote to post");
+								metaObj.down_votes+=1;
 
+								//visually down vote
+
+								var downVoteElement = document.querySelector('.down_votes_counter[cllId="'+currentLinkItemId+'"]');
+
+								var currentDownVoteValue = parseInt(downVoteElement.textContent);
+								//console.log(downVoteElement.textContent);
+								//console.log(currentDownVoteValue);
+								//console.log(typeof currentDownVoteValue);
+								currentDownVoteValue+=1;
+								downVoteElement.innerHTML = currentDownVoteValue;
+
+								var newPostMetaData = JSON.stringify({
+									"meta" : metaObj
+
+								});
+
+								makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link/'+objResponse[0].id, 'POST', newPostMetaData)
+									.then(function(request){
+										//console.log(request.responseText);
+									})
+									.catch(function(error){
+										//console.log(error);
+									});
+								return;
 							}
 						})
 						.catch(function(error){
@@ -340,7 +370,30 @@ function createNeutralVoteBtn(){
 								//console.log(voteRecordObj[cllUserId]);
 
 								//decrement appropriate vote
-								if(voteRecordObj[cllUserId] === "1"){
+								if(isNaN(voteRecordObj[cllUserId])){
+									//console.log(error);
+									////console.log("Could not parse voteRecord");
+									//console.log("There is no information on record *assertion");
+									
+									//console.log(metaObj.voteRecord);
+									//console.log("Change voter status to 3");
+									metaObj.voteRecord = '{"'+cllUserId+'":'+'"3"}';
+
+									var newPostMetaData = JSON.stringify({
+										"meta" : metaObj
+
+									});
+
+									makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link/'+objResponse[0].id, 'POST', newPostMetaData)
+										.then(function(request){
+											//console.log(request.responseText);
+										})
+										.catch(function(error){
+											//console.log(error);
+										});
+									return;
+								}
+								else if(voteRecordObj[cllUserId] === "1"){
 									metaObj.up_votes-=1;
 									//visually remove users up vote
 									var upVoteElement = document.querySelector('.up_votes_counter[cllId="'+currentLinkItemId+'"]');
@@ -388,9 +441,6 @@ function createNeutralVoteBtn(){
 									});
 							}
 							catch(error) {
-								if(voteRecordObj[cllUserId]  !== ""){ //if current user status is not empty
-									//console.log("There is information on record, here's the information: ");
-								} else {
 									//console.log(error);
 									////console.log("Could not parse voteRecord");
 									//console.log("There is no information on record *assertion");
@@ -411,7 +461,7 @@ function createNeutralVoteBtn(){
 										.catch(function(error){
 											//console.log(error);
 										});
-								}
+									return;
 							}
 						})
 						.catch(function(error){
@@ -474,8 +524,38 @@ function createUpVoteBtn(){
 									var currentUserVoteStatus = parseInt(voteRecordObj[cllUserId]);
 									
 									//console.log(JSON.parse(metaObj.voteRecord))
-
-									if(currentUserVoteStatus === 1)
+									if(!isNaN(currentUserVoteStatus)){
+										metaObj.voteRecord = '{"'+cllUserId+'":'+'"1"}';
+										//console.log("add UpVote to post");
+										metaObj.up_votes+=1;
+										//visually increment upvote
+		
+		
+										var upVoteButton = document.querySelector('.up_vote_button[cllId="'+currentLinkItemId+'"]');
+										//upVoteButton.style.backgroundColor = '#16C60C';
+		
+										//console.log(currentLinkItemId);
+		
+										var upVoteElement = document.querySelector('.up_votes_counter[cllId="'+currentLinkItemId+'"]');
+										var currentUpVoteValue = parseInt(upVoteElement.textContent);
+										currentUpVoteValue+=1;
+										upVoteElement.innerHTML = currentUpVoteValue;
+		
+										var newPostMetaData = JSON.stringify({
+											"meta" : metaObj
+		
+										});
+		
+										makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link/'+objResponse[0].id, 'POST', newPostMetaData)
+											.then(function(request){
+												//console.log(request.responseText);
+											})
+											.catch(function(error){
+												//console.log(error);
+											});
+										return;
+									}
+									else if(currentUserVoteStatus === 1)
 									{
 										alert("You've already up voted this post!");
 										return;
@@ -595,6 +675,7 @@ function createUpVoteBtn(){
 									.catch(function(error){
 										//console.log(error);
 									});
+								return;
 							}
 						})
 						.catch(function(error){
@@ -1538,9 +1619,10 @@ function createNewCategoryRequest(newCategoryValue)
 	
 
 
-	makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/cll-link-category/v1/cll-link/', 'POST', JSON.stringify(NewCategoryData), false)
-		.then(function(){
+	makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/cll-link-category/v1/cll-link/', 'POST')
+		.then(function(request){
 			console.log("Request for new category has been made successfully");
+			console.log(request.responseText);
 		})
 		.catch(function(error){
 			console.log("Failed to make the new category request");
@@ -1562,7 +1644,7 @@ function addClickToSettingsSubmitBtn(cllSettingsForm)
 
 			var isCategoryInputCreated = false;
 
-			settingsSubmitBtn.addEventListener("click", function()
+			settingsSubmitBtn.addEventListener("click", function(event)
 			{
 				event.preventDefault();
 				var x = document.querySelector(".listCategorySelector").selectedIndex;
