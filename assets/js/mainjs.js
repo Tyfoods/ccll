@@ -1567,15 +1567,22 @@ function updateCllListRequest(cllRequestData)
 			const cllListShortCodeArray = objResponse.content.raw.match(cllListRegex);
 
 
-			//console.log(cllListShortCodeArray);
-			//console.log(cllListShortCodeArray[currentCllId]);
+			console.log(cllListShortCodeArray);
+			var currentShortCode = cllListShortCodeArray[currentCllId].toString().toLowerCase();
+
+
+			var plainCllListRegex = /\[cll_list]?(\s+)?]/g;
+			console.log(typeof currentShortCode);
+
+			console.log(currentShortCode.match(plainCllListRegex));
+
+
 
 			//strreplace on this -> = cllListShortCodeArray[currentClassName]
 			//console.log("WIN");
-
-			if(cllListShortCodeArray[currentCllId] === '[cll_list]' ||
-			   cllListShortCodeArray[currentCllId] === '[cll_list  ]' ||
-			   cllListShortCodeArray[currentCllId] === '[cll_list] ')
+			
+			var plainShortCodeArray = currentShortCode.match(plainCllListRegex)
+			if(plainShortCodeArray !== null)
 			{
 
 				//else{
@@ -1588,9 +1595,9 @@ function updateCllListRequest(cllRequestData)
 					//var newPageContent = pageContent.replace(cllReplacementRegex,'[cll_list category_name="'+selectedCategory+'"]');
 
 
-					//console.log("selected category is: "+selectedCategory);
-					//console.log(pageContent);
-					//console.log(newPageContent);
+					console.log("selected category is: "+selectedCategory);
+					console.log(pageContent);
+					console.log(newPageContent);
 						
 					var NewShortCodeData = {
 						"content": newPageContent
@@ -1601,7 +1608,7 @@ function updateCllListRequest(cllRequestData)
 			}
 			else
 			{
-				//console.log("Short Code with New Category FOUND!");
+				console.log("Short Code with New Category FOUND!");
 
 				const cllPopulatedReplacementRegex = /category_name\s?=\s?"(.*?)"/g;
 				var pageContent = objResponse.content.raw;
@@ -1619,7 +1626,7 @@ function updateCllListRequest(cllRequestData)
 		.then(function (newShortCodeData) {
 			//console.log("WIN NUMBER TWO");
 			//console.log(newShortCodeData);
-			return makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/pages/'+current_page_id, "POST", JSON.stringify(newShortCodeData), true);
+			return makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/pages/'+current_page_id, "POST", JSON.stringify(newShortCodeData), false);
 		})
 		.catch(function (error){
 			//console.log("FAILED");
