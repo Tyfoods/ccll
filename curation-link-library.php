@@ -63,10 +63,46 @@ function vote_against_link($data){
 }
 
 function create_new_link_category($data){
-	return $data['id'];
+	
+	$category_name = str_replace('%20', ' ', $data['category_name']);
+	$category_nicename = strtolower($category_name);
+
+	$catarr = array(
+		'slug' => $category_name_slug);
+
+	//wp_insert_term($category_name, 'link_category', $catarr );
+
+	return wp_insert_term($category_name, 'link_category', $catarr );
 }
+/*
+function show_existing_link_categories(){
+	$cll_link_existing_categories = get_terms(
+	    array(
+	        'taxonomy' => 'link_category',
+			"hide_empty" => 0,
+	        //'object_ids' => $cll_link
+	    )
+	);
+
+	return json_encode(array_values($cll_link_existing_categories), JSON_FORCE_OBJECT);
+
+}
+*/
 
 add_action('rest_api_init', function(){
+
+	/*
+	register_rest_route('cll-link-category/v1', 'category-content', array(
+		'methods' => WP_REST_Server::READABLE,
+		'callback' => 'show_existing_link_categories'
+	));
+	*/
+	
+	register_rest_route( 'cll-link-category/v1', '/cll-link/(?P<category_name>[\s\S]+)',array(
+		'methods'  => WP_REST_Server::EDITABLE,
+		'callback' => 'create_new_link_category'
+	));
+
 	register_rest_route( 'cll-submitted_by/v1', '/cll-link/(?P<id>\d+)',array(
 		'methods'  => WP_REST_Server::READABLE,
 		'callback' => 'show_submitted_by'
@@ -77,10 +113,8 @@ add_action('rest_api_init', function(){
 		'callback' => 'vote_against_link'
 	));
 
-	register_rest_route( 'cll-link-category/v1', '/cll-link/(?P<id>\d+)',array(
-		'methods'  => WP_REST_Server::EDITABLE,
-		'callback' => 'create_new_link_category'
-	));
+
+
 });
 
 
@@ -264,7 +298,7 @@ function cll_list_style_processor($style, $final_category_data)
 	if($my_array_response === true )
 	{
 		//This allows us to assosciate localized data with specific shortcodes.
-		
+
 		//$GLOBALS['cll_include_count'] = 0; initilizing as 0 makes global immutable
 		$GLOBALS['cll_include_count'] +=1;
 
@@ -318,7 +352,6 @@ add_shortcode( 'cll_search_engine', 'cll_search_engine_shortcode');
 
 function cll_list_shortcode($atts){
 
-
 	$atts = shortcode_atts( array(
 		'style' => '1',
 		'category_name' => '' //Shortcode master must seperate with +'s for valid'
@@ -329,16 +362,21 @@ function cll_list_shortcode($atts){
 	//Controls query based on shortcode input
 	if(isset($final_category_data['final_category']))
 	{
+		//echo $final_category_data['final_category'];
 		//query specified by ShortCode Master input
 		$link_list_query_args = array( 
-		'orderby' => 'title',
-		'post_type' => 'cll_link',
-		'category_name' => $final_category_data['final_category']
+			'orderby' => 'title',
+			'post_type' => 'cll_link',
+			'tax_query' => array(
+							array(
+									'taxonomy' => 'link_category',
+									'field' => 'name',
+									'terms'    => $final_category_data['final_category']
+							),
+			)
 		);
-
-	
-
 		$link_list_query = new WP_Query( $link_list_query_args );
+
 	}
 	else
 	{
@@ -378,6 +416,8 @@ function cll_list_shortcode($atts){
 
 				$style_template = cll_list_style_processor($atts["style"], $final_category_data);
 				if (isset($style_template)){
+
+
 					ob_start(); 
 					include $style_template;
 					$output = ob_get_clean();
