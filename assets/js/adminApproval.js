@@ -78,7 +78,7 @@ function createNewCategoryRequest(newCategoryValue)
 	}
 
 	//console.log("Submit Button was clicked, now I'll post");
-	makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/categories/', 'POST', JSON.stringify(NewCategoryData))
+	makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/cll-link-category/v1/cll-link/'+NewCategoryData.name, 'POST')
 		.then(function(){
 			//console.log("Request for new category has been made successfully");
 		})
@@ -312,10 +312,10 @@ function addOnClickToDeclineBtn()
 		     			////console.log("The elements ID is: "+row.cells[j].id);
 						//row.cells[j].parentNode.removeChild(row.cells[j]);
 		     		}
-		     		else if(row.cells[j].title === 'categories'){
-		     			newLinkItemData['categories'] = row.cells[j].innerHTML;
+		     		else if(row.cells[j].title === 'category'){
+		     			newLinkItemData['link_category'] = row.cells[j].innerHTML;
 		     			//console.log("The content was found: "+row.cells[j].title);
-		     			//console.log("This is the InnerHTML: "+newLinkItemData['categories']);
+		     			//console.log("This is the InnerHTML: "+newLinkItemData['link_category']);
 		     			////console.log("The elements ID is: "+row.cells[j].id);
 						//row.cells[j].parentNode.removeChild(row.cells[j]);
 		     		}
@@ -400,7 +400,7 @@ function addOnClickToApproveBtn()
 
 		     		}
 		     		else if(row.cells[j].title === 'category'){
-		     			newLinkItemData['categories'] = row.cells[j].innerHTML;
+		     			newLinkItemData['link_category'] = row.cells[j].innerHTML;
 		     			////console.log("The content was found: "+row.cells[j].title);
 		     			////console.log("This is the InnerHTML: "+newLinkItemData['categories']);
 
@@ -425,41 +425,23 @@ function addOnClickToApproveBtn()
 				newLinkItemData['meta'] = {"submitted_by" : objResponse.name, "URL" : newLinkItemData['content'].trim(), "link_type" : "external link"};
 				return;
 			})
-			.then(function(request){
+			.then(function(){
+				//console.log(newLinkItemData);
 				makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link', 'POST', JSON.stringify(newLinkItemData))
-					.then(function(request){
-						//console.log("Successful Link Addition");
-						alert("You have approved a link!");
-						makeRequest(cllGlobals.currentProtocalDomain+'/wp-content/plugins/curation-link-library/cll-core/approve-link-item-handler.php', 'POST', "json_string="+JSON.stringify(newLinkItemData))
-							.then(function(request){
-								//console.log(request.responseText);
-								//console.log("Successful pending link deletion");
-							});
-					});
-				
+				.then(function(request){
+					//console.log("Successful Link Addition");
+					alert("You have approved a link!");
+					makeRequest(cllGlobals.currentProtocalDomain+'/wp-content/plugins/curation-link-library/cll-core/approve-link-item-handler.php', 'POST', "json_string="+JSON.stringify(newLinkItemData))
+						.then(function(request){
+							//console.log(request.responseText);
+							//console.log("Successful pending link deletion");
+						});
+				})
+				.catch(function(error){
+					console.log(error);
+				});
 			})
-			.catch(function(error){
-				//console.log(error)
-			});
-/*
-		var deletePendingLinkRequest = new XMLHttpRequest();
-		deletePendingLinkRequest.onreadystatechange = function()
-			{
-				if(this.readyState == 4 && this.status == 200)
-				{
-					//Nothing below gets called :O ready state is NEVER 4!!!
-					console.log('Successful Pending Link Deletion - Hello');
-					console.log(deletePendingLinkRequest.responseText);
-				}
-					//if request fails...?
-			}
-		deletePendingLinkRequest.open("POST", cllGlobals.currentProtocalDomain+'/wp-content/plugins/curation-link-library/cll-core/approve-link-item-handler.php');
-		deletePendingLinkRequest.setRequestHeader("X-WP-Nonce", magicalData.nonce);
-		deletePendingLinkRequest.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-		deletePendingLinkRequest.send("json_string="+JSON.stringify(newLinkItemData));
-		*/
-	});
-		
+		})
 	});
 }
 
