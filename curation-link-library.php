@@ -189,7 +189,7 @@ register_meta('post', 'submitted_by', [
 
  function cll_enqueue_styles(){
 	if(!is_admin()){
-	 wp_enqueue_style( 'cll-list-style-1',CLL_PLUGIN_DIR.'/assets/css/cll-list-style-1.css');
+	 wp_enqueue_style( 'cll-list-style-1',CLL_PLUGIN_DIR.'assets/css/cll-list-style-1.css');
 	}
  }
 
@@ -397,7 +397,7 @@ function cll_list_shortcode($atts){
 		{
 			if(!is_admin()){
 				//LOAD ADMIN JAVASCRIPT mainjs.js
-				wp_enqueue_script( 'cll-mainjs',CLL_PLUGIN_DIR.'/assets/js/mainjs.js');
+				wp_enqueue_script( 'cll-mainjs',CLL_PLUGIN_DIR.'assets/js/mainjs.js');
 				//pass "magicalData" to cll-main JS by echoing data through HTML
 				wp_localize_script('cll-mainjs','magicalData',array(
 					'nonce' => wp_create_nonce('wp_rest'),
@@ -432,7 +432,7 @@ function cll_list_shortcode($atts){
 		{
 			//Load commonUserJS.js
 			if(!is_admin()){
-				wp_enqueue_script( 'cll-commonUserJs', CLL_PLUGIN_DIR.'/assets/js/commonUserJs.js');
+				wp_enqueue_script( 'cll-commonUserJs', CLL_PLUGIN_DIR.'assets/js/commonUserJs.js');
 				wp_localize_script('cll-commonUserJs','magicalData',array(
 					'nonce' => wp_create_nonce('wp_rest'),
 					//'cllUserId' => get_current_user_id(),
@@ -458,7 +458,7 @@ function cll_list_shortcode($atts){
 	else{
 		if(!is_admin()){
 
-			wp_enqueue_script( 'cll-nonLoggedInUser.js',CLL_PLUGIN_DIR.'/assets/js/nonLoggedInUser.js');
+			wp_enqueue_script( 'cll-nonLoggedInUser.js',CLL_PLUGIN_DIR.'assets/js/nonLoggedInUser.js');
 			wp_localize_script('cll-nonLoggedInUser.js','magicalData',array(
 				'nonce' => wp_create_nonce('wp_rest'),
 			));
@@ -533,8 +533,8 @@ function load_link_manager_css_and_js($hook)
    {
    		return;
    }
-	wp_enqueue_style( 'cll-list-manager-page',CLL_PLUGIN_DIR.'/assets/css/cll-link-manager-page.css');
-	wp_enqueue_script( 'cll-adminApprovalJs',CLL_PLUGIN_DIR.'/assets/js/adminApproval.js');
+	wp_enqueue_style( 'cll-list-manager-page',CLL_PLUGIN_DIR.'assets/css/cll-link-manager-page.css');
+	wp_enqueue_script( 'cll-adminApprovalJs',CLL_PLUGIN_DIR.'assets/js/adminApproval.js');
 	wp_localize_script('cll-adminApprovalJs','magicalData',array(
 		'nonce' => wp_create_nonce('wp_rest')
 	));
