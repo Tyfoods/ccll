@@ -1,9 +1,10 @@
-module.exports = function endLinkRequest(currentAddToListBtn, makeRequest)
+module.exports = function endLinkRequest(currentAddToListBtn, deps)
 {
 
 
 	var multiListPageCategoryIds = "cll_category_ids"+"_"+currentAddToListBtn.getAttribute('cllid');
-
+	
+	const makeRequest = deps.makeRequest;
 
 	//console.log(window[multiListPageCategoryIds]);
 		

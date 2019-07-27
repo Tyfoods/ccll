@@ -1,4 +1,4 @@
-module.exports = function handleSearchInput(){
+module.exports = function handleSearchInput(makeRequest){
 	var cllSearchFormInput = document.querySelector('.cll_search_form_input');
 	var cllSuggestions = document.querySelector('.cll-suggestions');
 

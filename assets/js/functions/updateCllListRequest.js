@@ -1,5 +1,5 @@
 module.exports = //Function for updating shortcode of current page
-function updateCllListRequest(cllRequestData, makeRequest, replaceOccurrence)
+function updateCllListRequest(cllRequestData, deps)
 {
 	var selectedCategory = cllRequestData['selectedCategory'];
 	var currentCllId = parseInt(cllRequestData['currentCllId']);
@@ -7,6 +7,8 @@ function updateCllListRequest(cllRequestData, makeRequest, replaceOccurrence)
 	//console.log(selectedCategory);
 	console.log(currentCllId);
 	
+	const makeRequest = deps.makeRequest;
+	const replaceOccurrence = deps.replaceOccurrence;
 
 	makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/pages/'+current_page_id, "POST")
 		.then(function (request) {

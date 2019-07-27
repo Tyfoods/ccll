@@ -1,6 +1,8 @@
-module.exports = function throughLinkRequest(currentAddToListBtn, makeRequest)
+module.exports = function throughLinkRequest(currentAddToListBtn, deps)
 {
 
+	const makeRequest = deps.makeRequest;
+	
 	var NewLinkPageData = {
 		"title": document.querySelector('[name="newListItemTitle"].add_to_list_input').value,
 		"slug": "/"+document.querySelector('[name="newListItemTitle"].add_to_list_input').value.replace(/ /g,'-').toLowerCase(),
@@ -11,16 +13,38 @@ module.exports = function throughLinkRequest(currentAddToListBtn, makeRequest)
 	//Create new link page with user entered URL + information about how to make page
 
 		//createLinkPage
-		makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/pages', 'POST', JSON.stringify(NewLinkPageData))
-			.then(function(){
-				//console.log("Success, new page created!");
-				//document.location.reload(true);
+		if(cllIsAdmin[0] === "true"){
+			makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/pages', 'POST', JSON.stringify(NewLinkPageData))
+				.then(function(){
+					//console.log("Success, new page created!");
+					//document.location.reload(true);
+				})
+				.catch(function(error){
+					console.log(error);
+				});
+		}
+		else{
+			var NewLinkPageData_non_admin = {
+				"post_title": NewLinkPageData.title,
+				"post_content": NewLinkPageData.content,
+				"post_type": "page",
+				"post_status": "publish"
+			}
+			//custom end point request
+			makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/cll-link/v1/create-page/','POST', JSON.stringify(NewLinkPageData_non_admin))
+			.then(function(request){
+				console.log(request.responseText);
+				console.log(JSON.parse(request.responseText));
+			})
+			.catch(function(error){
+				console.log(error);
 			});
+		}
 
 
 	var multiListPageCategoryIds = "cll_category_ids"+"_"+currentAddToListBtn.getAttribute('cllid');
 
-	makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/users/'+cllUserId, 'GET')
+	makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/users/'+cllUserId[0], 'GET')
 		.then(function(request){
 			var objResponse = JSON.parse(request.responseText);
 			//console.log(objResponse.name);

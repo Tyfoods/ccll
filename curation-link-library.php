@@ -74,20 +74,13 @@ function create_new_link_category($data){
 
 	return wp_insert_term($category_name, 'link_category', $catarr );
 }
-/*
-function show_existing_link_categories(){
-	$cll_link_existing_categories = get_terms(
-	    array(
-	        'taxonomy' => 'link_category',
-			"hide_empty" => 0,
-	        //'object_ids' => $cll_link
-	    )
-	);
+function create_new_page($data){
+	//create new page
+	$new_page_data_array = json_decode($data->get_body(), true);
+	
 
-	return json_encode(array_values($cll_link_existing_categories), JSON_FORCE_OBJECT);
-
+	return wp_insert_post($new_page_data_array, true);
 }
-*/
 
 add_action('rest_api_init', function(){
 
@@ -97,7 +90,10 @@ add_action('rest_api_init', function(){
 		'callback' => 'show_existing_link_categories'
 	));
 	*/
-	
+	register_rest_route( 'cll-link/v1', '/create-page/',array(
+		'methods'  => WP_REST_Server::EDITABLE,
+		'callback' => 'create_new_page'
+	));
 	register_rest_route( 'cll-link-category/v1', '/cll-link/(?P<category_name>[\s\S]+)',array(
 		'methods'  => WP_REST_Server::EDITABLE,
 		'callback' => 'create_new_link_category'
@@ -405,6 +401,13 @@ function cll_list_shortcode($atts){
 				));
 
 				wp_localize_script('cll-mainjs', 'cllUserId', array(get_current_user_id()));
+
+				if(current_user_can("manage_options")){
+					wp_localize_script('cll-mainjs', 'cllIsAdmin', array("true"));
+				}
+				else{
+					wp_localize_script('cll-mainjs', 'cllIsAdmin', array("false"));
+				}
 
 				/*
 				wp_localize_script( 'cll-mainjs', 'cllAjaxUrl', array(

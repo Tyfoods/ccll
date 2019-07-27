@@ -1,8 +1,13 @@
 module.exports = cllGlobals = {
-    add_to_list_btn: document.getElementById("add_to_list_btn"),
     isAddToListBtnClicked: false,
     isSubmitBtnClicked: false,
-    isSettingsFormClicked: false,
+    isEditCategoryFormCreated: false,
+    isCategoryInputCreated: false,
+    isUpVoteBtnClicked: false,
+    isNeutralVoteBtnClicked: false,
+    isDownVoteBtnClicked: false,
+
+    add_to_list_btn: document.getElementById("add_to_list_btn"),
     currentProtocalDomain: document.location.origin,
     searchEngineRequestSent: false,
     //searchEngineLooping: false,

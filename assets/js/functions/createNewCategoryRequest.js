@@ -1,4 +1,4 @@
-module.exports = function createNewCategoryRequest(newCategoryValue, makeRequest)
+module.exports = function createNewCategoryRequest(newCategoryValue, deps)
 {
 
 	var NewCategoryData = {
@@ -9,7 +9,7 @@ module.exports = function createNewCategoryRequest(newCategoryValue, makeRequest
 	//console.log("Submit Button was clicked, now I'll post");
 	
 	
-	makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/cll-link-category/v1/cll-link/'+NewCategoryData.name, 'POST')
+	deps.makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/cll-link-category/v1/cll-link/'+NewCategoryData.name, 'POST')
 		.then(function(request){
 			//console.log("Request for new category has been made successfully");
 			console.log(request.responseText);

@@ -86,7 +86,7 @@ function createAddToListBtn(){
 	});
 }
 
-function setAttributeOfElementsInArray(array, attribute_name){
+function setAttributeOfElementsInArrayIncrementally(array, attribute_name){
 	var incrementer = 0;
 
 	array.forEach(function(item){
@@ -157,10 +157,10 @@ function displayVotesPerItem(){
 				incrementer+=1;
 			});
 			var downVoteCounterArray = document.querySelectorAll('.down_votes_counter');
-			setAttributeOfElementsInArray(downVoteCounterArray, 'cllId');
+			setAttributeOfElementsInArrayIncrementally(downVoteCounterArray, 'cllId');
 
 			var upVoteCounterArray = document.querySelectorAll('.up_votes_counter');
-			setAttributeOfElementsInArray(upVoteCounterArray, 'cllId');
+			setAttributeOfElementsInArrayIncrementally(upVoteCounterArray, 'cllId');
 		});
 }
 
@@ -184,7 +184,7 @@ function createDownVoteBtn(){
 
 
 	var linkListTitleArray = document.querySelectorAll('.link-list-title');
-	setAttributeOfElementsInArray(linkListTitleArray, 'cllId');
+	setAttributeOfElementsInArrayIncrementally(linkListTitleArray, 'cllId');
 
 	var downVoteBtnArray = document.querySelectorAll('.down_vote_button');
 	downVoteBtnArray.forEach(function(downVoteBtn){
@@ -213,7 +213,7 @@ function createNeutralVoteBtn(){
 	});
 
 	var linkListTitleArray = document.querySelectorAll('.link-list-title');
-	setAttributeOfElementsInArray(linkListTitleArray, 'cllId');
+	setAttributeOfElementsInArrayIncrementally(linkListTitleArray, 'cllId');
 
 	var neutralVoteBtnArray = document.querySelectorAll('.neutral_vote_button');
 	neutralVoteBtnArray.forEach(function(neutralVoteBtn){
@@ -244,7 +244,7 @@ function createUpVoteBtn(){
 	});
 
 	var linkListTitleArray = document.querySelectorAll('.link-list-title');
-	setAttributeOfElementsInArray(linkListTitleArray, 'cllId');
+	setAttributeOfElementsInArrayIncrementally(linkListTitleArray, 'cllId');
 
 	var upVoteBtnArray = document.querySelectorAll('.up_vote_button');
 	upVoteBtnArray.forEach(function(upVoteBtn){
@@ -397,7 +397,7 @@ else
 	//console.log("Search bar doesn't exist");
 }
 	var allListItemsArray = document.querySelectorAll('.link-list-item');
-    setAttributeOfElementsInArray(allListItemsArray, 'cllId');
+    setAttributeOfElementsInArrayIncrementally(allListItemsArray, 'cllId');
     
 	createAddToListBtn();
 	cllCreateForm();

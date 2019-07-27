@@ -1,4 +1,4 @@
-module.exports = function createDeleteListBtn(setAttributeOfElementsInArray, makeRequest){
+module.exports = function createDeleteListBtn(setAttributeOfElementsInArrayIncrementally, makeRequest){
 
 
 	var cllLinkListArray = document.querySelectorAll('.cll_link_list');
@@ -16,8 +16,8 @@ module.exports = function createDeleteListBtn(setAttributeOfElementsInArray, mak
 	var listArray = document.querySelectorAll('.cll_link_list');
 	var deleteListBtnCollection = document.querySelectorAll(".delete_list_btn");
 
-	setAttributeOfElementsInArray(deleteListBtnCollection, 'cllId');
-	setAttributeOfElementsInArray(listArray, 'cllId');
+	setAttributeOfElementsInArrayIncrementally(deleteListBtnCollection, 'cllId');
+	setAttributeOfElementsInArrayIncrementally(listArray, 'cllId');
 
 
 	deleteListBtnCollection.forEach(function(deleteListBtn){
@@ -33,13 +33,7 @@ module.exports = function createDeleteListBtn(setAttributeOfElementsInArray, mak
 					const cllListRegex = /\[cll_list\s?(.*?)\]/g;
 					const cllListShortCodeArray = objResponse.content.raw.match(cllListRegex);
 		
-		
-					//console.log(cllListShortCodeArray);
-					//console.log(cllListShortCodeArray[deleteListBtn.getAttribute('cllId')]);
-
-					//console.log(objResponse.content.raw);
 					var newPageContent = objResponse.content.raw.replace(cllListShortCodeArray[deleteListBtn.getAttribute('cllId')], '');
-					//console.log(newPageContent);
 
 					var newPageData = {
 						"content": newPageContent
@@ -58,10 +52,7 @@ module.exports = function createDeleteListBtn(setAttributeOfElementsInArray, mak
 							}
 						}
 					});
-
-
-
-					return;
+				return;
 				});
 		});
 	});
