@@ -12,6 +12,7 @@ module.exports = function handleLinkApproveBtnClick(cllApproveBtn, deps){
                 if(row.cells[j].nodeName.toLowerCase() === "td"){ //Check if it is table data
 
                     if(row.cells[j].getAttribute('cllid') === cllApproveBtnCllId){
+                        var rowToDelete = row.rowIndex;
                         if(row.cells[j].title === 'linkId'){
                             newLinkItemData['pendingLinkId'] = row.cells[j].innerHTML;
                         }
@@ -32,7 +33,7 @@ module.exports = function handleLinkApproveBtnClick(cllApproveBtn, deps){
             }
 
 }
-    table.deleteRow(cllApproveBtnCllId);
+    table.deleteRow(rowToDelete);
 
 
     newLinkItemData['status'] = 'publish';

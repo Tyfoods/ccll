@@ -11,6 +11,7 @@ module.exports = function handleListApproveBtnClick(cllListApproveBtn, deps){
             //var element = row.cells[j];
             if(row.cells[j].nodeName.toLowerCase() === "td"){ //Check if it is table data
                 if(row.cells[j].getAttribute('cllid') === cllListApproveBtnCllId){
+                    var rowToDelete = row.rowIndex;
                     if(row.cells[j].title === 'listId'){
                         newListItemData['listId'] = row.cells[j].innerHTML;
                         //console.log("This listId was found: "+row.cells[j].title);
@@ -47,7 +48,7 @@ module.exports = function handleListApproveBtnClick(cllListApproveBtn, deps){
             }
         } 
     }
-    table.deleteRow(cllListApproveBtnCllId);
+    table.deleteRow(rowToDelete);
 
     //add some function to refresh form fields and add temporary checkmark symbol
     deps.deletePendingListRequest(newListItemData);

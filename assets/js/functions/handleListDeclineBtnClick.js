@@ -14,6 +14,7 @@ module.exports = function handleListDeclineBtnClick(cllListDeclineBtn, deps){
 
             if(row.cells[j].getAttribute('cllid') === cllListDeclineBtnCllId)
             {
+                var rowToDelete = row.rowIndex;
                 if(row.cells[j].title === 'listId'){
                     newListItemData['listId'] = row.cells[j].innerHTML;
                     //console.log("This userId was found: "+row.cells[j].title);
@@ -38,7 +39,7 @@ module.exports = function handleListDeclineBtnClick(cllListDeclineBtn, deps){
             //columns would be accessed using the "col" variable assigned in the for loop
         } 
     }
-    table.deleteRow(cllListDeclineBtnCllId);
+    table.deleteRow(rowToDelete);
     //add some function to refresh form fields and add temporary checkmark symbol
     deps.deletePendingListRequest(newListItemData);
     alert("You have declined a list!");
