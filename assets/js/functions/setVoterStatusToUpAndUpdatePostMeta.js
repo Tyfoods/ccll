@@ -24,9 +24,21 @@ module.exports = function setVoterStatusToUpAndUpdatePostMeta(currentLinkItemPos
         "meta" : metaObj
 
     });
-
-    makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link/'+currentLinkItemPostId, 'POST', newPostMetaData)
-        .then(function(request){
+    if(cllIsAdmin[0] === "true"){
+        makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link/'+currentLinkItemPostId, 'POST', newPostMetaData)
+            .then(function(){
+                cllGlobals.isUpVoteBtnClicked = false;
+                cllGlobals.isNeutralVoteBtnClicked = false;
+                cllGlobals.isDownVoteBtnClicked = false;
+            })
+            .catch(function(error){
+                console.log(error);
+            });
+        return;
+    }
+    else{
+        makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/cll-vote/v1/cll-link/'+currentLinkItemPostId, 'POST', JSON.stringify(metaObj))
+        .then(function(){
             cllGlobals.isUpVoteBtnClicked = false;
             cllGlobals.isNeutralVoteBtnClicked = false;
             cllGlobals.isDownVoteBtnClicked = false;
@@ -34,4 +46,5 @@ module.exports = function setVoterStatusToUpAndUpdatePostMeta(currentLinkItemPos
         .catch(function(error){
             console.log(error);
         });
+    }
 }

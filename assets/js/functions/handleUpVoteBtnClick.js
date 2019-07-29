@@ -99,9 +99,22 @@ module.exports = function handleUpVoteBtnClick(upVoteBtn, deps){
                                 });
                                 var upVoteCounter = document.querySelector('.up_votes_counter[cllId="'+currentLinkItemId+'"]');
                                 upVoteCounter.innerHTML = visuallyUpdateVoteCounter("increment", upVoteCounter);
-                                
-                                makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link/'+objResponse[0].id, 'POST', newPostMetaData)
-                                    .then(function(request){
+                                if(cllIsAdmin[0] === "true"){
+                                    makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/cll-link/'+objResponse[0].id, 'POST', newPostMetaData)
+                                        .then(function(){
+                                            cllGlobals.isUpVoteBtnClicked = false;
+                                            cllGlobals.isNeutralVoteBtnClicked = false;
+                                            cllGlobals.isDownVoteBtnClicked = false;
+                                        })
+                                        .catch(function(error){
+                                            console.log(error);
+                                        });
+                                    return;
+                                }
+                                else{
+                                    makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/cll-vote/v1/cll-link/'+objResponse[0].id, 'POST', JSON.stringify(metaObj))
+                                    .then(function(){
+                                        //console.log(request.responseText);
                                         cllGlobals.isUpVoteBtnClicked = false;
                                         cllGlobals.isNeutralVoteBtnClicked = false;
                                         cllGlobals.isDownVoteBtnClicked = false;
@@ -109,7 +122,7 @@ module.exports = function handleUpVoteBtnClick(upVoteBtn, deps){
                                     .catch(function(error){
                                         console.log(error);
                                     });
-                                return;
+                                }
                             }
                         }
                     })

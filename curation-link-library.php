@@ -298,37 +298,37 @@ function cll_list_style_processor($style, $final_category_data)
 		//$GLOBALS['cll_include_count'] = 0; initilizing as 0 makes global immutable
 		$GLOBALS['cll_include_count'] +=1;
 
-		wp_localize_script('cll-mainjs','cll_category_ids'.'_'.$GLOBALS['cll_include_count'], $final_category_id);
+		wp_localize_script('cll-frontEndAdminManager','cll_category_ids'.'_'.$GLOBALS['cll_include_count'], $final_category_id);
 
 		if(!empty($final_category)){
-			wp_localize_script('cll-mainjs','cll_category_names'.'_'.$GLOBALS['cll_include_count'], $final_category);
+			wp_localize_script('cll-frontEndAdminManager','cll_category_names'.'_'.$GLOBALS['cll_include_count'], $final_category);
 		}
 
-		wp_localize_script('cll-commonUserJs','cll_category_ids'.'_'.$GLOBALS['cll_include_count'], $final_category_id);
+		wp_localize_script('cll-frontEndLoggedInUser','cll_category_ids'.'_'.$GLOBALS['cll_include_count'], $final_category_id);
 
 		if(!empty($final_category)){
-			wp_localize_script('cll-commonUserJs','cll_category_names'.'_'.$GLOBALS['cll_include_count'], $final_category);
+			wp_localize_script('cll-frontEndLoggedInUser','cll_category_names'.'_'.$GLOBALS['cll_include_count'], $final_category);
 		}
 
 		return $cll_php_template_path;
 
 	}
 	else{
-		wp_localize_script('cll-mainjs','cll_category_ids_0', $final_category_id);
+		wp_localize_script('cll-frontEndAdminManager','cll_category_ids_0', $final_category_id);
 
 		if(!empty($final_category)){
-			wp_localize_script('cll-mainjs','cll_category_names_0', $final_category);
+			wp_localize_script('cll-frontEndAdminManager','cll_category_names_0', $final_category);
 		}
 
-		wp_localize_script('cll-mainjs','existing_category_names_array', $processed_existing_category_name_array);
+		wp_localize_script('cll-frontEndAdminManager','existing_category_names_array', $processed_existing_category_name_array);
 
-		wp_localize_script('cll-commonUserJs','cll_category_ids_0', $final_category_id);
+		wp_localize_script('cll-frontEndLoggedInUser','cll_category_ids_0', $final_category_id);
 
 		if(!empty($final_category)){
-			wp_localize_script('cll-commonUserJs','cll_category_names_0', $final_category);
+			wp_localize_script('cll-frontEndLoggedInUser','cll_category_names_0', $final_category);
 		}
 
-		wp_localize_script('cll-commonUserJs','existing_category_names_array', $processed_existing_category_name_array);
+		wp_localize_script('cll-frontEndLoggedInUser','existing_category_names_array', $processed_existing_category_name_array);
 
 		return $cll_php_template_path;
 	}
@@ -387,30 +387,30 @@ function cll_list_shortcode($atts){
 
 	$user = wp_get_current_user();
 	$allowed_roles = array('library_manager', 'administrator');
-	//checkUserPermissions if admin, or if Library Manager then execute following, else load "commonUserJS.js"
+	//checkUserPermissions if admin, or if Library Manager then execute following, else load "frontEndLoggedInUser.js"
 	if(is_user_logged_in() === true){
 		if( array_intersect($allowed_roles, $user->roles ) ) 
 		{
 			if(!is_admin()){
-				//LOAD ADMIN JAVASCRIPT mainjs.js
-				wp_enqueue_script( 'cll-mainjs',CLL_PLUGIN_DIR.'assets/js/mainjs.js');
+				//LOAD ADMIN JAVASCRIPT frontEndAdminManager.js
+				wp_enqueue_script( 'cll-frontEndAdminManager',CLL_PLUGIN_DIR.'assets/js/frontEndAdminManager.js');
 				//pass "magicalData" to cll-main JS by echoing data through HTML
-				wp_localize_script('cll-mainjs','magicalData',array(
+				wp_localize_script('cll-frontEndAdminManager','magicalData',array(
 					'nonce' => wp_create_nonce('wp_rest'),
 					//'cllUserId' => get_current_user_id()
 				));
 
-				wp_localize_script('cll-mainjs', 'cllUserId', array(get_current_user_id()));
+				wp_localize_script('cll-frontEndAdminManager', 'cllUserId', array(get_current_user_id()));
 
 				if(current_user_can("manage_options")){
-					wp_localize_script('cll-mainjs', 'cllIsAdmin', array("true"));
+					wp_localize_script('cll-frontEndAdminManager', 'cllIsAdmin', array("true"));
 				}
 				else{
-					wp_localize_script('cll-mainjs', 'cllIsAdmin', array("false"));
+					wp_localize_script('cll-frontEndAdminManager', 'cllIsAdmin', array("false"));
 				}
 
 				/*
-				wp_localize_script( 'cll-mainjs', 'cllAjaxUrl', array(
+				wp_localize_script( 'cll-frontEndAdminManager', 'cllAjaxUrl', array(
 						'ajax_url' => admin_url( 'admin-ajax.php' )
 					));
 				*/
@@ -424,8 +424,8 @@ function cll_list_shortcode($atts){
 					ob_start(); 
 					include $style_template;
 					$output = ob_get_clean();
-					wp_localize_script('cll-mainjs','current_page_id', array($current_page_id));
-					wp_localize_script('cll-commonUserJs','current_page_id', array($current_page_id));
+					wp_localize_script('cll-frontEndAdminManager','current_page_id', array($current_page_id));
+					wp_localize_script('cll-frontEndLoggedInUser','current_page_id', array($current_page_id));
 					return $output;
 				}
 				return;
@@ -433,15 +433,17 @@ function cll_list_shortcode($atts){
 		}
 		else
 		{
-			//Load commonUserJS.js
+			//Load frontEndLoggedInUser.js
 			if(!is_admin()){
-				wp_enqueue_script( 'cll-commonUserJs', CLL_PLUGIN_DIR.'assets/js/commonUserJs.js');
-				wp_localize_script('cll-commonUserJs','magicalData',array(
+				wp_enqueue_script( 'cll-frontEndLoggedInUser', CLL_PLUGIN_DIR.'assets/js/frontEndLoggedInUser.js');
+				wp_localize_script('cll-frontEndLoggedInUser','magicalData',array(
 					'nonce' => wp_create_nonce('wp_rest'),
 					//'cllUserId' => get_current_user_id(),
 				));
 
-				wp_localize_script('cll-commonUserJs', 'cllUserId', get_current_user_id());
+				wp_localize_script('cll-frontEndLoggedInUser', 'cllUserId', array(get_current_user_id()));
+
+				wp_localize_script('cll-frontEndLoggedInUser', 'cllIsAdmin', array("false"));
 				
 
 				$style_template = cll_list_style_processor($atts["style"], $final_category_data);
@@ -449,8 +451,8 @@ function cll_list_shortcode($atts){
 
 					ob_start();
 					include $style_template;
-					wp_localize_script('cll-mainjs','current_page_id', $current_page_id);
-					wp_localize_script('cll-commonUserJs','current_page_id', $current_page_id);
+					wp_localize_script('cll-frontEndAdminManager','current_page_id', $current_page_id);
+					wp_localize_script('cll-frontEndLoggedInUser','current_page_id', $current_page_id);
 					$output = ob_get_clean();
 					return $output;
 				}
@@ -461,8 +463,8 @@ function cll_list_shortcode($atts){
 	else{
 		if(!is_admin()){
 
-			wp_enqueue_script( 'cll-nonLoggedInUser.js',CLL_PLUGIN_DIR.'assets/js/nonLoggedInUser.js');
-			wp_localize_script('cll-nonLoggedInUser.js','magicalData',array(
+			wp_enqueue_script( 'cll-frontEndLoggedOutUser.js',CLL_PLUGIN_DIR.'assets/js/frontEndLoggedOutUser.js');
+			wp_localize_script('cll-frontEndLoggedOutUser.js','magicalData',array(
 				'nonce' => wp_create_nonce('wp_rest'),
 			));
 			$style_template = cll_list_style_processor($atts["style"], $final_category_data);
@@ -537,8 +539,8 @@ function load_link_manager_css_and_js($hook)
    		return;
    }
 	wp_enqueue_style( 'cll-list-manager-page',CLL_PLUGIN_DIR.'assets/css/cll-link-manager-page.css');
-	wp_enqueue_script( 'cll-adminApprovalJs',CLL_PLUGIN_DIR.'assets/js/adminApproval.js');
-	wp_localize_script('cll-adminApprovalJs','magicalData',array(
+	wp_enqueue_script( 'cll-backEndAdminManager',CLL_PLUGIN_DIR.'assets/js/backEndAdminManager.js');
+	wp_localize_script('cll-backEndAdminManager','magicalData',array(
 		'nonce' => wp_create_nonce('wp_rest')
 	));
 

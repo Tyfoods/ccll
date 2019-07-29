@@ -31,7 +31,7 @@
 	import createAdminRemoveBtn from '../js/functions/createAdminRemoveBtn';
 	import addClickToAddToListBtn from '../js/functions/addClickToAddToListBtn';
 	import addClickToEditCategoryFormCancelBtn from '../js/functions/addClickToEditCategoryFormCancelBtn';
-	import addClickToAddToListFormCancelBtn from '../js/functions/addClickToAddToListFormCancelBtn';
+	import addClickToAddToListBtnFormCancelBtn from '../js/functions/addClickToAddToListBtnFormCancelBtn';
 	import addClickToAddToListBtnFormSubmitBtn from '../js/functions/addClickToAddToListBtnFormSubmitBtn';
 	import throughLinkRequest from '../js/functions/throughLinkRequest';
 	import endLinkRequest from '../js/functions/endLinkRequest';
@@ -75,7 +75,7 @@ window.onload=function()
 		
 		'addClickToAddToListBtn:': addClickToAddToListBtn,
 		'addClickToEditCategoryFormCancelBtn': addClickToEditCategoryFormCancelBtn,
-		'addClickToAddToListFormCancelBtn': addClickToAddToListFormCancelBtn,
+		'addClickToAddToListBtnFormCancelBtn': addClickToAddToListBtnFormCancelBtn,
 		'addClickToAddToListBtnFormSubmitBtn': addClickToAddToListBtnFormSubmitBtn,
 		'addClickToEditCategoryFormSubmitBtn': addClickToEditCategoryFormSubmitBtn,
 		'addClickToEditCategoryBtn': addClickToEditCategoryBtn,
@@ -95,8 +95,10 @@ window.onload=function()
 	var allListItemsArray = document.querySelectorAll('.link-list-item');
 	setAttributeOfElementsInArrayIncrementally(allListItemsArray, 'cllId');
 
+	
 	var linkListTitleArray = document.querySelectorAll('.link-list-title');
 	setAttributeOfElementsInArrayIncrementally(linkListTitleArray, 'cllId');
+	
 
 /*
 	function testButton(){
@@ -139,9 +141,9 @@ window.onload=function()
 
 	createNewListBtn(makeRequest); //done
 
-	//goal extract click functionality
+	
 	createDownVoteBtn(); //
-	addClickToDownVoteBtn(dependencies);//in progress
+	addClickToDownVoteBtn(dependencies);
 
 	createUpVoteBtn(); //
 	addClickToUpVoteBtn(dependencies); //

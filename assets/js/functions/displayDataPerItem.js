@@ -5,14 +5,14 @@ module.exports = (function displayDataPerItem(setAttributeOfElementsInArrayIncre
 		.then(function(request){
 
 			var cllLinkArray = JSON.parse(request.responseText);
-			var linkListTitleArray = document.querySelectorAll('.link-list-title');
+			var linkListItemArray = document.querySelectorAll('.link-list-item');
 			var incrementer = 0;
 
 			//console.log(cllLinkArray);
 
 			cllLinkArray.forEach(function(cllLink){
-				linkListTitleArray.forEach(function(linkListTitle){
-					var post_slug = linkListTitle.textContent.trim().replace(/\s/g, '-').toLowerCase();
+				linkListItemArray.forEach(function(linkListItem){
+					var post_slug = linkListItem.textContent.trim().replace(/\s/g, '-').toLowerCase();
 					if(cllLink.slug === post_slug){
 
 						var upVotesCounter = document.createElement('p');
@@ -23,7 +23,7 @@ module.exports = (function displayDataPerItem(setAttributeOfElementsInArrayIncre
 						downVotesCounter.setAttribute('class','down_votes_counter');
 						downVotesCounter.innerHTML = cllLinkArray[incrementer].meta.down_votes;
 
-						var currentLinkItemId = linkListTitle.getAttribute('cllId');
+						var currentLinkItemId = linkListItem.getAttribute('cllId');
 
 						var downVoteButton = document.querySelector('.down_vote_button[cllId="'+currentLinkItemId+'"]');
 						var upVoteButton = document.querySelector('.up_vote_button[cllId="'+currentLinkItemId+'"]');
@@ -41,7 +41,7 @@ module.exports = (function displayDataPerItem(setAttributeOfElementsInArrayIncre
 						submittedByElement.innerHTML = "Submitted by: "+cllLinkArray[incrementer].meta.submitted_by;
 
 						//console.log(currentLinkItemId);
-						var linkListItem = document.querySelector('.link-list-item[cllId="'+currentLinkItemId+'"]');
+						//var linkListItem = document.querySelector('.link-list-item[cllId="'+currentLinkItemId+'"]');
 						try{
 							linkListItem.appendChild(submittedByElement);
 						}

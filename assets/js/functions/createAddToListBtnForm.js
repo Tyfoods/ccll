@@ -16,29 +16,6 @@ module.exports = function createAddToListBtnForm(currentAddToListBtn, deps){
         link.setAttribute('placeholder',"URL here");
         link.setAttribute("class", "add_to_list_input");
 
-        var dropDownBox = document.createElement("select");
-        dropDownBox.setAttribute('id','linkTypeSelecter');
-
-        var dropDownBoxPlaceHolder = document.createElement("option");
-        dropDownBoxPlaceHolder.innerHTML = "Link Type";
-        dropDownBoxPlaceHolder.value = '';
-        dropDownBoxPlaceHolder.disabled = true;
-        dropDownBoxPlaceHolder.selected = true;
-        dropDownBoxPlaceHolder.hidden = true;
-        //dropDownBoxPlaceHolder.required = true;
-
-        var endLinkOption = document.createElement("option");
-        endLinkOption.innerHTML = "External Link";
-        //endLinkOption.setAttribute('name',"Link Type");
-
-        var throughLinkOption = document.createElement("option");
-        throughLinkOption.innerHTML = "Internal Link";
-        //throughLinkOption.setAttribute('name',"Link Type");
-
-        dropDownBox.appendChild(endLinkOption);
-        dropDownBox.appendChild(throughLinkOption);
-        dropDownBox.appendChild(dropDownBoxPlaceHolder);
-
         var b = document.createElement("button");
         b.setAttribute('name',"submitBtn");
         b.setAttribute('type', 'button');
@@ -50,9 +27,51 @@ module.exports = function createAddToListBtnForm(currentAddToListBtn, deps){
         cancelBtn.setAttribute('type', 'button');
         cancelBtn.setAttribute('class','cancelBtn');
 
+        if(cllIsAdmin[0] === "true"){
+            var dropDownBox = document.createElement("select");
+            dropDownBox.setAttribute('id','linkTypeSelecter');
+
+            var dropDownBoxPlaceHolder = document.createElement("option");
+            dropDownBoxPlaceHolder.innerHTML = "Link Type";
+            dropDownBoxPlaceHolder.value = '';
+            dropDownBoxPlaceHolder.disabled = true;
+            dropDownBoxPlaceHolder.selected = true;
+            dropDownBoxPlaceHolder.hidden = true;
+            //dropDownBoxPlaceHolder.required = true;
+
+            var endLinkOption = document.createElement("option");
+            endLinkOption.innerHTML = "External Link";
+            //endLinkOption.setAttribute('name',"Link Type");
+
+            var throughLinkOption = document.createElement("option");
+            throughLinkOption.innerHTML = "Internal Link";
+            //throughLinkOption.setAttribute('name',"Link Type");
+        
+            dropDownBox.appendChild(endLinkOption);
+            dropDownBox.appendChild(throughLinkOption);
+            dropDownBox.appendChild(dropDownBoxPlaceHolder);
+
+            f.appendChild(dropDownBox);
+
+            dropDownBox.addEventListener('change', function(){
+
+                var x = document.getElementById("linkTypeSelecter").selectedIndex;
+                var linkType = document.getElementsByTagName("option")[x].value;
+    
+                if(linkType.toLowerCase() === 'internal link')
+                {
+                    link.parentNode.removeChild(link);
+                }
+                else if(linkType.toLowerCase() === 'external link')
+                {
+                    linktitle.parentNode.insertBefore(link, linktitle.nextSibling);
+                    //f.appendChild(link);
+                }
+            });
+        }
+
         f.appendChild(linktitle);
         f.appendChild(link);
-        f.appendChild(dropDownBox);
         f.appendChild(b);
         f.appendChild(cancelBtn);
 
@@ -61,27 +80,11 @@ module.exports = function createAddToListBtnForm(currentAddToListBtn, deps){
 
         cllGlobals.isAddToListBtnClicked = true;
         deps.addClickToAddToListBtnFormSubmitBtn(currentAddToListBtn, deps);
-        deps.addClickToAddToListFormCancelBtn();
+        deps.addClickToAddToListBtnFormCancelBtn();
 
         //change form depending on link type selected
 
         //var box = document.getElementById("linkTypeSelecter");
-
-        dropDownBox.addEventListener('change', function(){
-
-            var x = document.getElementById("linkTypeSelecter").selectedIndex;
-            var linkType = document.getElementsByTagName("option")[x].value;
-
-            if(linkType.toLowerCase() === 'internal link')
-            {
-                link.parentNode.removeChild(link);
-            }
-            else if(linkType.toLowerCase() === 'external link')
-            {
-                linktitle.parentNode.insertBefore(link, linktitle.nextSibling);
-                //f.appendChild(link);
-            }
-        });
 
     }
 }

@@ -21,7 +21,6 @@ module.exports = function handleDownVoteBtnClick(downVoteBtn, deps){
                         
                         try {
                             var voteRecordObj = JSON.parse(metaObj.voteRecord);
-                            //console.log(voteRecordObj[cllUserId]);
                             if(typeof voteRecordObj[cllUserId[0]]  === "undefined"){ //if current user has never voted then...
                                 if(cllGlobals.isDownVoteBtnClicked === false){
                                     cllGlobals.isDownVoteBtnClicked = true;
@@ -40,7 +39,7 @@ module.exports = function handleDownVoteBtnClick(downVoteBtn, deps){
                             }
                             //console.log("There is information on record for this user");
                             //Get user vote status
-                            var currentUserVoteStatus = parseInt(voteRecordObj[cllUserId]);
+                            var currentUserVoteStatus = parseInt(voteRecordObj[cllUserId[0]]);
                             if(currentUserVoteStatus === 0)
                             {
                                 alert("You've already down voted this post!");
@@ -95,7 +94,7 @@ module.exports = function handleDownVoteBtnClick(downVoteBtn, deps){
                                 //console.log("There is no information on record AT ALL");
                                 
                                 //console.log("Change voter status to 0");
-                                metaObj.voteRecord = '{"'+cllUserId+'":'+'"0"}';
+                                metaObj.voteRecord = '{"'+cllUserId[0]+'":'+'"0"}';
                                 ////console.log("add downvote to post");
                                 metaObj.down_votes+=1;
 
@@ -107,9 +106,22 @@ module.exports = function handleDownVoteBtnClick(downVoteBtn, deps){
                                 //visually add 1 to down vote
                                 downVoteCounter.innerHTML = visuallyUpdateVoteCounter("increment", downVoteCounter);
 
-                                makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link/'+objResponse[0].id, 'POST', newPostMetaData)
-                                    .then(function(request){
-                                        //do something after request complete
+                               if(cllIsAdmin[0] === "true"){
+                                    makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/cll-link/'+objResponse[0].id, 'POST', newPostMetaData)
+                                        .then(function(){
+                                            cllGlobals.isUpVoteBtnClicked = false;
+                                            cllGlobals.isNeutralVoteBtnClicked = false;
+                                            cllGlobals.isDownVoteBtnClicked = false;
+                                        })
+                                        .catch(function(error){
+                                            console.log(error);
+                                        });
+                                    return;
+                                }
+                                else{
+                                    makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/cll-vote/v1/cll-link/'+objResponse[0].id, 'POST', JSON.stringify(metaObj))
+                                    .then(function(){
+                                        //console.log(request.responseText);
                                         cllGlobals.isUpVoteBtnClicked = false;
                                         cllGlobals.isNeutralVoteBtnClicked = false;
                                         cllGlobals.isDownVoteBtnClicked = false;
@@ -117,7 +129,7 @@ module.exports = function handleDownVoteBtnClick(downVoteBtn, deps){
                                     .catch(function(error){
                                         console.log(error);
                                     });
-                                return;
+                                }
                             }
                         }
                     })

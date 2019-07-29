@@ -8,7 +8,7 @@ module.exports = function endLinkRequest(currentAddToListBtn, deps)
 
 	//console.log(window[multiListPageCategoryIds]);
 		
-	makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/users/'+cllUserId, 'GET')
+	makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/users/'+cllUserId[0], 'GET')
 		.then(function(request){
 			var objResponse = JSON.parse(request.responseText);
 			//console.log(objResponse.name);

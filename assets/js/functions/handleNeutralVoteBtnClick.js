@@ -90,16 +90,29 @@ module.exports = function handleNeutralVoteBtnClick(neutralVoteBtn, deps){
                                 
                                 //console.log(metaObj.voteRecord);
                                 console.log("Change voter status to 3");
-                                metaObj.voteRecord = '{"'+cllUserId+'":'+'"3"}';
+                                metaObj.voteRecord = '{"'+cllUserId[0]+'":'+'"3"}';
 
                                 var newPostMetaData = JSON.stringify({
                                     "meta" : metaObj
 
                                 });
 
-                                makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link/'+objResponse[0].id, 'POST', newPostMetaData)
-                                    .then(function(request){
-                                        //Make other buttons clickable,
+                               if(cllIsAdmin[0] === "true"){
+                                    makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/cll-link/'+objResponse[0].id, 'POST', newPostMetaData)
+                                        .then(function(){
+                                            cllGlobals.isUpVoteBtnClicked = false;
+                                            cllGlobals.isNeutralVoteBtnClicked = false;
+                                            cllGlobals.isDownVoteBtnClicked = false;
+                                        })
+                                        .catch(function(error){
+                                            console.log(error);
+                                        });
+                                    return;
+                                }
+                                else{
+                                    makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/cll-vote/v1/cll-link/'+objResponse[0].id, 'POST', JSON.stringify(metaObj))
+                                    .then(function(){
+                                        //console.log(request.responseText);
                                         cllGlobals.isUpVoteBtnClicked = false;
                                         cllGlobals.isNeutralVoteBtnClicked = false;
                                         cllGlobals.isDownVoteBtnClicked = false;
@@ -107,7 +120,7 @@ module.exports = function handleNeutralVoteBtnClick(neutralVoteBtn, deps){
                                     .catch(function(error){
                                         console.log(error);
                                     });
-                                return;
+                                }
                             }
                         }
                     })
