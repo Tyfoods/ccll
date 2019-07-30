@@ -2,7 +2,7 @@ module.exports = function handleEditCategoryBtnClick(editCategoryBtn, deps){
     if(cllGlobals.isEditCategoryFormCreated === false)
     {
         var dropDownBox = document.createElement("select"); //input element, text
-        dropDownBox.setAttribute('class','listCategorySelector');
+        dropDownBox.setAttribute('class','cll-edit-category-btn__list-category-selector');
 
         var dropDownBoxPlaceHolder = document.createElement("option"); //input element, text
         dropDownBoxPlaceHolder.innerHTML = "List Category";
@@ -20,13 +20,13 @@ module.exports = function handleEditCategoryBtnClick(editCategoryBtn, deps){
         var b = document.createElement("button"); //button element, b button
         b.setAttribute('name',"settingsSubmitBtn");
         b.setAttribute('type', 'button');
-        b.setAttribute('class','settingsSubmitBtn');
+        b.setAttribute('class','cll-edit-categoy-btn__submit-btn');
         b.innerHTML = 'Submit';
 
         var cancelBtn = document.createElement("button");
         cancelBtn.setAttribute('name',"cancelBtn");
         cancelBtn.setAttribute('type', 'button');
-        cancelBtn.setAttribute('class','cancelBtn');
+        cancelBtn.setAttribute('class','cll-edit-category-btn__cancel-btn');
 
 
         existing_category_names_array.forEach(function(existing_category_name){

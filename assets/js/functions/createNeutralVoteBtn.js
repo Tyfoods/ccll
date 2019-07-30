@@ -1,12 +1,11 @@
 module.exports = function createNeutralVoteBtn(){
-	var allListItemsCollection = document.getElementsByClassName('link-list-item');
-	var allListItemsArray = Array.prototype.slice.call( allListItemsCollection, 0 );
+	var allListItemsArray = document.querySelectorAll('.link-list--style-1__link-list-item');
 	
 	var incrementer = 0;
 
 	allListItemsArray.forEach(function(listItem){
 		var neutralVoteBtn = document.createElement("button");
-		neutralVoteBtn.setAttribute('class','neutral_vote_button');
+		neutralVoteBtn.setAttribute('class','link-list-item__neutral-vote-button');
 
 		var cllId = document.createAttribute("cllId");       // Create a "class" attribute
 		neutralVoteBtn.setAttributeNode(cllId);

@@ -1,6 +1,6 @@
 module.exports = function addClickToEditCategoryBtn(deps){
 	
-	var editCategoryBtnArray = document.querySelectorAll(".cll_edit_category_btn");
+	var editCategoryBtnArray = document.querySelectorAll(".cll-link-list__cll-edit-category-btn");
 
 	editCategoryBtnArray.forEach(function(editCategoryBtn)
 	{

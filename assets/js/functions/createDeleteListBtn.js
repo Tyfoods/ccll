@@ -1,20 +1,20 @@
 module.exports = function createDeleteListBtn(setAttributeOfElementsInArrayIncrementally, makeRequest){
 
 
-	var cllLinkListArray = document.querySelectorAll('.cll_link_list');
+	var cllLinkListArray = document.querySelectorAll('.cll-link-list');
 	//console.log(cllLinkListArray);
 
 	cllLinkListArray.forEach(function(cllLinkList)
 	{
 		var deleteListBtn = document.createElement("button");
-		deleteListBtn.setAttribute('class', 'delete_list_btn')
+		deleteListBtn.setAttribute('class', 'cll-link-list__delete-list-btn')
 		deleteListBtn.innerHTML = "Delete List";
 		cllLinkList.insertBefore(deleteListBtn, cllLinkList.firstChild);
 	});
 
 	
-	var listArray = document.querySelectorAll('.cll_link_list');
-	var deleteListBtnCollection = document.querySelectorAll(".delete_list_btn");
+	var listArray = document.querySelectorAll('.cll-link-list');
+	var deleteListBtnCollection = document.querySelectorAll(".cll-link-list__delete-list-btn");
 
 	setAttributeOfElementsInArrayIncrementally(deleteListBtnCollection, 'cllId');
 	setAttributeOfElementsInArrayIncrementally(listArray, 'cllId');

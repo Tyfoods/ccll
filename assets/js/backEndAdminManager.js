@@ -104,7 +104,7 @@ eval("module.exports = cllGlobals = {\n  isAddToListBtnClicked: false,\n  isSubm
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-eval("module.exports = function addClickToLinkApproveBtn(deps) {\n  var cllApproveBtnArray = document.querySelectorAll(\".cllApproveBtn\");\n  cllApproveBtnArray.forEach(function (cllApproveBtn) {\n    cllApproveBtn.addEventListener(\"click\", function () {\n      deps.handleLinkApproveBtnClick(cllApproveBtn, deps);\n    });\n  });\n};\n\n//# sourceURL=webpack:///./assets/js/functions/addClickToLinkApproveBtn.js?");
+eval("module.exports = function addClickToLinkApproveBtn(deps) {\n  var cllApproveBtnArray = document.querySelectorAll(\".pending-link-data__approve-btn\");\n  cllApproveBtnArray.forEach(function (cllApproveBtn) {\n    cllApproveBtn.addEventListener(\"click\", function () {\n      deps.handleLinkApproveBtnClick(cllApproveBtn, deps);\n    });\n  });\n};\n\n//# sourceURL=webpack:///./assets/js/functions/addClickToLinkApproveBtn.js?");
 
 /***/ }),
 
@@ -115,7 +115,7 @@ eval("module.exports = function addClickToLinkApproveBtn(deps) {\n  var cllAppro
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-eval("module.exports = function addClickToLinkDeclineBtn(deps) {\n  var cllDeclineBtnArray = document.querySelectorAll(\".cllDeclineBtn\");\n  cllDeclineBtnArray.forEach(function (cllDeclineBtn) {\n    cllDeclineBtn.addEventListener(\"click\", function () {\n      deps.handleLinkDeclineBtnClick(cllDeclineBtn, deps);\n    });\n  });\n};\n\n//# sourceURL=webpack:///./assets/js/functions/addClickToLinkDeclineBtn.js?");
+eval("module.exports = function addClickToLinkDeclineBtn(deps) {\n  var cllDeclineBtnArray = document.querySelectorAll(\".pending-link-data__decline-btn\");\n  cllDeclineBtnArray.forEach(function (cllDeclineBtn) {\n    cllDeclineBtn.addEventListener(\"click\", function () {\n      deps.handleLinkDeclineBtnClick(cllDeclineBtn, deps);\n    });\n  });\n};\n\n//# sourceURL=webpack:///./assets/js/functions/addClickToLinkDeclineBtn.js?");
 
 /***/ }),
 
@@ -126,7 +126,7 @@ eval("module.exports = function addClickToLinkDeclineBtn(deps) {\n  var cllDecli
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-eval("module.exports = function addOnClickToListApproveBtn(deps) {\n  var cllListApproveBtnArray = document.querySelectorAll(\".cllListApproveBtn\");\n  cllListApproveBtnArray.forEach(function (cllListApproveBtn) {\n    cllListApproveBtn.addEventListener(\"click\", function () {\n      deps.handleListApproveBtnClick(cllListApproveBtn, deps);\n    });\n  });\n};\n\n//# sourceURL=webpack:///./assets/js/functions/addClickToListApproveBtn.js?");
+eval("module.exports = function addOnClickToListApproveBtn(deps) {\n  var cllListApproveBtnArray = document.querySelectorAll(\".pending-list-data__approve-btn\");\n  cllListApproveBtnArray.forEach(function (cllListApproveBtn) {\n    cllListApproveBtn.addEventListener(\"click\", function () {\n      deps.handleListApproveBtnClick(cllListApproveBtn, deps);\n    });\n  });\n};\n\n//# sourceURL=webpack:///./assets/js/functions/addClickToListApproveBtn.js?");
 
 /***/ }),
 
@@ -137,7 +137,7 @@ eval("module.exports = function addOnClickToListApproveBtn(deps) {\n  var cllLis
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-eval("module.exports = function addClickToListDeclineBtn(deps) {\n  var cllListDeclineBtnArray = document.querySelectorAll(\".cllListDeclineBtn\");\n  cllListDeclineBtnArray.forEach(function (cllListDeclineBtn) {\n    cllListDeclineBtn.addEventListener(\"click\", function () {\n      deps.handleListDeclineBtnClick(cllListDeclineBtn, deps);\n    });\n  });\n};\n\n//# sourceURL=webpack:///./assets/js/functions/addClickToListDeclineBtn.js?");
+eval("module.exports = function addClickToListDeclineBtn(deps) {\n  var cllListDeclineBtnArray = document.querySelectorAll(\".pending-list-data__decline-btn\");\n  cllListDeclineBtnArray.forEach(function (cllListDeclineBtn) {\n    cllListDeclineBtn.addEventListener(\"click\", function () {\n      deps.handleListDeclineBtnClick(cllListDeclineBtn, deps);\n    });\n  });\n};\n\n//# sourceURL=webpack:///./assets/js/functions/addClickToListDeclineBtn.js?");
 
 /***/ }),
 

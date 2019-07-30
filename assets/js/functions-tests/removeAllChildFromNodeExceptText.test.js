@@ -7,7 +7,8 @@ testEditCategoryBtn.innerHTML = "Edit Category";
 
 var testCategorySelectorDropDownBox = document.createElement("type", "select");
 //testCategorySelectorDropDownBox.setAttribute("class", "cll-edit-category-btn__list-category-selector");
-testCategorySelectorDropDownBox.setAttribute("class", "listCategorySelector");
+//testCategorySelectorDropDownBox.setAttribute("class", "listCategorySelector");
+//cll-edit-category-btn__list-category-selector
 
 const testSubmitBtn = document.createElement("type", "button");
 //testSubmitBtn.setAttribute("class", "cll-edit-category-btn__submit-btn");

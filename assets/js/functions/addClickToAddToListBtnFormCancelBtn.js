@@ -1,6 +1,6 @@
 module.exports = function addClickToAddToListBtnFormCancelBtn()
 {
-	var cancelBtnArray = document.querySelectorAll(".cancelBtn");
+	var cancelBtnArray = document.querySelectorAll(".add-to-list-form__cancel-btn");
 	cancelBtnArray.forEach(function(cancelBtn)
 	{
 

@@ -2,14 +2,14 @@ h1#cll-link-manager-page-title{
     text-align: center;
 }
 
-td.pending-link-data{
+.pending-link-data-table__pending-link-data td{
 	text-align: center;
 }
 
-td.pending-list-data{
+.pending-link-data-table__pending-list-data td{
 	text-align: center;
 }
 
-#cllApproveBtn{
+#pending-link-data_approve-btn{
 	left: 10%;
 }

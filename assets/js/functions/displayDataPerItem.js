@@ -5,7 +5,7 @@ module.exports = (function displayDataPerItem(setAttributeOfElementsInArrayIncre
 		.then(function(request){
 
 			var cllLinkArray = JSON.parse(request.responseText);
-			var linkListItemArray = document.querySelectorAll('.link-list-item');
+			var linkListItemArray = document.querySelectorAll('.link-list--style-1__link-list-item');
 			var incrementer = 0;
 
 			//console.log(cllLinkArray);
@@ -16,17 +16,17 @@ module.exports = (function displayDataPerItem(setAttributeOfElementsInArrayIncre
 					if(cllLink.slug === post_slug){
 
 						var upVotesCounter = document.createElement('p');
-						upVotesCounter.setAttribute('class','up_votes_counter');
+						upVotesCounter.setAttribute('class','link-list-item__up-votes-counter');
 						upVotesCounter.innerHTML = cllLinkArray[incrementer].meta.up_votes;
 
 						var downVotesCounter = document.createElement('p');
-						downVotesCounter.setAttribute('class','down_votes_counter');
+						downVotesCounter.setAttribute('class','link-list-item__down-votes-counter');
 						downVotesCounter.innerHTML = cllLinkArray[incrementer].meta.down_votes;
 
 						var currentLinkItemId = linkListItem.getAttribute('cllId');
 
-						var downVoteButton = document.querySelector('.down_vote_button[cllId="'+currentLinkItemId+'"]');
-						var upVoteButton = document.querySelector('.up_vote_button[cllId="'+currentLinkItemId+'"]');
+						var downVoteButton = document.querySelector('.link-list-item__down-vote-button[cllId="'+currentLinkItemId+'"]');
+						var upVoteButton = document.querySelector('.link-list-item__up-vote-button[cllId="'+currentLinkItemId+'"]');
 
 
 						downVoteButton.appendChild(downVotesCounter);
@@ -34,7 +34,7 @@ module.exports = (function displayDataPerItem(setAttributeOfElementsInArrayIncre
 
 						//display "submittedByElement";
 						var submittedByElement = document.createElement('p');
-						submittedByElement.setAttribute('class','submitted_by');
+						submittedByElement.setAttribute('class','link-list-item__submitted-by');
 
 						//console.log(cllLinkArray[incrementer].meta);
 
@@ -53,10 +53,10 @@ module.exports = (function displayDataPerItem(setAttributeOfElementsInArrayIncre
 				});
 				incrementer+=1;
 			});
-			var downVoteCounterArray = document.querySelectorAll('.down_votes_counter');
+			var downVoteCounterArray = document.querySelectorAll('.link-list-item__down-votes-counter');
 			setAttributeOfElementsInArrayIncrementally(downVoteCounterArray, 'cllId');
 
-			var upVoteCounterArray = document.querySelectorAll('.up_votes_counter');
+			var upVoteCounterArray = document.querySelectorAll('.link-list-item__up-votes-counter');
 			setAttributeOfElementsInArrayIncrementally(upVoteCounterArray, 'cllId');
 		});
 });

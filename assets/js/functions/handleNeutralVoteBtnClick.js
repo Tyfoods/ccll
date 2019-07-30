@@ -3,7 +3,7 @@ module.exports = function handleNeutralVoteBtnClick(neutralVoteBtn, deps){
     const visuallyUpdateVoteCounter = deps.visuallyUpdateVoteCounter;
     const setVoterStatusToNeutralAndUpdatePostMeta = deps.setVoterStatusToNeutralAndUpdatePostMeta;
 
-    var linkListTitleArray = document.querySelectorAll('.link-list-title');
+    var linkListTitleArray = document.querySelectorAll('.link_list_item__link-list-title');
     if(cllGlobals.isNeutralVoteBtnClicked === false){
         linkListTitleArray.forEach(function(linkListTitle){
             var post_slug = linkListTitle.textContent.trim().replace(/\s/g, '-').toLowerCase();
@@ -52,7 +52,7 @@ module.exports = function handleNeutralVoteBtnClick(neutralVoteBtn, deps){
 
                                     console.log("Voter status 1, updating status, removing up vote updating voter status");
                                     //visually remove users up vote
-                                    var upVoteCounter = document.querySelector('.up_votes_counter[cllId="'+currentLinkItemCllId+'"]');
+                                    var upVoteCounter = document.querySelector('.link-list-item__up-votes-counter[cllId="'+currentLinkItemCllId+'"]');
                                     upVoteCounter.innerHTML = visuallyUpdateVoteCounter("decrement", upVoteCounter);
 
                                     setVoterStatusToNeutralAndUpdatePostMeta(currentLinkItemPostId, metaObj, "upVote", makeRequest);
@@ -69,7 +69,7 @@ module.exports = function handleNeutralVoteBtnClick(neutralVoteBtn, deps){
                                     
                                     console.log("Voter status 0, updating status, removing down vote updating voter status");
                                     //visually remove users down vote
-                                    var downVoteCounter = document.querySelector('.down_votes_counter[cllId="'+currentLinkItemCllId+'"]');
+                                    var downVoteCounter = document.querySelector('.link-list-item__down-votes-counter[cllId="'+currentLinkItemCllId+'"]');
                                     downVoteCounter.innerHTML = visuallyUpdateVoteCounter("decrement", downVoteCounter);
 
                                     setVoterStatusToNeutralAndUpdatePostMeta(currentLinkItemPostId, metaObj, "downVote", makeRequest);
@@ -98,7 +98,7 @@ module.exports = function handleNeutralVoteBtnClick(neutralVoteBtn, deps){
                                 });
 
                                if(cllIsAdmin[0] === "true"){
-                                    makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/cll-link/'+objResponse[0].id, 'POST', newPostMetaData)
+                                    makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link/'+objResponse[0].id, 'POST', newPostMetaData)
                                         .then(function(){
                                             cllGlobals.isUpVoteBtnClicked = false;
                                             cllGlobals.isNeutralVoteBtnClicked = false;

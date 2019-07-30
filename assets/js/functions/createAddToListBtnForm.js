@@ -8,28 +8,28 @@ module.exports = function createAddToListBtnForm(currentAddToListBtn, deps){
         linktitle.setAttribute('type',"text");
         linktitle.setAttribute('name',"newListItemTitle");
         linktitle.setAttribute('placeholder',"Link title here");
-        linktitle.setAttribute("class", "add_to_list_input");
+        linktitle.setAttribute("class", "add-to-list-form__add-to-list-input");
 
         var link = document.createElement("input");
         link.setAttribute('type',"text");
         link.setAttribute('name',"newListItemUrl");
         link.setAttribute('placeholder',"URL here");
-        link.setAttribute("class", "add_to_list_input");
+        link.setAttribute("class", "add-to-list-form__add-to-list-input");
 
         var b = document.createElement("button");
         b.setAttribute('name',"submitBtn");
         b.setAttribute('type', 'button');
-        b.setAttribute('class','submitBtn');
+        b.setAttribute('class','add-to-list-form__submit-btn');
         b.innerHTML = 'Submit';
 
         var cancelBtn = document.createElement("button");
         cancelBtn.setAttribute('name',"cancelBtn");
         cancelBtn.setAttribute('type', 'button');
-        cancelBtn.setAttribute('class','cancelBtn');
+        cancelBtn.setAttribute('class','add-to-list-form__cancel-btn');
 
         if(cllIsAdmin[0] === "true"){
             var dropDownBox = document.createElement("select");
-            dropDownBox.setAttribute('id','linkTypeSelecter');
+            dropDownBox.setAttribute('id','add-to-list-form__link-type-selector');
 
             var dropDownBoxPlaceHolder = document.createElement("option");
             dropDownBoxPlaceHolder.innerHTML = "Link Type";
@@ -55,7 +55,7 @@ module.exports = function createAddToListBtnForm(currentAddToListBtn, deps){
 
             dropDownBox.addEventListener('change', function(){
 
-                var x = document.getElementById("linkTypeSelecter").selectedIndex;
+                var x = document.getElementById("add-to-list-form__link-type-selector").selectedIndex;
                 var linkType = document.getElementsByTagName("option")[x].value;
     
                 if(linkType.toLowerCase() === 'internal link')

@@ -17,9 +17,9 @@ module.exports = function endLinkRequest(currentAddToListBtn, deps)
 		.then(function(username){
 
 			var NewLinkItemData = {
-				"title": document.querySelector('[name="newListItemTitle"].add_to_list_input').value,
-				"slug": "/"+document.querySelector('[name="newListItemTitle"].add_to_list_input').value.replace(/ /g,'-').toLowerCase(),
-				"meta" : {"URL" : document.querySelector('[name="newListItemUrl"].add_to_list_input').value.replace(/ /g, '-').replace(/%20/g,'-'), "link_type" : "external link", "submitted_by": username },
+				"title": document.querySelector('[name="newListItemTitle"].add-to-list-form__add-to-list-input').value,
+				"slug": "/"+document.querySelector('[name="newListItemTitle"].add-to-list-form__add-to-list-input').value.replace(/ /g,'-').toLowerCase(),
+				"meta" : {"URL" : document.querySelector('[name="newListItemUrl"].add-to-list-form__add-to-list-input').value.replace(/ /g, '-').replace(/%20/g,'-'), "link_type" : "external link", "submitted_by": username },
 				"status": "publish",
 				"link_category": [window[multiListPageCategoryIds]]
 			}
@@ -40,7 +40,7 @@ module.exports = function endLinkRequest(currentAddToListBtn, deps)
 	alert("Thank you for submitting!");
 
 
-	var newListItemTitle = document.querySelector('[name="newListItemTitle"].add_to_list_input').value
+	var newListItemTitle = document.querySelector('[name="newListItemTitle"].add-to-list-form__add-to-list-input').value
 	//event.stopPropagation();
 	var jsDataArray = {
 			"newListItemTitle":newListItemTitle,

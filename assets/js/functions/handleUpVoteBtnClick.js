@@ -3,7 +3,7 @@ module.exports = function handleUpVoteBtnClick(upVoteBtn, deps){
 	const visuallyUpdateVoteCounter = deps.visuallyUpdateVoteCounter;
 	const setVoterStatusToUpAndUpdatePostMeta = deps.setVoterStatusToUpAndUpdatePostMeta;
 
-    var linkListTitleArray = document.querySelectorAll('.link-list-title');
+    var linkListTitleArray = document.querySelectorAll('.link_list_item__link-list-title');
 
     if(cllGlobals.isUpVoteBtnClicked === false){
         linkListTitleArray.forEach(function(linkListTitle){
@@ -29,7 +29,7 @@ module.exports = function handleUpVoteBtnClick(upVoteBtn, deps){
                                     
                                     //console.log("There is no information for this user on record");
                                     
-                                    var upVoteCounter = document.querySelector('.up_votes_counter[cllId="'+currentLinkItemId+'"]');
+                                    var upVoteCounter = document.querySelector('.link-list-item__up-votes-counter[cllId="'+currentLinkItemId+'"]');
                                     upVoteCounter.innerHTML = visuallyUpdateVoteCounter("increment", upVoteCounter);
 
                                     //increments upvote
@@ -50,11 +50,11 @@ module.exports = function handleUpVoteBtnClick(upVoteBtn, deps){
 
                                     //console.log("Voter status was 0, incrementing up vote /removing downvote (visually too), changing status to 1");
                                     //visually remove down vote
-                                    var downVoteCounter = document.querySelector('.down_votes_counter[cllId="'+currentLinkItemId+'"]');
+                                    var downVoteCounter = document.querySelector('.link-list-item__down-votes-counter[cllId="'+currentLinkItemId+'"]');
                                     downVoteCounter.innerHTML = visuallyUpdateVoteCounter("decrement", downVoteCounter);
 
                                     //visually add up vote
-                                    var upVoteCounter = document.querySelector('.up_votes_counter[cllId="'+currentLinkItemId+'"]');
+                                    var upVoteCounter = document.querySelector('.link-list-item__up-votes-counter[cllId="'+currentLinkItemId+'"]');
                                     upVoteCounter.innerHTML = visuallyUpdateVoteCounter("increment", upVoteCounter);
 
                                     setVoterStatusToUpAndUpdatePostMeta(currentLinkItemPostId, metaObj, "switch", makeRequest);
@@ -69,7 +69,7 @@ module.exports = function handleUpVoteBtnClick(upVoteBtn, deps){
                                     //console.log("Voter status was 3, incrementing up vote (visually too), changing status to 1");
 
                                     //visually add up vote
-                                    var upVoteCounter = document.querySelector('.up_votes_counter[cllId="'+currentLinkItemId+'"]');
+                                    var upVoteCounter = document.querySelector('.link-list-item__up-votes-counter[cllId="'+currentLinkItemId+'"]');
                                     upVoteCounter.innerHTML = visuallyUpdateVoteCounter("increment", upVoteCounter);
 
                                     //Increment up_votes in metaObj
@@ -97,10 +97,10 @@ module.exports = function handleUpVoteBtnClick(upVoteBtn, deps){
                                     "meta" : metaObj
 
                                 });
-                                var upVoteCounter = document.querySelector('.up_votes_counter[cllId="'+currentLinkItemId+'"]');
+                                var upVoteCounter = document.querySelector('.link-list-item__up-votes-counter[cllId="'+currentLinkItemId+'"]');
                                 upVoteCounter.innerHTML = visuallyUpdateVoteCounter("increment", upVoteCounter);
                                 if(cllIsAdmin[0] === "true"){
-                                    makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/cll-link/'+objResponse[0].id, 'POST', newPostMetaData)
+                                    makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link/'+objResponse[0].id, 'POST', newPostMetaData)
                                         .then(function(){
                                             cllGlobals.isUpVoteBtnClicked = false;
                                             cllGlobals.isNeutralVoteBtnClicked = false;

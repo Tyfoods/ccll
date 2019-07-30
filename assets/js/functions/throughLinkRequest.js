@@ -4,8 +4,8 @@ module.exports = function throughLinkRequest(currentAddToListBtn, deps)
 	const makeRequest = deps.makeRequest;
 	
 	var NewLinkPageData = {
-		"title": document.querySelector('[name="newListItemTitle"].add_to_list_input').value,
-		"slug": "/"+document.querySelector('[name="newListItemTitle"].add_to_list_input').value.replace(/ /g,'-').toLowerCase(),
+		"title": document.querySelector('[name="newListItemTitle"].add-to-list-form__add-to-list-input').value,
+		"slug": "/"+document.querySelector('[name="newListItemTitle"].add-to-list-form__add-to-list-input').value.replace(/ /g,'-').toLowerCase(),
 		"content": '[cll_list]',
 		"type": "page",
 		"status": "publish"
@@ -52,9 +52,9 @@ module.exports = function throughLinkRequest(currentAddToListBtn, deps)
 		})
 		.then(function(username){
 			var NewLinkItemData = {
-				"title": document.querySelector('[name="newListItemTitle"].add_to_list_input').value,
-				"slug": "/"+document.querySelector('[name="newListItemTitle"].add_to_list_input').value.replace(/ /g,'-').toLowerCase(),
-				"meta" : {"URL" : cllGlobals.currentProtocalDomain+'/'+document.querySelector('[name="newListItemTitle"].add_to_list_input').value.replace(/ /g, '-').replace(/%20/g,'-'), "link_type" : "internal link", "submitted_by": username },
+				"title": document.querySelector('[name="newListItemTitle"].add-to-list-form__add-to-list-input').value,
+				"slug": "/"+document.querySelector('[name="newListItemTitle"].add-to-list-form__add-to-list-input').value.replace(/ /g,'-').toLowerCase(),
+				"meta" : {"URL" : cllGlobals.currentProtocalDomain+'/'+document.querySelector('[name="newListItemTitle"].add-to-list-form__add-to-list-input').value.replace(/ /g, '-').replace(/%20/g,'-'), "link_type" : "internal link", "submitted_by": username },
 				"status": "publish",
 				"link_category": [window[multiListPageCategoryIds]]
 			}
@@ -73,7 +73,7 @@ module.exports = function throughLinkRequest(currentAddToListBtn, deps)
 
 
 
-	var newListItemTitle = document.querySelector('[name="newListItemTitle"].add_to_list_input').value
+	var newListItemTitle = document.querySelector('[name="newListItemTitle"].add-to-list-form__add-to-list-input').value
 	//event.stopPropagation();
 	var jsDataArray = {"newListItemTitle":newListItemTitle,
 						"currentAddToListBtn":currentAddToListBtn}

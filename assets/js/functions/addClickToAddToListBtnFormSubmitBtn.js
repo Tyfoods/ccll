@@ -1,6 +1,6 @@
 module.exports = function addClickToAddToListBtnFormSubmitBtn(currentAddToListBtn, deps){
 
-	var submitBtn = document.querySelector('button.submitBtn');
+	var submitBtn = document.querySelector('button.add-to-list-form__submit-btn');
 
 
 	if (typeof submitBtn !== 'undefined')
@@ -8,21 +8,21 @@ module.exports = function addClickToAddToListBtnFormSubmitBtn(currentAddToListBt
 		//console.log("Submit Button Existance Verified");
 		submitBtn.addEventListener("click", function()
 		{
-			//console.log(document.querySelector('[name="newListItemUrl"].add_to_list_input'));
+			//console.log(document.querySelector('[name="newListItemUrl"].add-to-list-form__add-to-list-input'));
 
 			if(cllIsAdmin[0] === "true"){
-				var x = document.getElementById("linkTypeSelecter").selectedIndex;
+				var x = document.getElementById("add-to-list-form__link-type-selector").selectedIndex;
 				var linkType = document.getElementsByTagName("option")[x].value;
 
-				if(document.querySelector('[name="newListItemTitle"].add_to_list_input').value === ''){
+				if(document.querySelector('[name="newListItemTitle"].add-to-list-form__add-to-list-input').value === ''){
 					alert("You must submit a title!");
 				}
 				else if(linkType.toLowerCase() === 'external link')
 				{
-					if(document.querySelector('[name="newListItemUrl"].add_to_list_input').value === ''){
+					if(document.querySelector('[name="newListItemUrl"].add-to-list-form__add-to-list-input').value === ''){
 						alert("You must submit a URL!");
 					}
-					else if(!deps.isUrl(document.querySelector('[name="newListItemUrl"].add_to_list_input').value))
+					else if(!deps.isUrl(document.querySelector('[name="newListItemUrl"].add-to-list-form__add-to-list-input').value))
 					{
 						alert("Please enter a valid URL!");
 					}
@@ -41,13 +41,13 @@ module.exports = function addClickToAddToListBtnFormSubmitBtn(currentAddToListBt
 				}
 			}
 			else{
-				if(document.querySelector('[name="newListItemTitle"].add_to_list_input').value === ''){
+				if(document.querySelector('[name="newListItemTitle"].add-to-list-form__add-to-list-input').value === ''){
 					alert("You must submit a title!");
 				}
-				else if(document.querySelector('[name="newListItemUrl"].add_to_list_input').value === ''){
+				else if(document.querySelector('[name="newListItemUrl"].add-to-list-form__add-to-list-input').value === ''){
 					alert("You must submit a URL!");
 				}
-				else if(!deps.isUrl(document.querySelector('[name="newListItemUrl"].add_to_list_input').value))
+				else if(!deps.isUrl(document.querySelector('[name="newListItemUrl"].add-to-list-form__add-to-list-input').value))
 				{
 					alert("Please enter a valid URL!");
 				}
@@ -56,8 +56,8 @@ module.exports = function addClickToAddToListBtnFormSubmitBtn(currentAddToListBt
 					var multiListPageCategoryIds = "cll_category_ids"+"_"+currentAddToListBtn.getAttribute('cllid');
 
 					var NewLinkItemData = {
-						"title": document.querySelector('[name="newListItemTitle"].add_to_list_input').value,
-						"content": document.querySelector('[name="newListItemUrl"].add_to_list_input').value,
+						"title": document.querySelector('[name="newListItemTitle"].add-to-list-form__add-to-list-input').value,
+						"content": document.querySelector('[name="newListItemUrl"].add-to-list-form__add-to-list-input').value,
 						"categories": [window[multiListPageCategoryIds]],
 						"status": "publish"
 					}
@@ -113,7 +113,7 @@ module.exports = function addClickToAddToListBtnFormSubmitBtn(currentAddToListBt
 					createLinkItemQuery.send(NewLinkItemData);
 					*/
 
-					//var newListItemTitle = document.querySelector('[name="newListItemTitle"].add_to_list_input').value //what's this for?
+					//var newListItemTitle = document.querySelector('[name="newListItemTitle"].add-to-list-form__add-to-list-input').value //what's this for?
 					//event.stopPropagation();
 			}
 

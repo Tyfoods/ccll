@@ -16,11 +16,11 @@ window.onload=function()
 
 function createNewListRequestBtn(){
 	var newListRequestBtn = document.createElement('button');
-	newListRequestBtn.setAttribute("class", "newListBtn");
+	newListRequestBtn.setAttribute("class", "new-list-btn");
 	newListRequestBtn.innerHTML = "Request New Category +";
 
 
-	var cll_link_list = document.querySelector('.cll_link_list');
+	var cll_link_list = document.querySelector('.cll-link-list');
 
 	cll_link_list.parentElement.insertBefore(newListRequestBtn, cll_link_list.parentElement.firstChild);
 
@@ -33,7 +33,7 @@ function createNewListRequestBtn(){
 function addClickToAddToListBtn()
 {
 	var i = 0;
-	var add_to_list_btn_array = document.querySelectorAll(".add_to_list_btn");
+	var add_to_list_btn_array = document.querySelectorAll(".cll-link-list__add-to-list-btn");
 	add_to_list_btn_array.forEach(function(add_to_list_btn)
 	{
 
@@ -62,7 +62,7 @@ else
 {
 	//console.log("Search bar doesn't exist");
 }
-	var allListItemsArray = document.querySelectorAll('.link-list-item');
+	var allListItemsArray = document.querySelectorAll('.link-list--style-1__link-list-item');
 	setAttributeOfElementsInArrayIncrementally(allListItemsArray, 'cllId');
 	
 	const dependencies = {
@@ -78,22 +78,21 @@ else
 	createNeutralVoteBtn();
 	createNewListRequestBtn();
 
-	var upVoteBtnArray = document.querySelectorAll('.up_vote_button');
+	var upVoteBtnArray = document.querySelectorAll('.link-list-item__up-vote-button');
 	upVoteBtnArray.forEach(function(upVoteBtn){
-		console.log("hi!");
 		upVoteBtn.addEventListener('click', function(){
             alert("You must be logged in to upvote!");
 		});
 	});
 
-	var neutralVoteBtnArray = document.querySelectorAll('.neutral_vote_button');
+	var neutralVoteBtnArray = document.querySelectorAll('.link-list-item__neutral-vote-button');
 	neutralVoteBtnArray.forEach(function(neutralVoteBtn){
 		neutralVoteBtn.addEventListener('click', function(){
             alert("You must be logged in to neutral vote");
 		});
 	});
 
-	var downVoteBtnArray = document.querySelectorAll('.down_vote_button');
+	var downVoteBtnArray = document.querySelectorAll('.link-list-item__down-vote-button');
 	downVoteBtnArray.forEach(function(downVoteBtn){
 		downVoteBtn.addEventListener('click', function(){
             alert("You must be logged in to down vote!");

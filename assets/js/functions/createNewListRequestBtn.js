@@ -1,10 +1,10 @@
 module.exports = function createNewListRequestBtn(makeRequest){
     var newListRequestBtn = document.createElement('button');
-    newListRequestBtn.setAttribute("class", "newListBtn");
+    newListRequestBtn.setAttribute("class", "new-list-btn");
     newListRequestBtn.innerHTML = "Request New Category +";
 
 
-    var cll_link_list = document.querySelector('.cll_link_list');
+    var cll_link_list = document.querySelector('.cll-link-list');
 
     cll_link_list.parentElement.insertBefore(newListRequestBtn, cll_link_list.parentElement.firstChild);
 

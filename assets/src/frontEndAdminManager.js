@@ -92,11 +92,11 @@ window.onload=function()
 
 	//createListTitles(); deprecated
 
-	var allListItemsArray = document.querySelectorAll('.link-list-item');
+	var allListItemsArray = document.querySelectorAll('.link-list--style-1__link-list-item');
 	setAttributeOfElementsInArrayIncrementally(allListItemsArray, 'cllId');
 
 	
-	var linkListTitleArray = document.querySelectorAll('.link-list-title');
+	var linkListTitleArray = document.querySelectorAll('.link-list-item__link-list-title');
 	setAttributeOfElementsInArrayIncrementally(linkListTitleArray, 'cllId');
 	
 
@@ -104,7 +104,7 @@ window.onload=function()
 	function testButton(){
 		var testButton = document.createElement('type', 'button');
 		testButton.innerHTML = "Test Request";
-		var cllLinkList = document.querySelector('.cll_link_list');
+		var cllLinkList = document.querySelector('.cll-link-list');
 		cllLinkList.appendChild(testButton);
 
 		var NewLinkPageData = {

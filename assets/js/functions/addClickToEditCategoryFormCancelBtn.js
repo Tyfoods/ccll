@@ -1,7 +1,7 @@
 
 
 module.exports = function addClickToEditCategoryFormCancelBtn(deps) {
-	var cancelBtnArray = document.querySelectorAll(".cancelBtn");
+	var cancelBtnArray = document.querySelectorAll(".cll-edit-category-btn__cancel-btn");
 	cancelBtnArray.forEach(function(cancelBtn){
 		if (typeof cancelBtn !== 'undefined'){
 			cancelBtn.addEventListener("click", function(){

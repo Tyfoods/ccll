@@ -1,14 +1,13 @@
 module.exports = function createAdminRemoveBtn(makeRequest, isObjEmpty){
-	var allListItemsArray = document.querySelectorAll('.link-list-item');
-	var allListItemsAnchorArray = document.querySelectorAll('.link-list-title');
-
+	var allListItemsArray = document.querySelectorAll('.link-list--style-1__link-list-item');
+	var allListItemsAnchorArray = document.querySelectorAll('.link-list-item__link-list-title');
 	var deleteBtnIncrementer = 0;
 
 
 	//append delete buttons to list items
 	allListItemsArray.forEach(function(listItem){
 		var adminDeleteBtn = document.createElement("button");
-		adminDeleteBtn.setAttribute('class','adminDeleteBtn');
+		adminDeleteBtn.setAttribute('class','link-list-item__admin-delete-button');
 
 		var cllId = document.createAttribute("cllId");       // Create a "class" attribute
 		adminDeleteBtn.setAttributeNode(cllId);
@@ -18,7 +17,7 @@ module.exports = function createAdminRemoveBtn(makeRequest, isObjEmpty){
 		deleteBtnIncrementer +=1;
 	});
 
-	var adminDeleteBtnArray = document.querySelectorAll('.adminDeleteBtn'); 
+	var adminDeleteBtnArray = document.querySelectorAll('.link-list-item__admin-delete-button'); 
 	adminDeleteBtnArray.forEach(function(adminDeleteBtn){
 		adminDeleteBtn.addEventListener("click", function(){
 			allListItemsAnchorArray.forEach(function(listItem){

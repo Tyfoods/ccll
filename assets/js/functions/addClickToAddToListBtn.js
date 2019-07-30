@@ -1,5 +1,5 @@
 module.exports = function addClickToAddToListBtn(deps){
-	var add_to_list_btn_array = document.querySelectorAll(".add_to_list_btn");
+	var add_to_list_btn_array = document.querySelectorAll(".cll-link-list__add-to-list-btn");
 
 	deps.setAttributeOfElementsInArrayIncrementally(add_to_list_btn_array, 'cllId');
 

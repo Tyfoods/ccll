@@ -3,7 +3,7 @@ module.exports = function handleDownVoteBtnClick(downVoteBtn, deps){
     const visuallyUpdateVoteCounter = deps.visuallyUpdateVoteCounter;
     const setVoterStatusToDownAndUpdatePostMeta = deps.setVoterStatusToDownAndUpdatePostMeta;
 
-	var linkListTitleArray = document.querySelectorAll('.link-list-title');
+	var linkListTitleArray = document.querySelectorAll('.link_list_item__link-list-title');
     if(cllGlobals.isDownVoteBtnClicked === false){
         linkListTitleArray.forEach(function(linkListTitle){
             var post_slug = linkListTitle.textContent.trim().replace(/\s/g, '-').toLowerCase();
@@ -16,8 +16,8 @@ module.exports = function handleDownVoteBtnClick(downVoteBtn, deps){
 
                         var currentLinkItemId = downVoteBtn.getAttribute('cllId');
 
-                        var downVoteCounter = document.querySelector('.down_votes_counter[cllId="'+currentLinkItemId+'"]');
-                        var upVoteCounter = document.querySelector('.up_votes_counter[cllId="'+currentLinkItemId+'"]');
+                        var downVoteCounter = document.querySelector('.link-list-item__down-votes-counter[cllId="'+currentLinkItemId+'"]');
+                        var upVoteCounter = document.querySelector('.link-list-item__up-votes-counter[cllId="'+currentLinkItemId+'"]');
                         
                         try {
                             var voteRecordObj = JSON.parse(metaObj.voteRecord);
@@ -107,7 +107,7 @@ module.exports = function handleDownVoteBtnClick(downVoteBtn, deps){
                                 downVoteCounter.innerHTML = visuallyUpdateVoteCounter("increment", downVoteCounter);
 
                                if(cllIsAdmin[0] === "true"){
-                                    makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/cll-link/'+objResponse[0].id, 'POST', newPostMetaData)
+                                    makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link/'+objResponse[0].id, 'POST', newPostMetaData)
                                         .then(function(){
                                             cllGlobals.isUpVoteBtnClicked = false;
                                             cllGlobals.isNeutralVoteBtnClicked = false;
