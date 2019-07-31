@@ -3,7 +3,7 @@ module.exports = function handleNeutralVoteBtnClick(neutralVoteBtn, deps){
     const visuallyUpdateVoteCounter = deps.visuallyUpdateVoteCounter;
     const setVoterStatusToNeutralAndUpdatePostMeta = deps.setVoterStatusToNeutralAndUpdatePostMeta;
 
-    var linkListTitleArray = document.querySelectorAll('.link_list_item__link-list-title');
+    var linkListTitleArray = document.querySelectorAll('.link-list-item__link-list-title');
     if(cllGlobals.isNeutralVoteBtnClicked === false){
         linkListTitleArray.forEach(function(linkListTitle){
             var post_slug = linkListTitle.textContent.trim().replace(/\s/g, '-').toLowerCase();

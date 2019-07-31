@@ -53,7 +53,7 @@ module.exports = function handleLinkApproveBtnClick(cllApproveBtn, deps){
             .then(function(request){
                 //console.log("Successful Link Addition");
                 alert("You have approved a link!");
-                makeRequest(cllGlobals.currentProtocalDomain+'/wp-content/plugins/curation-link-library/cll-core/approve-link-item-handler.php', 'POST', "json_string="+JSON.stringify(newLinkItemData))
+                makeRequest(cllGlobals.currentProtocalDomain+'/wp-content/plugins/curation-link-library/cll-core/request-handlers/approve-link-item-handler.php', 'POST', "json_string="+JSON.stringify(newLinkItemData))
                     .then(function(request){
                         //console.log(request.responseText);
                         //console.log("Successful pending link deletion");

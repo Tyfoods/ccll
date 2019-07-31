@@ -17,15 +17,15 @@ module.exports = function createNewListRequestBtn(makeRequest){
             
             var NewPendingListItemData = {
                 "list_category": requestMsg,
-                "list_page_orgin":current_page_id
+                "list_page_origin":current_page_id
 
             }
             //Make request to PHP handler and have it add to backend admin page.
             NewPendingListItemData = "commonUserId=" + JSON.stringify(cllUserId[0]) + "json_string=" + JSON.stringify(NewPendingListItemData);
-            makeRequest(cllGlobals.currentProtocalDomain+'/wp-content/plugins/curation-link-library/cll-core/common-user-list-request-handler.php', "POST", NewPendingListItemData)
+            makeRequest(cllGlobals.currentProtocalDomain+'/wp-content/plugins/curation-link-library/cll-core/request-handlers/logged-in-user-list-request-handler.php', "POST", NewPendingListItemData)
                 .then(function(request){
 
-                    //console.log(request.responseText);
+                    console.log(request.responseText);
                 })
                 .catch(function(error){
 

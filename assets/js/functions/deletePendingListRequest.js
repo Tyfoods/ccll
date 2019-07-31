@@ -10,7 +10,7 @@ module.exports = function deletePendingListRequest(newListItemData){
 			}
 				//if request fails...?
 		}
-	deletePendingListRequest.open("POST", cllGlobals.currentProtocalDomain+'/wp-content/plugins/curation-link-library/cll-core/decline-list-item-handler.php');
+	deletePendingListRequest.open("POST", cllGlobals.currentProtocalDomain+'/wp-content/plugins/curation-link-library/cll-core/request-handlers/decline-list-item-handler.php');
 	deletePendingListRequest.setRequestHeader("X-WP-Nonce", magicalData.nonce);
 	deletePendingListRequest.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
 	deletePendingListRequest.send("json_string="+JSON.stringify(newListItemData));

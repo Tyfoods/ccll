@@ -65,7 +65,7 @@ module.exports = function addClickToAddToListBtnFormSubmitBtn(currentAddToListBt
 					NewLinkItemData = "commonUserId=" + JSON.stringify(cllUserId[0]) + "json_string=" + JSON.stringify(NewLinkItemData);
 					console.log(cllUserId[0]);
 					console.log(JSON.stringify(cllUserId[0]));
-					deps.makeRequest(cllGlobals.currentProtocalDomain+'/wp-content/plugins/curation-link-library/cll-core/common-user-request-handler.php', 'POST', NewLinkItemData)
+					deps.makeRequest(cllGlobals.currentProtocalDomain+'/wp-content/plugins/curation-link-library/cll-core/request-handlers/logged-in-user-link-request-handler.php', 'POST', NewLinkItemData)
 						.then(function(request){
 							console.log(request.responseText);
 						})
@@ -107,7 +107,7 @@ module.exports = function addClickToAddToListBtnFormSubmitBtn(currentAddToListBt
 						
 						}
 					NewLinkItemData = "commonUserId=" + JSON.stringify(cllUserId) + "json_string=" + JSON.stringify(NewLinkItemData);
-					createLinkItemQuery.open("POST", cllGlobals.currentProtocalDomain+'/wp-content/plugins/curation-link-library/cll-core/common-user-request-handler.php');
+					createLinkItemQuery.open("POST", cllGlobals.currentProtocalDomain+'/wp-content/plugins/curation-link-library/cll-core/request-handlers/common-user-request-handler.php');
 					createLinkItemQuery.setRequestHeader("X-WP-Nonce", magicalData.nonce);
 					createLinkItemQuery.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
 					createLinkItemQuery.send(NewLinkItemData);

@@ -41,7 +41,7 @@ module.exports = function handleLinkDeclineBtnClick(cllDeclineBtn, deps){
                 //do something
             }
     }
-    deletePendingLinkRequest.open("POST", cllGlobals.currentProtocalDomain+'/wp-content/plugins/curation-link-library/cll-core/approve-link-item-handler.php');
+    deletePendingLinkRequest.open("POST", cllGlobals.currentProtocalDomain+'/wp-content/plugins/curation-link-library/cll-core/request-handlers/approve-link-item-handler.php');
     deletePendingLinkRequest.setRequestHeader("X-WP-Nonce", magicalData.nonce);
     deletePendingLinkRequest.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
     deletePendingLinkRequest.send("json_string="+JSON.stringify(newLinkItemData));

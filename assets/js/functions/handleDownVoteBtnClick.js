@@ -3,7 +3,7 @@ module.exports = function handleDownVoteBtnClick(downVoteBtn, deps){
     const visuallyUpdateVoteCounter = deps.visuallyUpdateVoteCounter;
     const setVoterStatusToDownAndUpdatePostMeta = deps.setVoterStatusToDownAndUpdatePostMeta;
 
-	var linkListTitleArray = document.querySelectorAll('.link_list_item__link-list-title');
+	var linkListTitleArray = document.querySelectorAll('.link-list-item__link-list-title');
     if(cllGlobals.isDownVoteBtnClicked === false){
         linkListTitleArray.forEach(function(linkListTitle){
             var post_slug = linkListTitle.textContent.trim().replace(/\s/g, '-').toLowerCase();

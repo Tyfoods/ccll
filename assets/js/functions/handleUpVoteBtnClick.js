@@ -3,7 +3,7 @@ module.exports = function handleUpVoteBtnClick(upVoteBtn, deps){
 	const visuallyUpdateVoteCounter = deps.visuallyUpdateVoteCounter;
 	const setVoterStatusToUpAndUpdatePostMeta = deps.setVoterStatusToUpAndUpdatePostMeta;
 
-    var linkListTitleArray = document.querySelectorAll('.link_list_item__link-list-title');
+    var linkListTitleArray = document.querySelectorAll('.link-list-item__link-list-title');
 
     if(cllGlobals.isUpVoteBtnClicked === false){
         linkListTitleArray.forEach(function(linkListTitle){

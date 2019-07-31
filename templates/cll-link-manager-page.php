@@ -61,7 +61,7 @@ if(empty($retrieve_data)){
 <div>
 <h2 class = "pending-titles" style="text-align:center"> Pending Lists</h2>
 <table id="pending-list-data-table" style="width:100%">
-	   <th class = "pending-list-data-table__table_header">List Page Orgin</th>
+	   <th class = "pending-list-data-table__table_header">List Page Origin</th>
 	   <th class = "pending-list-data-table__table_header">List ID</th>
 	   <th class = "pending-list-data-table__table_header">User ID</th>
 	   <th class = "pending-list-data-table__table_header">List Category</th> 
@@ -80,7 +80,7 @@ if(empty($retrieve_data)){
 	   <?php $pending_list_cllid = 1 ?>
 	  <?php foreach ($retrieved_list_data as $list_data){ ?>
 	  <tr class="pending-link-data-table__pending-list-data">
-	  	<td title="list_page_orgin" cllid="<?php echo $pending_list_cllid ?>" class="pending-list-data__list-page-origin"> <?php echo $list_data->list_page_orgin ?> </td>
+	  	<td title="list_page_origin" cllid="<?php echo $pending_list_cllid ?>" class="pending-list-data__list-page-origin"> <?php echo $list_data->list_page_origin ?> </td>
 	    <td title="listId" cllid="<?php echo $pending_list_cllid ?>" class="pending-list-data__list-id"> <?php echo $list_data->pending_list_id ?> </td>
 	    <td title="userId" cllid="<?php echo $pending_list_cllid ?>" class="pending-list-data__user-id"> <?php echo $list_data->common_user_id ?> </td>
 	    <td title="list_category" cllid="<?php echo $pending_list_cllid ?>" class="pending-list-data__list-category"> <?php echo $list_data->list_category ?> </td>

@@ -37,10 +37,10 @@ module.exports = function handleListApproveBtnClick(cllListApproveBtn, deps){
                         ////console.log("The elements ID is: "+row.cells[j].id);
                         //row.cells[j].parentNode.removeChild(row.cells[j]);
                         }
-                    else if(row.cells[j].title === 'list_page_orgin'){
-                        newListItemData['list_page_orgin'] = row.cells[j].innerHTML;
+                    else if(row.cells[j].title === 'list_page_origin'){
+                        newListItemData['list_page_origin'] = row.cells[j].innerHTML;
                         //console.log("The pageId was found: "+row.cells[j].title);
-                        //console.log("This is the InnerHTML: "+newListItemData['list_page_orgin']);
+                        //console.log("This is the InnerHTML: "+newListItemData['list_page_origin']);
                         ////console.log("The elements ID is: "+row.cells[j].id);
                         //row.cells[j].parentNode.removeChild(row.cells[j]);
                     }
@@ -53,13 +53,13 @@ module.exports = function handleListApproveBtnClick(cllListApproveBtn, deps){
     //add some function to refresh form fields and add temporary checkmark symbol
     deps.deletePendingListRequest(newListItemData);
 
-    var list_page_orgin_id = newListItemData['list_page_orgin'].replace(/\s/g, '').replace(/%20/g, '');
+    var list_page_origin_id = newListItemData['list_page_origin'].replace(/\s/g, '').replace(/%20/g, '');
     if (confirm("Are you sure you would like to add this new list?")) {
         ////console.log("You pressed YES!");
-        makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/pages/'+list_page_orgin_id, "POST")
+        makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/pages/'+list_page_origin_id, "POST")
             .then(function(request){
-                var rawResponse = request.responseText.split('{"id":'+list_page_orgin_id).pop();
-                var jsonResponse = '{"id":'+list_page_orgin_id+rawResponse;
+                var rawResponse = request.responseText.split('{"id":'+list_page_origin_id).pop();
+                var jsonResponse = '{"id":'+list_page_origin_id+rawResponse;
                 var objResponse = JSON.parse(jsonResponse);
 
                 var newPageContent = {
@@ -69,7 +69,7 @@ module.exports = function handleListApproveBtnClick(cllListApproveBtn, deps){
                 //creates new category
                 deps.createNewCategory(newListItemData['list_category'], deps);
 
-                makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/pages/'+list_page_orgin_id, "POST", JSON.stringify(newPageContent))
+                makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/pages/'+list_page_origin_id, "POST", JSON.stringify(newPageContent))
                     .then(function(request){
                         //console.log("Successfully updated page!");
                         //console.log(request.responseText);
