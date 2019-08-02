@@ -17,7 +17,7 @@ final class CCLL {
 	 */
 	public function __construct() {
 		//$this->define_constants();
-		//$this->includes();
+		$this->includes();
 		$this->init_hooks();
 		$this->cll_register_all_meta();
 		//add_shortcode( 'cll_list', $this::cll_list_shortcode());
@@ -44,14 +44,13 @@ final class CCLL {
 		add_action( 'init', array( $this, 'create_link_taxonomies'), 0 );
 		
 	}
+
+	private function includes(){
+		
+	}
+
 	public function register_ccll_rest_routes(){
 
-		/*
-		register_rest_route('cll-link-category/v1', 'category-content', array(
-			'methods' => WP_REST_Server::READABLE,
-			'callback' => 'show_existing_link_categories'
-		));
-		*/
 		register_rest_route( 'cll-link/v1', '/create-page/',array(
 			'methods'  => WP_REST_Server::EDITABLE,
 			'callback' => array($this, 'create_new_page')

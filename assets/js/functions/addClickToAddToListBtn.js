@@ -8,4 +8,6 @@ module.exports = function addClickToAddToListBtn(deps){
 			deps.createAddToListBtnForm(currentAddToListBtn, deps);
 		});
 	})
+
+	return add_to_list_btn_array;
 }

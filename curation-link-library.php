@@ -13,20 +13,18 @@ if(!defined('ABSPATH')){
 	exit;
 }
 
-// Define CLL_PLUGIN_DIR
+// Define URL Based DIR
 if ( ! defined( 'CLL_PLUGIN_DIR' ) ) {
 	define( 'CLL_PLUGIN_DIR', plugin_dir_url(__FILE__) );
 }
-// Define CLL_PLUGIN_FILE
+// Define Server based CLL_PLUGIN_FILE
 if ( ! defined( 'CCLL_PLUGIN_FILE' ) ) {
 	define( 'CCLL_PLUGIN_FILE', __FILE__ );
 }
-
+// Define Server Based Dir
 if ( ! defined( 'CCLL_SERVER_DIR' ) ) {
 	define( 'CCLL_SERVER_DIR', __DIR__ );
 }
-
-
 
 // Include the main CCLL class.
 if ( ! class_exists( 'CCLL' ) ) {

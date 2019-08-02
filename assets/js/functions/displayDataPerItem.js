@@ -14,39 +14,52 @@ module.exports = (function displayDataPerItem(setAttributeOfElementsInArrayIncre
 				linkListItemArray.forEach(function(linkListItem){
 					var post_slug = linkListItem.textContent.trim().replace(/\s/g, '-').toLowerCase();
 					if(cllLink.slug === post_slug){
+						//if(cllLink.meta.link_type !== "internal link"){
+							//console.log("external link");
+							//console.log(linkListItem);
+							var upVotesCounter = document.createElement('p');
+							upVotesCounter.setAttribute('class','link-list-item__up-votes-counter');
+							upVotesCounter.innerHTML = cllLinkArray[incrementer].meta.up_votes;
 
-						var upVotesCounter = document.createElement('p');
-						upVotesCounter.setAttribute('class','link-list-item__up-votes-counter');
-						upVotesCounter.innerHTML = cllLinkArray[incrementer].meta.up_votes;
+							var downVotesCounter = document.createElement('p');
+							downVotesCounter.setAttribute('class','link-list-item__down-votes-counter');
+							downVotesCounter.innerHTML = cllLinkArray[incrementer].meta.down_votes;
 
-						var downVotesCounter = document.createElement('p');
-						downVotesCounter.setAttribute('class','link-list-item__down-votes-counter');
-						downVotesCounter.innerHTML = cllLinkArray[incrementer].meta.down_votes;
+							var currentLinkItemId = linkListItem.getAttribute('cllId');
 
-						var currentLinkItemId = linkListItem.getAttribute('cllId');
-
-						var downVoteButton = document.querySelector('.link-list-item__down-vote-button[cllId="'+currentLinkItemId+'"]');
-						var upVoteButton = document.querySelector('.link-list-item__up-vote-button[cllId="'+currentLinkItemId+'"]');
+							var downVoteButton = document.querySelector('.link-list-item__down-vote-button[cllId="'+currentLinkItemId+'"]');
+							var upVoteButton = document.querySelector('.link-list-item__up-vote-button[cllId="'+currentLinkItemId+'"]');
 
 
-						downVoteButton.appendChild(downVotesCounter);
-						upVoteButton.appendChild(upVotesCounter);
+							downVoteButton.appendChild(downVotesCounter);
+							upVoteButton.appendChild(upVotesCounter);
 
-						//display "submittedByElement";
-						var submittedByElement = document.createElement('p');
-						submittedByElement.setAttribute('class','link-list-item__submitted-by');
+							//display "submittedByElement";
+							var submittedByElement = document.createElement('p');
+							submittedByElement.setAttribute('class','link-list-item__submitted-by');
 
-						//console.log(cllLinkArray[incrementer].meta);
+							//console.log(cllLinkArray[incrementer].meta);
 
-						submittedByElement.innerHTML = "Submitted by: "+cllLinkArray[incrementer].meta.submitted_by;
+							submittedByElement.innerHTML = "Submitted by: "+cllLinkArray[incrementer].meta.submitted_by;
 
-						//console.log(currentLinkItemId);
-						//var linkListItem = document.querySelector('.link-list-item[cllId="'+currentLinkItemId+'"]');
-						try{
-							linkListItem.appendChild(submittedByElement);
-						}
-						catch(error){
-							console.log(error);
+							//console.log(currentLinkItemId);
+							//var linkListItem = document.querySelector('.link-list-item[cllId="'+currentLinkItemId+'"]')
+							try{
+								linkListItem.appendChild(submittedByElement);
+							}
+							catch(error){
+								console.log(error);
+							}
+						//}
+						if(cllLink.meta.link_type === "internal link"){
+
+							var neutralVoteButton = document.querySelector('.link-list-item__neutral-vote-button[cllId="'+currentLinkItemId+'"]');
+							submittedByElement.style.display = 'none';
+							neutralVoteButton.style.display = 'none';
+							downVoteButton.style.display = 'none';
+							upVoteButton.style.display = 'none';
+							downVotesCounter.style.display = 'none';
+							upVotesCounter.style.display = 'none';
 						}
 
 					}

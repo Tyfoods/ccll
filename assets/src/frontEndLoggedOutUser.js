@@ -72,11 +72,12 @@ else
     
 	createAddToListBtn();
 	addClickToAddToListBtn();
-	displayDataPerItem(setAttributeOfElementsInArrayIncrementally, makeRequest);
 	createDownVoteBtn();
 	createUpVoteBtn();
 	createNeutralVoteBtn();
+	displayDataPerItem(setAttributeOfElementsInArrayIncrementally, makeRequest);
 	createNewListRequestBtn();
+
 
 	var upVoteBtnArray = document.querySelectorAll('.link-list-item__up-vote-button');
 	upVoteBtnArray.forEach(function(upVoteBtn){
