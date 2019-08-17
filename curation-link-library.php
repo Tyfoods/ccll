@@ -36,10 +36,12 @@ function CCLL(){
 }
 CCLL();
 
-/* Will eventually convert plugin to use React.js
+/* Will eventually convert plugin to use React.js */
+/*
 function cll_root(){
 	return '<div id="root"></div>';
 
 }
 add_shortcode( 'cll_root', 'cll_root');
 */
+

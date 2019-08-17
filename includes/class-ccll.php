@@ -34,6 +34,7 @@ final class CCLL {
 		add_action('rest_api_init', array( $this, 'register_ccll_rest_routes'));
 
 		add_shortcode( 'cll_list', array( $this, 'cll_list_shortcode'));
+		add_shortcode( 'cll_list_react', array( $this, 'cll_list_react_shortcode'));
 		add_shortcode( 'cll_search_engine', array( $this, 'cll_search_engine_shortcode'));
 
 		add_action( 'wp_enqueue_scripts', array( $this, 'cll_enqueue_styles')); //LOADS CSS
@@ -220,6 +221,12 @@ final class CCLL {
 		return $output;
 	
 	}
+
+	public function cll_list_react_shortcode(){
+		wp_enqueue_script( 'cll-App',CLL_PLUGIN_DIR.'assets/js/AppCompiled.js');
+		return '<div id="root"></div>';
+	}
+
 	public function cll_list_shortcode($atts){
 
 		$atts = shortcode_atts( array(

@@ -42,7 +42,12 @@ select#linkTypeSelecter {
 
 select.cll-edit-category-btn__list-category-selector {
   width: 100%;
-  background-color: #fff;
+  background-color: #fff !important;
+}
+
+#add-to-list-form__link-type-selector {
+  width: 100%;
+  background-color: #fff !important;
 }
 
 .cll-link-list__link-list--style-1 li {
@@ -322,6 +327,7 @@ div.cll-link-list{
   margin-top: 0px !important;
   border: solid 3px #000;
   border-radius: 10px;
+  margin-bottom: 1%;
 }
 
 
