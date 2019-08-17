@@ -6,11 +6,13 @@ const config = {
 	// Create the entry points.
 	// One for frontend and one for the admin area.
 	entry: {
-		// frontend and admin will replace the [name] portion of the output config below.
+		//the key here will replace the [name] portion of the output config below.
 		frontEndAdminManager: './assets/src/frontEndAdminManager.js',
 		frontEndLoggedOutUser: './assets/src/frontEndLoggedOutUser.js',
 		frontEndLoggedInUser: './assets/src/frontEndLoggedInUser.js',
 		backEndAdminManager: './assets/src/backEndAdminManager.js',
+
+		appComponent: './assets/src/components/App.js'
 	},
 
 	// Create the output files.
