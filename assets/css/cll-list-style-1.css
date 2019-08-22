@@ -255,6 +255,7 @@ p.link-list-item__submitted-by {
   grid-column: 1 / span 3;
   font-size: 70%;
   margin: 0px;
+  margin-top: 5%;
 }
 
 button.add-to-list-form__submit-btn {

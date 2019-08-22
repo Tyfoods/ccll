@@ -1,9 +1,8 @@
-module.exports = (function displayDataPerItem(setAttributeOfElementsInArrayIncrementally, makeRequest) {
+module.exports = (function displayDataPerItem(setAttributeOfElementsInArrayIncrementally, makeRequest, slugify) {
 
 
 	makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link/', 'GET')
 		.then(function(request){
-
 			var cllLinkArray = JSON.parse(request.responseText);
 			var linkListItemArray = document.querySelectorAll('.link-list--style-1__link-list-item');
 			var incrementer = 0;
@@ -12,7 +11,7 @@ module.exports = (function displayDataPerItem(setAttributeOfElementsInArrayIncre
 
 			cllLinkArray.forEach(function(cllLink){
 				linkListItemArray.forEach(function(linkListItem){
-					var post_slug = linkListItem.textContent.trim().replace(/\s/g, '-').toLowerCase();
+					var post_slug = slugify(linkListItem.textContent.trim()); //replace(/\s/g, '-').replace(/[.]/g,'-').toLowerCase();
 					if(cllLink.slug === post_slug){
 						//if(cllLink.meta.link_type !== "internal link"){
 							//console.log("external link");

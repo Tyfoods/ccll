@@ -3,7 +3,7 @@ module.exports = function endLinkRequest(currentAddToListBtn, deps)
 
 
 	var multiListPageCategoryIds = "cll_category_ids"+"_"+currentAddToListBtn.getAttribute('cllid');
-	
+	const slugify = deps.slugify;
 	const makeRequest = deps.makeRequest;
 
 	//console.log(window[multiListPageCategoryIds]);
@@ -18,7 +18,7 @@ module.exports = function endLinkRequest(currentAddToListBtn, deps)
 
 			var NewLinkItemData = {
 				"title": document.querySelector('[name="newListItemTitle"].add-to-list-form__add-to-list-input').value,
-				"slug": "/"+document.querySelector('[name="newListItemTitle"].add-to-list-form__add-to-list-input').value.replace(/ /g,'-').toLowerCase(),
+				"slug": slugify(document.querySelector('[name="newListItemTitle"].add-to-list-form__add-to-list-input').value),
 				"meta" : {"URL" : document.querySelector('[name="newListItemUrl"].add-to-list-form__add-to-list-input').value.replace(/ /g, '-').replace(/%20/g,'-'), "link_type" : "external link", "submitted_by": username },
 				"status": "publish",
 				"link_category": [window[multiListPageCategoryIds]]

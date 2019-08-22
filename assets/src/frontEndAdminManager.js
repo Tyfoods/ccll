@@ -5,6 +5,7 @@
 	import setVoterStatusToNeutralAndUpdatePostMeta from '../js/functions/setVoterStatusToNeutralAndUpdatePostMeta';
 	import setVoterStatusToUpAndUpdatePostMeta from '../js/functions/setVoterStatusToUpAndUpdatePostMeta';
 	import setVoterStatusToDownAndUpdatePostMeta from '../js/functions/setVoterStatusToDownAndUpdatePostMeta';
+	import slugify from '../js/functions/slugify';
 
 	//const setAttributeOfElementsInArrayIncrementally = require( '../js/functions/setAttributeOfElementsInArrayIncrementally');
 	import makeRequest from '../js/functions/makeRequest';
@@ -59,6 +60,7 @@ window.onload=function()
 		'replaceOccurrence': replaceOccurrence,
 		'isUrl': isUrl,
 		'isObjEmpty': isObjEmpty,
+		'slugify': slugify,
 		
 		'createAddToListBtn': createAddToListBtn,
 		'createAddToListBtnForm': createAddToListBtnForm,
@@ -135,7 +137,7 @@ window.onload=function()
 	createEditCategoryBtn(setAttributeOfElementsInArrayIncrementally);//done
 	addClickToEditCategoryBtn(dependencies);//done
 
-	displayDataPerItem(setAttributeOfElementsInArrayIncrementally, makeRequest); //done
+	displayDataPerItem(setAttributeOfElementsInArrayIncrementally, makeRequest, slugify); //done
 
 	createDeleteListBtn(setAttributeOfElementsInArrayIncrementally, makeRequest); //done
 

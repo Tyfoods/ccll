@@ -11,8 +11,6 @@ const config = {
 		frontEndLoggedOutUser: './assets/src/frontEndLoggedOutUser.js',
 		frontEndLoggedInUser: './assets/src/frontEndLoggedInUser.js',
 		backEndAdminManager: './assets/src/backEndAdminManager.js',
-
-		appComponent: './assets/src/components/App.js'
 	},
 
 	// Create the output files.
