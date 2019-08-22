@@ -1,6 +1,7 @@
 import cllGlobals from '../js/cllGlobals';
 import makeRequest from '../js/functions/makeRequest';
 import setAttributeOfElementsInArrayIncrementally from '../js/functions/setAttributeOfElementsInArrayIncrementally';
+import slugify from '../js/functions/slugify';
 
 import displayDataPerItem from '../js/functions/displayDataPerItem';
 import handleSearchInput from '../js/functions/handleSearchInput';
@@ -75,7 +76,7 @@ else
 	createDownVoteBtn();
 	createUpVoteBtn();
 	createNeutralVoteBtn();
-	displayDataPerItem(setAttributeOfElementsInArrayIncrementally, makeRequest);
+	displayDataPerItem(setAttributeOfElementsInArrayIncrementally, makeRequest, slugify);
 	createNewListRequestBtn();
 
 

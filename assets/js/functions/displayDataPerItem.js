@@ -11,8 +11,8 @@ module.exports = (function displayDataPerItem(setAttributeOfElementsInArrayIncre
 
 			cllLinkArray.forEach(function(cllLink){
 				linkListItemArray.forEach(function(linkListItem){
-					var post_slug = slugify(linkListItem.textContent.trim()); //replace(/\s/g, '-').replace(/[.]/g,'-').toLowerCase();
-					if(cllLink.slug === post_slug){
+					var postSlug = slugify(linkListItem.textContent.trim()); //replace(/\s/g, '-').replace(/[.]/g,'-').toLowerCase();
+					if(cllLink.slug === postSlug){
 						//if(cllLink.meta.link_type !== "internal link"){
 							//console.log("external link");
 							//console.log(linkListItem);

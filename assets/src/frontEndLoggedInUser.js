@@ -11,6 +11,7 @@ import setVoterStatusToNeutralAndUpdatePostMeta from '../js/functions/setVoterSt
 import setVoterStatusToUpAndUpdatePostMeta from '../js/functions/setVoterStatusToUpAndUpdatePostMeta';
 import setVoterStatusToDownAndUpdatePostMeta from '../js/functions/setVoterStatusToDownAndUpdatePostMeta';
 import fadeOut from '../js/functions/fadeOut';
+import slugify from '../js/functions/slugify';
 
 import createNewListRequestBtn from '../js/functions/createNewListRequestBtn';
 
@@ -71,6 +72,7 @@ else
 		'setAttributeOfElementsInArrayIncrementally': setAttributeOfElementsInArrayIncrementally,
 		'makeRequest': makeRequest,
 		'fadeOut': fadeOut,
+		'slugify': slugify,
 
 		'createAddToListBtnForm': createAddToListBtnForm,
 
@@ -82,7 +84,7 @@ else
 	var linkListTitleArray = document.querySelectorAll('.link-list-item__link-list-title');
 	setAttributeOfElementsInArrayIncrementally(linkListTitleArray, 'cllId');
 
-    displayDataPerItem(setAttributeOfElementsInArrayIncrementally, makeRequest);
+    displayDataPerItem(setAttributeOfElementsInArrayIncrementally, makeRequest, slugify);
 
     createNewListRequestBtn(makeRequest);
     

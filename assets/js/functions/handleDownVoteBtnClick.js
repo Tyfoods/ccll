@@ -2,13 +2,14 @@ module.exports = function handleDownVoteBtnClick(downVoteBtn, deps){
     const makeRequest = deps.makeRequest;
     const visuallyUpdateVoteCounter = deps.visuallyUpdateVoteCounter;
     const setVoterStatusToDownAndUpdatePostMeta = deps.setVoterStatusToDownAndUpdatePostMeta;
+    const slugify = deps.slugify;
 
 	var linkListTitleArray = document.querySelectorAll('.link-list-item__link-list-title');
     if(cllGlobals.isDownVoteBtnClicked === false){
         linkListTitleArray.forEach(function(linkListTitle){
-            var post_slug = linkListTitle.textContent.trim().replace(/\s/g, '-').toLowerCase();
+            var postSlug = slugify(linkListTitle.textContent.trim()); //replace(/\s/g, '-').toLowerCase();
             if(linkListTitle.getAttribute('cllId') === downVoteBtn.getAttribute('cllId')){
-                makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link?slug='+post_slug, 'GET')
+                makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link?slug='+postSlug, 'GET')
                     .then(function(request){
                         var objResponse = JSON.parse(request.responseText);
                         var metaObj = objResponse[0].meta;
