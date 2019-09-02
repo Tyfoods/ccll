@@ -24,6 +24,7 @@
 	import createUpVoteBtn from '../js/functions/createUpVoteBtn'; 
 	import createDeleteListBtn from '../js/functions/createDeleteListBtn';
 	import createNewListBtn from '../js/functions/createNewListBtn';
+	import createBackBtn from '../js/functions/createBackBtn';
 	import createAddToListBtnForm from '../js/functions/createAddToListBtnForm';
 	import createEditCategoryBtn from '../js/functions/createEditCategoryBtn';
 	import isUrl from '../js/functions/isUrl';
@@ -43,6 +44,7 @@
 	import addClickToUpVoteBtn from '../js/functions/addClickToUpVoteBtn';
 	import addClickToDownVoteBtn from '../js/functions/addClickToDownVoteBtn';
 	import addClickToNeutralVoteBtn from '../js/functions/addClickToNeutralVoteBtn';
+	import addClickToCancelBackBtn from '../js/functions/addClickToCancelBackBtn';
 
 
 
@@ -61,6 +63,7 @@ window.onload=function()
 		'isUrl': isUrl,
 		'isObjEmpty': isObjEmpty,
 		'slugify': slugify,
+
 		
 		'createAddToListBtn': createAddToListBtn,
 		'createAddToListBtnForm': createAddToListBtnForm,
@@ -75,6 +78,7 @@ window.onload=function()
 		'handleNeutralVoteBtnClick': handleNeutralVoteBtnClick,
 		'handleDownVoteBtnClick': handleDownVoteBtnClick,
 		
+		'addClickToCancelBackBtn': addClickToCancelBackBtn,
 		'addClickToAddToListBtn:': addClickToAddToListBtn,
 		'addClickToEditCategoryFormCancelBtn': addClickToEditCategoryFormCancelBtn,
 		'addClickToAddToListBtnFormCancelBtn': addClickToAddToListBtnFormCancelBtn,
@@ -129,9 +133,14 @@ window.onload=function()
 	}
 	testButton();
 */
+	let controlBox = document.createElement("div");
+	controlBox.setAttribute('class', 'control-box');
 
-
-	createAddToListBtn();
+	var cll_link_list = document.querySelector('.cll-link-list');
+	cll_link_list.parentElement.insertBefore(controlBox, cll_link_list.parentElement.firstChild);
+	
+	createBackBtn(makeRequest, addClickToCancelBackBtn, dependencies);
+	createAddToListBtn(makeRequest);
 	addClickToAddToListBtn(dependencies);//done
 	
 	createEditCategoryBtn(setAttributeOfElementsInArrayIncrementally);//done

@@ -29,57 +29,90 @@ module.exports = function createAdminRemoveBtn(makeRequest, isObjEmpty){
 					//console.log(listItemSlug);
 					//console.log(listItem.innerHTML);
 
-					//deletePage if it exists
-					makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/pages?slug='+listItemSlug, "GET")
-						.then(function(request){
+						//Delete post if it exists
 
+					makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link?slug='+listItemSlug, 'GET')
+						.then(function(request){
 							var objResponse = JSON.parse(request.responseText);
 							//console.log(objResponse);
-							//console.log(objResponse[0].id);
-
-							//get ID
-
+							
 							if(isObjEmpty(objResponse) === true){
-								//console.log("A page with a slug of that type was unable to be found. (Response was empty)");
+								//console.log("A post with a slug of that type was unable to be found. (Response was empty)");
 								
 								
 							}
 							else
 							{
-								//console.log(objResponse[0].id);
-								//console.log("Response was not empty");
-								//console.log("deleting the associated page");
-								makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/pages/'+objResponse[0].id, "DELETE")
-									.then(function(){
-										//console.log("Successfully deleted page!");
-									})
-									.catch(function(error){
-										//console.log("Failed to delete page");
-										console.log(error);
-									});
-							}
-						})
-						.catch(function(error){
-							//console.log("Unable to get page information about list item");
-							console.log(error);
-						});
+								if(objResponse[0].link_category.length > 1){
+									console.log("removing category");	
+									let linkCategoryArray = objResponse[0].link_category;
 
-						//Delete post if it exists
-						makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link?slug='+listItemSlug, 'GET')
-							.then(function(request){
-								var objResponse = JSON.parse(request.responseText);
-								//console.log(objResponse);
+									//getArray of every Div
+									//iterate through every div children
+									//see if child textContent matches "objResponse[0].title"
+									//if so then getAttribute("cllid"); of div
+									//use it as below.
+									let cllLinkId = (function(){
+										let cllListDivArray = document.querySelectorAll('.cll-link-list');
+										
+										for(cllListDiv of cllListDivArray){
 
-								if(isObjEmpty(objResponse) === true){
-									//console.log("A post with a slug of that type was unable to be found. (Response was empty)");
-									
-									
+											for (cllListDivChild of cllListDiv.children){
+												if(cllListDivChild.tagName === 'UL'){
+
+													for (cllListUlChild of cllListDivChild.children){
+														if(cllListUlChild.tagName === 'LI'){
+
+															for (cllListItemChild of cllListUlChild.children){
+																if(cllListItemChild.tagName === 'A'){
+																	if(cllListItemChild.textContent.trim() === objResponse[0].title.rendered){
+																		console.log(cllListDiv);
+																		var cllLinkId = cllListDiv.getAttribute("cllid");
+																		return cllLinkId;
+																	}
+																}
+															}
+														}
+													}
+												}
+											}
+										}
+									}());
+									console.log(window["cll_category_names_"+cllLinkId]);
+
+									for (let i=0; i < linkCategoryArray.length; i++){
+										makeRequest(cllGlobals.currentProtocalDomain+"/wp-json/cll-link-category/v1/cll-link/"+linkCategoryArray[i], 'GET')
+											.then(function(request){
+												console.log(request);
+
+												if(JSON.parse(request.responseText).name === window["cll_category_names_"+cllLinkId]){
+													console.log(linkCategoryArray);
+													linkCategoryArray.splice(i, 1);
+													console.log(linkCategoryArray);
+
+													let newLinkCategory = {
+														"link_category": linkCategoryArray
+													};
+													makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link/'+objResponse[0].id, 'POST', JSON.stringify(newLinkCategory))
+														.then(function(request){
+															console.log(request);
+															console.log("Succesfully removed category");
+														})
+														.catch(function(error){
+															console.log(error);
+															console.log("Unable to remove category");
+														});
+												}
+
+											});
+										
+
+									}
+			
 								}
-								else
-								{
-									//console.log(objResponse[0].id);
-									//console.log("Response was not empty");
-									//console.log("deleting the associated post");
+								else{
+									console.log("Post only had one category, deleting post");
+									
 									makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link/'+objResponse[0].id, 'DELETE')
 										.then(function(){
 											//console.log("Successfully deleted post!");
@@ -89,20 +122,21 @@ module.exports = function createAdminRemoveBtn(makeRequest, isObjEmpty){
 											console.log(error);
 										});
 								}
-							})
-							.catch(function(error){
-								//console.log("unable to get post information about list item");
-								console.log(error);
-							});
-							allListItemsArray.forEach(function(listItemToRemove){
-								if(listItemToRemove.getAttribute('cllId') === adminDeleteBtn.getAttribute('cllId'))
-								{
-									listItemToRemove.parentNode.removeChild(listItemToRemove);
-									while (listItemToRemove.firstChild) {
-										listItemToRemove.removeChild(listItemToRemove.firstChild);
+								allListItemsArray.forEach(function(listItemToRemove){
+									if(listItemToRemove.getAttribute('cllId') === adminDeleteBtn.getAttribute('cllId'))
+									{
+										listItemToRemove.parentNode.removeChild(listItemToRemove);
+										while (listItemToRemove.firstChild) {
+											listItemToRemove.removeChild(listItemToRemove.firstChild);
+										}
 									}
-								}
-							});
+								});
+							}
+						})
+						.catch(function(error){
+							//console.log("unable to get post information about list item");
+							console.log(error);
+						});
 				}
 				else{
 					//console.log("No match was found!");

@@ -56,7 +56,7 @@ module.exports = function handleListApproveBtnClick(cllListApproveBtn, deps){
     var list_page_origin_id = newListItemData['list_page_origin'].replace(/\s/g, '').replace(/%20/g, '');
     if (confirm("Are you sure you would like to add this new list?")) {
         ////console.log("You pressed YES!");
-        makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/pages/'+list_page_origin_id, "POST")
+        makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link/'+list_page_origin_id, "POST")
             .then(function(request){
                 var rawResponse = request.responseText.split('{"id":'+list_page_origin_id).pop();
                 var jsonResponse = '{"id":'+list_page_origin_id+rawResponse;
@@ -69,7 +69,7 @@ module.exports = function handleListApproveBtnClick(cllListApproveBtn, deps){
                 //creates new category
                 deps.createNewCategory(newListItemData['list_category'], deps);
 
-                makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/pages/'+list_page_origin_id, "POST", JSON.stringify(newPageContent))
+                makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link/'+list_page_origin_id, "POST", JSON.stringify(newPageContent))
                     .then(function(request){
                         //console.log("Successfully updated page!");
                         //console.log(request.responseText);

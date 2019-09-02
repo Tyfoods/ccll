@@ -55,9 +55,14 @@ final class CCLL {
 			'methods'  => WP_REST_Server::EDITABLE,
 			'callback' => array($this, 'create_new_page')
 		));
+
 		register_rest_route( 'cll-link-category/v1', '/cll-link/(?P<category_name>[\s\S]+)',array(
 			'methods'  => WP_REST_Server::EDITABLE,
 			'callback' => array($this, 'create_new_link_category')
+		));
+		register_rest_route( 'cll-link-category/v1', '/cll-link/(?P<id>\d+)',array(
+			'methods'  => WP_REST_Server::READABLE,
+			'callback' => array($this, 'get_link_category_by_id')
 		));
 	
 		register_rest_route( 'cll-submitted_by/v1', '/cll-link/(?P<id>\d+)',array(
@@ -606,6 +611,16 @@ final class CCLL {
 	
 	}
 
+	public function get_link_category_by_id($data){
+
+		//$data['id'];
+
+		$cll_category = get_term_by('id', (int)$data['id'], 'link_category');
+
+
+		return $cll_category;
+	}
+
 	public function create_new_link_category($data){
 	
 		$category_name = str_replace('%20', ' ', $data['category_name']);
@@ -652,9 +667,11 @@ final class CCLL {
 						 'labels' => $labels,
 						 'taxonomies' => array( 'link_category' ),
 						 'rewrite' => array( 'slug' => 'link' ), 
-						 'supports' => array( 'title', 'editor', 'author', 'thumbnail', 'comments', 'custom-fields')
+						 'supports' => array( 'title', 'editor', 'thumbnail', 'custom-fields')
 						 );
 		 register_post_type( 'cll_link', $args );
+		 
+		 flush_rewrite_rules();
 	 }
 
 	 public function cll_register_all_meta(){
@@ -690,6 +707,12 @@ final class CCLL {
 			'show_in_rest'   => true,
 		]);
 		register_meta('post', 'submitted_by', [
+			'object_subtype' => 'cll_link', // Limit to a post type.
+			'type'           => 'string',
+			'single'         => true,
+			'show_in_rest'   => true,
+		]);
+		register_meta('post', 'mention_record', [
 			'object_subtype' => 'cll_link', // Limit to a post type.
 			'type'           => 'string',
 			'single'         => true,

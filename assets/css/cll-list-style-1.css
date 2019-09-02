@@ -110,6 +110,7 @@ button.link-list-item__admin-delete-button:hover{
   opacity: 1;
  }
 
+
  input.add-to-list-form__add-to-list-input{
    width:100%;
  }
@@ -161,7 +162,9 @@ button.link-list-item__admin-delete-button:hover{
   opacity: .5;
  }
 
-
+ p.link-list--style-1__no-links-text {
+  text-align: center;
+}
 
 
 button.link-list-item__admin-delete-button{
@@ -175,11 +178,33 @@ button.link-list-item__admin-delete-button{
   border:none;
 }
 
+.back-btn__cancel-btn{
+  padding: 4.5% 10% 4.5% 10%;
+  position: relative;
+  margin-left: 14%;
+  border:none;
+
+  background-color:unset;
+  background-image: url("../images/cancelBtn.png") !important;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.back-btn__cancel-btn:hover{
+  padding: 4.5% 10% 4.5% 10%;
+  position: relative;
+  margin-left: 14%;
+  border:none;
+
+  background-color:unset;
+  background-image: url("../images/cancelBtn.png") !important;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
 
 .cll-edit-category-btn__cancel-btn {
 	padding: 8.5% 10% 8.5% 10%;
   position: relative;
-  background-color: #F42E2B;
   margin-left: 14%;
   border:none;
 
@@ -192,7 +217,6 @@ button.link-list-item__admin-delete-button{
 .add-to-list-form__cancel-btn {
 	padding: 8.5% 10% 8.5% 10%;
   position: relative;
-  background-color: #F42E2B;
   margin-left: 14%;
   border:none;
 
@@ -300,22 +324,53 @@ div.search-result-element {
 }
 
 button.new-list-btn{
+  margin: 5% 5% !important;
   padding: 1.5%;
   border-color: #000;
   background: #fff;
   color: #000;
-  margin: 5% 0%;
   border-style: outset;
   border-width: 1px;
   box-shadow: 2.5px 5px;
   position: relative;
-  display: block;
+  display: inline;
   border-radius: 10px;
 }
 
 button.new-list-btn:hover { 
   background-color: #0C808E;
   color: #fff;
+}
+
+button.back-btn{
+  background-color:unset;
+  background-image: url("../images/back-button.png") !important;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  margin: 5% 0;
+  padding: 3%;
+
+  box-shadow: 2.5px 5px;
+  position: relative;
+  display: inline;
+}
+
+button.back-btn:hover { 
+  background-color:unset;
+  background-image: url("../images/back-button.png") !important;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+button.back-btn:focus { 
+  background-color:unset;
+  background-image: url("../images/back-button.png") !important;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+
 }
 
 div.cll-link-list{

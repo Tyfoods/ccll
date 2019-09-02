@@ -35,6 +35,7 @@ import handleDownVoteBtnClick from '../js/functions/handleDownVoteBtnClick';
 import addClickToAddToListBtn from '../js/functions/addClickToAddToListBtn';
 import addClickToAddToListBtnFormSubmitBtn from '../js/functions/addClickToAddToListBtnFormSubmitBtn';
 import addClickToAddToListBtnFormCancelBtn from '../js/functions/addClickToAddToListBtnFormCancelBtn'
+import addClickToCancelBackBtn from '../js/functions/addClickToCancelBackBtn';
 
 window.onload=function()
 {
@@ -60,6 +61,7 @@ else
 
 		'addClickToAddToListBtnFormSubmitBtn': addClickToAddToListBtnFormSubmitBtn,
 		'addClickToAddToListBtnFormCancelBtn': addClickToAddToListBtnFormCancelBtn,
+		'addClickToCancelBackBtn': addClickToCancelBackBtn,
 		
 
 		'handleUpVoteBtnClick': handleUpVoteBtnClick,
@@ -77,6 +79,14 @@ else
 		'createAddToListBtnForm': createAddToListBtnForm,
 
 	}
+
+	let controlBox = document.createElement("div");
+	controlBox.setAttribute('class', 'control-box');
+
+	var cll_link_list = document.querySelector('.cll-link-list');
+	cll_link_list.parentElement.insertBefore(controlBox, cll_link_list.parentElement.firstChild);
+
+	createBackBtn(makeRequest, addClickToCancelBackBtn, dependencies);
 
 	var allListItemsArray = document.querySelectorAll('.link-list--style-1__link-list-item');
 	setAttributeOfElementsInArrayIncrementally(allListItemsArray, 'cllId');

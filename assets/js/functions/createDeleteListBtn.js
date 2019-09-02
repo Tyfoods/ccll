@@ -22,7 +22,7 @@ module.exports = function createDeleteListBtn(setAttributeOfElementsInArrayIncre
 
 	deleteListBtnCollection.forEach(function(deleteListBtn){
 		deleteListBtn.addEventListener("click", function(){
-			makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/pages/'+current_page_id, "POST")
+			makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link/'+current_page_id, "POST")
 				.then(function (request) {
 		
 					var response = request.responseText;
@@ -40,7 +40,7 @@ module.exports = function createDeleteListBtn(setAttributeOfElementsInArrayIncre
 					}
 
 					//Delete the appropriate list from the front end.
-					makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/pages/'+current_page_id, "POST", JSON.stringify(newPageData), true);
+					makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link/'+current_page_id, "POST", JSON.stringify(newPageData), true);
 
 					//Delete list from front end visually
 					listArray.forEach(function(listToRemove){

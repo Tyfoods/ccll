@@ -10,7 +10,7 @@ function updateCllListRequest(cllRequestData, deps)
 	const makeRequest = deps.makeRequest;
 	const replaceOccurrence = deps.replaceOccurrence;
 
-	makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/pages/'+current_page_id, "POST")
+	makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link/'+current_page_id, "POST")
 		.then(function (request) {
 
 			var response = request.responseText;
@@ -77,7 +77,7 @@ function updateCllListRequest(cllRequestData, deps)
 		.then(function (newShortCodeData) {
 			//console.log("WIN NUMBER TWO");
 			//console.log(newShortCodeData);
-			return makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/pages/'+current_page_id, "POST", JSON.stringify(newShortCodeData), true);
+			return makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link/'+current_page_id, "POST", JSON.stringify(newShortCodeData), true);
 		})
 		.catch(function (error){
 			//console.log("FAILED");
