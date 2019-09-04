@@ -16,10 +16,10 @@ module.exports = function throughLinkRequest(currentAddToListBtn, deps)
 						'GET')
 				.then(function(request){
 
-					console.log(request);
+					//console.log(request);
 					if(request.responseText === "[]"){
 
-						console.log("There was no reponseText - Post does not exist");
+						//console.log("There was no reponseText - Post does not exist");
 						
 						var NewLinkItemData = {
 							"title": document.querySelector('[name="newListItemTitle"].add-to-list-form__add-to-list-input').value,
@@ -34,7 +34,7 @@ module.exports = function throughLinkRequest(currentAddToListBtn, deps)
 						}
 					
 							//create new link post type
-							makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link', 'POST', JSON.stringify(NewLinkItemData))
+							makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link', 'POST', JSON.stringify(NewLinkItemData), true)
 								.catch(function(error){
 									console.log("Failed to create new post");
 									console.log(error);
@@ -43,7 +43,7 @@ module.exports = function throughLinkRequest(currentAddToListBtn, deps)
 					else{
 						alert("Link already exists! We'll add this link to the list");
 						let objResponse = JSON.parse(request.responseText);
-						console.log(objResponse);
+						//console.log(objResponse);
 						let linkCategoryArray = objResponse[0].link_category;
 						linkCategoryArray.push(window[multiListPageCategoryIds]);
 
@@ -60,7 +60,7 @@ module.exports = function throughLinkRequest(currentAddToListBtn, deps)
 						let newLinkCategory = (function ()
 							{for (mentionSlug of mentionSlugArray){
 								if(currentPageUrl !== mentionSlug){
-									console.log("This page doesn't yet exist in the record, adding now");
+									//console.log("This page doesn't yet exist in the record, adding now");
 									//change meta here such that mention record contains the new mention
 									let mentionObjKeysArray = Object.keys(mentionObj);
 
@@ -78,7 +78,7 @@ module.exports = function throughLinkRequest(currentAddToListBtn, deps)
 									};
 								}
 								else{
-									console.log("This page exists in the record already, not adding");
+									//console.log("This page exists in the record already, not adding");
 									return {
 										"link_category": linkCategoryArray
 									};

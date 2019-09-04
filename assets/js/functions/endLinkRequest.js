@@ -41,7 +41,7 @@ module.exports = function endLinkRequest(currentAddToListBtn, deps)
 										"link_category": linkCategoryArray
 									};
 		
-									makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link/'+linkObj.id, 'POST', JSON.stringify(newLinkCategory))
+									makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link/'+linkObj.id, 'POST', JSON.stringify(newLinkCategory), true)
 									.catch(function(error){
 										console.log(error);
 									});
@@ -66,7 +66,7 @@ module.exports = function endLinkRequest(currentAddToListBtn, deps)
 							}
 				
 							//create new link post type
-							makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link', 'POST', JSON.stringify(NewLinkItemData))
+							makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link', 'POST', JSON.stringify(NewLinkItemData), true)
 								.catch(function(error){
 									console.log(error);
 								});
