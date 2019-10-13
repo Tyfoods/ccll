@@ -1,7 +1,7 @@
 
 
 module.exports = function createAddToListBtn() {
-	var allListsArray = document.querySelectorAll('.cll-link-list__link-list--style-1');
+	var allListsArray = document.querySelectorAll('.cll-link-list__link-list--style-'+list_style);
 	allListsArray.forEach(function(list){
 		//append Add To List! button
 		var addToListBtn = document.createElement('button');

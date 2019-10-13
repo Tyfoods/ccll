@@ -20,6 +20,11 @@
 
 */
 
+input.cll_search_form_input {
+  width: 100%;
+  text-align: center;
+}
+
 input[name="newCategoryRequestElement"] {
   width: 100%;
   border-radius: 10px;
@@ -40,7 +45,7 @@ select#linkTypeSelecter {
   background-color: #fff;
 }
 
-select.cll-edit-category-btn__list-category-selector {
+select.cll-edit-category-btn__list-category-selector--style-1 {
   width: 100%;
   background-color: #fff !important;
 }
@@ -64,7 +69,7 @@ select.cll-edit-category-btn__list-category-selector {
  display:grid;
 }
 
-.link-list--style-1__link-list-item a.link-list-item__link-list-title {
+.link-list--style-1__link-list-item--style-1 a.link-list-item__link-list-title--style-1 {
   text-decoration: none !important;
   color: #000;
   display: block;
@@ -84,7 +89,7 @@ select.cll-edit-category-btn__list-category-selector {
   margin-bottom: 5%;
 }
 
-button.link-list-item__admin-delete-button:hover{
+button.link-list-item__admin-delete-button--style-1:hover{
   opacity:.5 !important;
 }
 
@@ -92,7 +97,7 @@ button.link-list-item__admin-delete-button:hover{
   color:white;
 }
 
-.cll-link-list button.cll-link-list__delete-list-btn:hover{
+.cll-link-list--style-1 button.cll-link-list__delete-list-btn--style-1:hover{
   color: #fff;
   background-color: #0C808E;
   background-size: 1.5em;
@@ -101,7 +106,7 @@ button.link-list-item__admin-delete-button:hover{
   opacity: 1;
  }
 
-.cll-link-list button.cll-link-list__cll-edit-category-btn:hover{
+.cll-link-list--style-1 button.cll-link-list__cll-edit-category-btn--style-1:hover{
   color: #fff;
   background-color: #0C808E;
   background-size: 1.5em;
@@ -111,11 +116,11 @@ button.link-list-item__admin-delete-button:hover{
  }
 
 
- input.add-to-list-form__add-to-list-input{
+ input.add-to-list-form__add-to-list-input--style-1{
    width:100%;
  }
 
- .cll-link-list button.cll-link-list__add-to-list-btn:hover{
+ .cll-link-list--style-1 button.cll-link-list__add-to-list-btn--style-1:hover{
   color: #fff;
   background-color: #0C808E;
   background-size: 1.5em;
@@ -124,7 +129,7 @@ button.link-list-item__admin-delete-button:hover{
   opacity: 1;
  }
 
- .cll-link-list button.cll-link-list__add-to-list-btn:focus{
+ .cll-link-list--style-1 button.cll-link-list__add-to-list-btn--style-1:focus{
   color: #fff;
   background-color: #0C808E;
   background-size: 1.5em;
@@ -143,18 +148,18 @@ button.link-list-item__admin-delete-button:hover{
 }
 
 
-.cll-link-list__link-list--style-1 li.cll-link-list__add-to-list-btn:hover{
+.cll-link-list__link-list--style-1 li.cll-link-list__add-to-list-btn--style-1:hover{
 
   background-color: #0C808E;
   color: white;
  }
 
- button.cll-link-list__add-to-list-btn {
-  bottom: 10px;
+ button.cll-admin-button.add-to-list-btn--style-1 {
+  margin-bottom: 5%;
 }
 
 
-.cll-link-list__link-list--style-1 button:focus{
+.cll-link-list__link-list--style-1 button--style-1:focus{
   background-color: unset;
   background-size: 1.5em;
   background-repeat: no-repeat;
@@ -162,12 +167,12 @@ button.link-list-item__admin-delete-button:hover{
   opacity: .5;
  }
 
- p.link-list--style-1__no-links-text {
+ p.link-list--style-1__no-links-text--style-1 {
   text-align: center;
 }
 
 
-button.link-list-item__admin-delete-button{
+button.admin-delete-button--style-1{
   grid-column: 3;
   grid-row: 1;
   background-color:unset;
@@ -178,31 +183,9 @@ button.link-list-item__admin-delete-button{
   border:none;
 }
 
-.back-btn__cancel-btn{
-  padding: 4.5% 10% 4.5% 10%;
-  position: relative;
-  margin-left: 14%;
-  border:none;
 
-  background-color:unset;
-  background-image: url("../images/cancelBtn.png") !important;
-  background-size: contain;
-  background-repeat: no-repeat;
-}
 
-.back-btn__cancel-btn:hover{
-  padding: 4.5% 10% 4.5% 10%;
-  position: relative;
-  margin-left: 14%;
-  border:none;
-
-  background-color:unset;
-  background-image: url("../images/cancelBtn.png") !important;
-  background-size: contain;
-  background-repeat: no-repeat;
-}
-
-.cll-edit-category-btn__cancel-btn {
+.cll-edit-category-btn__cancel-btn--style-1 {
 	padding: 8.5% 10% 8.5% 10%;
   position: relative;
   margin-left: 14%;
@@ -214,7 +197,7 @@ button.link-list-item__admin-delete-button{
   background-repeat: no-repeat;
 }
 
-.add-to-list-form__cancel-btn {
+.add-to-list-form__cancel-btn--style-1 {
 	padding: 8.5% 10% 8.5% 10%;
   position: relative;
   margin-left: 14%;
@@ -226,7 +209,7 @@ button.link-list-item__admin-delete-button{
   background-repeat: no-repeat;
 }
 
-button.link-list-item__up-vote-button {
+button.up-vote-button--style-1 {
   background-image: url("../images/thumb-up.png") !important;
   background-color:unset;
   background-size: 1.5em;
@@ -238,7 +221,7 @@ button.link-list-item__up-vote-button {
   position: relative;
   border: none;
 }
-button.link-list-item__down-vote-button {
+button.down-vote-button--style-1 {
   background-image: url("../images/dislike-thumb.png") !important;
   background-color:unset;
   background-size: 1.5em;
@@ -248,7 +231,7 @@ button.link-list-item__down-vote-button {
   grid-row: 2;
   border: none;
 }
-button.link-list-item__neutral-vote-button {
+button.neutral-vote-button--style-1 {
   background-image: url("../images/emoticon-neutral-face-outline.png") !important;
   background-color:unset;
   background-size: 1.5em;
@@ -259,22 +242,24 @@ button.link-list-item__neutral-vote-button {
   border: none;
 }
 
-p.link-list-item__up-votes-counter {
+p.up-votes-counter--style-1 {
+  grid-column: 1;
+	grid-row: 2;
+	color: #000;
+	position: relative;
+  top: 30px;
+  text-align: center;
+}
+p.down-votes-counter--style-1 {
 	grid-column: 3;
 	grid-row: 2;
 	color: #000;
 	position: relative;
-	top: 30px;
-}
-p.link-list-item__down-votes-counter {
-	grid-column: 1;
-	grid-row: 2;
-	color: #000;
-	position: relative;
-	top: 25px;
+  top: 25px;
+  text-align: center;
 }
 
-p.link-list-item__submitted-by {
+p.link-list-item__submitted-by--style-1 {
   grid-row: 3;
   grid-column: 1 / span 3;
   font-size: 70%;
@@ -282,7 +267,7 @@ p.link-list-item__submitted-by {
   margin-top: 5%;
 }
 
-button.add-to-list-form__submit-btn {
+button.add-to-list-form__submit-btn--style-1 {
     padding: 4%;
     border-color: #000;
     background: #fff;
@@ -294,7 +279,7 @@ button.add-to-list-form__submit-btn {
     border-radius: 10px;
 }
 
-button.cll-edit-categoy-btn__submit-btn {
+button.cll-edit-categoy-btn__submit-btn--style-1 {
   padding: 4%;
   border-color: #000;
   background: #fff;
@@ -312,68 +297,19 @@ button.cll-edit-categoy-btn__submit-btn {
   width: 60%;
 }
 
-input.cll_search_form_input {
+input.cll_search_form_input--style-1 {
     width: 100%;
     text-align: center;
     border: solid 2.5px #000!important;
 }
 
-div.search-result-element {
+div.search-result-element--style-1 {
     border: solid 1.5px #000;
     cursor: pointer;
 }
 
-button.new-list-btn{
-  margin: 5% 5% !important;
-  padding: 1.5%;
-  border-color: #000;
-  background: #fff;
-  color: #000;
-  border-style: outset;
-  border-width: 1px;
-  box-shadow: 2.5px 5px;
-  position: relative;
-  display: inline;
-  border-radius: 10px;
-}
 
-button.new-list-btn:hover { 
-  background-color: #0C808E;
-  color: #fff;
-}
-
-button.back-btn{
-  background-color:unset;
-  background-image: url("../images/back-button.png") !important;
-  background-size: contain;
-  background-position: center;
-  background-repeat: no-repeat;
-
-  margin: 5% 0;
-  padding: 3%;
-
-  border: none;
-  position: relative;
-  display: inline;
-}
-
-button.back-btn:hover { 
-  background-color:unset;
-  background-image: url("../images/back-button.png") !important;
-  background-size: contain;
-  background-position: center;
-  background-repeat: no-repeat;
-}
-button.back-btn:focus { 
-  background-color:unset;
-  background-image: url("../images/back-button.png") !important;
-  background-size: contain;
-  background-position: center;
-  background-repeat: no-repeat;
-
-}
-
-div.cll-link-list{
+div.cll-link-list--style-1{
   display: inline-block;
   vertical-align: top;
   width: 25%;
@@ -387,7 +323,7 @@ div.cll-link-list{
 }
 
 
-.cll-link-list > button {
+.cll-link-list--style-1 > button {
   margin-left: 16%;
   padding: 1.5%;
   border-color: #000;
@@ -402,8 +338,9 @@ div.cll-link-list{
   right: 12%;
 }
 
-h4.cll-link-list__list-title {
+h4.cll-link-list__list-title--style-1 {
   margin: 10px 0px 0px 0px;
+  overflow-wrap: break-word;
   text-align: center;
   max-width: 190px;
   font-weight: bolder;

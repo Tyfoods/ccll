@@ -1,86 +1,95 @@
-module.exports = //Function for updating shortcode of current page
-function updateCllListRequest(cllRequestData, deps)
+import makeRequest from '../functions/makeRequest'
+
+//Function for updating shortcode of current page
+function updateCllListRequest(cllRequestData)
 {
 	var selectedCategory = cllRequestData['selectedCategory'];
-	var currentCllId = parseInt(cllRequestData['currentCllId']);
+	var shortcodeSourceId = parseInt(cllRequestData['shortcodeSourceId']);
+	var listId = cllRequestData['listId'];
 
-	//console.log(selectedCategory);
-	console.log(currentCllId);
-	
-	const makeRequest = deps.makeRequest;
-	const replaceOccurrence = deps.replaceOccurrence;
-
-	makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link/'+current_page_id, "POST")
+		(()=>{
+			if(current_screen_type[0] === "page"){
+			return makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/pages/'+current_page_id, "POST");
+			}
+			if(current_screen_type[0] === "post"){
+				return makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link/'+current_post_id, "POST");
+			}
+		})()
 		.then(function (request) {
+			let objResponse = JSON.parse(request.responseText);
 
-			var response = request.responseText;
-			var rawResponse = response.split('{"id":'+current_page_id).pop();
-			var jsonResponse = '{"id":'+current_page_id+rawResponse;
-			var objResponse = JSON.parse(jsonResponse);
+			const cllListRegex = /\[new_cll_list\s?(.*?)\]/g;
+			const cllListMatchJson = /(\'|\")\{(.*?)\}(\'|\")/g;
+			const cllListDataRegex = /list_data\s?=\s?(\'|\")\{(.*?)\}(\'|\")/g
+			const cllIsSearchEngineOnRegex = /is_search_engine_on\s?=\s?(\'|\")(.*?)(\'|\")/g
 
 			
-			const cllListRegex = /\[cll_list]?\s?/g;
 			const cllListShortCodeArray = objResponse.content.raw.match(cllListRegex);
 
+			//later used with "replace()" to editShortCode
+			const entireCurrentShortcodeString = cllListShortCodeArray[shortcodeSourceId-1];
+			console.log(entireCurrentShortcodeString);
 
-			console.log(cllListShortCodeArray);
-
-			
-			var currentShortCode = cllListShortCodeArray[currentCllId].toString().toLowerCase();
-
-
-			var plainCllListRegex = /\[cll_list]?(\s+)?]/g;
-
-			
-			var plainShortCodeArray = currentShortCode.match(plainCllListRegex)
-			if(plainShortCodeArray !== null)
-			{
-
-				//else{
-					const cllReplacementRegex = /\[cll_list]?\s?\]?/g;
-					var pageContent = objResponse.content.raw;
-
-
-					//replace ONLY the correctly numbered short code using INDEX
-					var newPageContent = replaceOccurrence(pageContent, cllReplacementRegex, parseInt(currentCllId), '[cll_list category_name="'+selectedCategory+'"]');
-					//var newPageContent = pageContent.replace(cllReplacementRegex,'[cll_list category_name="'+selectedCategory+'"]');
-
-
-					console.log("selected category is: "+selectedCategory);
-					console.log(pageContent);
-					console.log(newPageContent);
-						
-					var NewShortCodeData = {
-						"content": newPageContent
-
-					}
-				//}
-				return NewShortCodeData;
+			const searchEngineSetting = entireCurrentShortcodeString.match(cllIsSearchEngineOnRegex);
+			if(searchEngineSetting == null){
+				searchEngineSetting = '';
 			}
-			else
-			{
-				console.log("Short Code with New Category FOUND!");
 
-				const cllPopulatedReplacementRegex = /category_name\s?=\s?"(.*?)"/g;
-				var pageContent = objResponse.content.raw;
 
-				//replace ONLY the correctly numbered short code using INDEX
-				var newPageContent = replaceOccurrence(pageContent, cllPopulatedReplacementRegex, parseInt(currentCllId), 'category_name="'+selectedCategory+'"');
-						
+			//getData
+			let listDataAtt = entireCurrentShortcodeString.match(cllListDataRegex);
+			if(listDataAtt == null){ //if data doesn't exist set to default
+				listDataAtt = [];
+				listDataAtt[0] = '"{ "1": { "style": "2", "category_name": "" } }"'
+				//when not null, "listDataArrayString" requires one to strip the first and last character
+				//To leverage the code below, we'll stick extra characters in hence the extra quotes outside jSon
+
+        	}
+			let listDataArrayString = listDataAtt[0].match(cllListMatchJson);
+			let listDataObj = JSON.parse(listDataArrayString[0].substr(1, listDataArrayString[0].length-2));
+
+
+			//Modify Data appropriately
+			console.log(listId);
+			console.log(listDataObj[listId]);
+			listDataObj[`${listId}`]['category_name'] = selectedCategory;
+			console.log(listDataObj);
+
+			//createShortCode
+			let newShortcode = `[new_cll_list list_data='${JSON.stringify(listDataObj)}' ${searchEngineSetting}']`;
+
+			//console.log(newShortcode);
+			let pageContent = objResponse.content.raw;
+
+			console.log(pageContent);
+
+			let newPageContent = pageContent.replace(entireCurrentShortcodeString, newShortcode);
+
+			console.log(newPageContent);
+			
+			
+			(()=>{
 				var NewShortCodeData = {
 					"content": newPageContent
 
 				}
-				return NewShortCodeData;
-			}
-		})
-		.then(function (newShortCodeData) {
-			//console.log("WIN NUMBER TWO");
-			//console.log(newShortCodeData);
-			return makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link/'+current_page_id, "POST", JSON.stringify(newShortCodeData), true);
+				if(current_screen_type[0] === "page"){
+				return makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/pages/'+current_page_id, "POST", JSON.stringify(NewShortCodeData));
+				}
+				if(current_screen_type[0] === "post"){
+					return makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link/'+current_post_id, "POST", JSON.stringify(NewShortCodeData));
+				}
+			})()
+			.catch(function(error){
+				console.log(error);
+			});
+			
+
 		})
 		.catch(function (error){
 			//console.log("FAILED");
 			console.log(error);
 		});
 }
+
+export default updateCllListRequest;

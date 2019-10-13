@@ -44,16 +44,19 @@ module.exports = function handleLinkApproveBtnClick(cllApproveBtn, deps){
     makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/users/'+userId, 'GET')
         .then(function(request){
             var objResponse = JSON.parse(request.responseText);
-            newLinkItemData['meta'] = {"submitted_by" : objResponse.name, "URL" : newLinkItemData['content'].trim(), "link_type" : "external link"};
+            newLinkItemData['meta'] = {"submitted_by" : objResponse.name,
+                                        "URL" : newLinkItemData['content'].trim(),
+                                        "link_type" : "external link"};
             return;
         })
         .then(function(){
             //console.log(newLinkItemData);
             makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link', 'POST', JSON.stringify(newLinkItemData))
+           // makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link', 'GET')
             .then(function(request){
-                //console.log("Successful Link Addition");
+                console.log("Successful Link Addition");
                 alert("You have approved a link!");
-                makeRequest(cllGlobals.currentProtocalDomain+'/wp-content/plugins/curation-link-library/cll-core/request-handlers/approve-link-item-handler.php', 'POST', "json_string="+JSON.stringify(newLinkItemData))
+                makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/cll-link/v1/link-approved-request/'+userId, 'POST', JSON.stringify(newLinkItemData))
                     .then(function(request){
                         //console.log(request.responseText);
                         //console.log("Successful pending link deletion");

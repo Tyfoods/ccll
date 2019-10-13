@@ -16,17 +16,6 @@ import addClickToLinkApproveBtn from '../js/functions/addClickToLinkApproveBtn';
 import handleLinkDeclineBtnClick from '../js/functions/handleLinkDeclineBtnClick';
 import handleLinkApproveBtnClick from '../js/functions/handleLinkApproveBtnClick';
 
-
-
-
-
-
-
-
-
-
-
-
 window.onload=function()
 {
     const dependencies = {

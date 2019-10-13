@@ -1,5 +1,5 @@
 module.exports = function createUpVoteBtn(){
-	var allListItemsArray = document.querySelectorAll('.link-list--style-1__link-list-item');
+	var allListItemsArray = document.querySelectorAll('.link-list--style-'+list_style+'__link-list-item');
 	
 	var incrementer = 0;
 	allListItemsArray.forEach(function(listItem){

@@ -1,9 +1,7 @@
-module.exports = function throughLinkRequest(currentAddToListBtn, deps)
-{
+import slugify from '../functions/slugify'
+import makeRequest from '../functions/makeRequest'
 
-	const slugify = deps.slugify;
-	const makeRequest = deps.makeRequest;
-	var multiListPageCategoryIds = "cll_category_ids"+"_"+currentAddToListBtn.getAttribute('cllid');
+function throughLinkRequest(categoryId, style){
 
 	makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/users/'+cllUserId[0], 'GET')
 		.then(function(request){
@@ -12,7 +10,7 @@ module.exports = function throughLinkRequest(currentAddToListBtn, deps)
 			return objResponse.name;
 		})
 		.then(function(username){
-			makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link?slug='+slugify(document.querySelector('[name="newListItemTitle"].add-to-list-form__add-to-list-input').value),
+			makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link?slug='+slugify(document.querySelector('[name="newListItemTitle"].add-to-list-form__add-to-list-input--style-'+style).value),
 						'GET')
 				.then(function(request){
 
@@ -22,19 +20,19 @@ module.exports = function throughLinkRequest(currentAddToListBtn, deps)
 						//console.log("There was no reponseText - Post does not exist");
 						
 						var NewLinkItemData = {
-							"title": document.querySelector('[name="newListItemTitle"].add-to-list-form__add-to-list-input').value,
-							"slug": "/"+document.querySelector('[name="newListItemTitle"].add-to-list-form__add-to-list-input').value.replace(/ /g,'-').toLowerCase(),
+							"title": document.querySelector('[name="newListItemTitle"].add-to-list-form__add-to-list-input--style-'+style).value,
+							"slug": "/"+document.querySelector('[name="newListItemTitle"].add-to-list-form__add-to-list-input--style-'+style).value.replace(/ /g,'-').toLowerCase(),
 							"content": '[cll_list]',
-							"meta" : {"URL" : cllGlobals.currentProtocalDomain+'/link/'+document.querySelector('[name="newListItemTitle"].add-to-list-form__add-to-list-input').value.replace(/ /g, '-').replace(/%20/g,'-'),
+							"meta" : {"URL" : cllGlobals.currentProtocalDomain+'/link/'+document.querySelector('[name="newListItemTitle"].add-to-list-form__add-to-list-input--style-'+style).value.replace(/ /g, '-').replace(/%20/g,'-'),
 									 "link_type" : "internal link",
 									 "submitted_by": username,
 									 "mention_record": '{ "0" : "'+window.location.href+'" }'},
 							"status": "publish",
-							"link_category": [window[multiListPageCategoryIds]]
+							"link_category": categoryId[0]
 						}
 					
 							//create new link post type
-							makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link', 'POST', JSON.stringify(NewLinkItemData), true)
+							makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link', 'POST', JSON.stringify(NewLinkItemData))
 								.catch(function(error){
 									console.log("Failed to create new post");
 									console.log(error);
@@ -45,7 +43,7 @@ module.exports = function throughLinkRequest(currentAddToListBtn, deps)
 						let objResponse = JSON.parse(request.responseText);
 						//console.log(objResponse);
 						let linkCategoryArray = objResponse[0].link_category;
-						linkCategoryArray.push(window[multiListPageCategoryIds]);
+						linkCategoryArray.push(categoryId[0]);
 
 						let currentPageUrl = window.location.href;
 						mentionObj = JSON.parse(objResponse[0].meta.mention_record);
@@ -85,7 +83,7 @@ module.exports = function throughLinkRequest(currentAddToListBtn, deps)
 								}
 							}})();
 
-						makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link/'+objResponse[0].id, 'POST', JSON.stringify(newLinkCategory), true)
+						makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link/'+objResponse[0].id, 'POST', JSON.stringify(newLinkCategory))
 							.catch(function(error){
 								console.log(error);
 							});
@@ -100,3 +98,5 @@ module.exports = function throughLinkRequest(currentAddToListBtn, deps)
 			console.log(error);
 		});
 }
+
+export default throughLinkRequest;

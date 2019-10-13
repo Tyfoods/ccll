@@ -1,3 +1,8 @@
+
+
+/* Deprecated!
+
+
 import cllGlobals from '../js/cllGlobals';
 import setAttributeOfElementsInArrayIncrementally from '../js/functions/setAttributeOfElementsInArrayIncrementally';
 import makeRequest from '../js/functions/makeRequest';
@@ -113,3 +118,4 @@ else
 
 
 }
+*/

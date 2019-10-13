@@ -22,7 +22,7 @@ function delete_pending_link_item_data(){
 
 
 	//Delete Passed in new_link_item_data from pending link table
-	$wp_config_path = $_SERVER['DOCUMENT_ROOT'] . 'wp-config.php';
+	$wp_config_path = $_SERVER['DOCUMENT_ROOT'] . '/wp-config.php';
 	require_once($wp_config_path);
 
 

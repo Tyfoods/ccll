@@ -6,10 +6,11 @@ module.exports = function handleUpVoteBtnClick(upVoteBtn, deps){
 
     var linkListTitleArray = document.querySelectorAll('.link-list-item__link-list-title');
 
-    if(cllGlobals.isUpVoteBtnClicked === false){
-        linkListTitleArray.forEach(function(linkListTitle){
+    //if(cllGlobals.isUpVoteBtnClicked === false){
+        //instead of iterating through each of these I can pass as props down the necessary information.
+        //linkListTitleArray.forEach(function(linkListTitle){
             var postSlug = slugify(linkListTitle.textContent.trim()); //.replace(/\s/g, '-').toLowerCase();
-            if(linkListTitle.getAttribute('cllId') === upVoteBtn.getAttribute('cllId')){
+            //if(linkListTitle.getAttribute('cllId') === upVoteBtn.getAttribute('cllId')){
                 makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link?slug='+postSlug, 'GET')
                     .then(function(request){
                         var objResponse = JSON.parse(request.responseText);
@@ -129,7 +130,7 @@ module.exports = function handleUpVoteBtnClick(upVoteBtn, deps){
                 .catch(function(error){
                     console.log(error);
                 });
-            }
-        })
-    }
+            //}
+
+    //}
 }

@@ -54,7 +54,7 @@ function main_request_handler()
 
 	
 
-	$wp_config_path = $_SERVER['DOCUMENT_ROOT'] . 'wp-config.php';
+	$wp_config_path = $_SERVER['DOCUMENT_ROOT'] . '/wp-config.php';
 	//echo $_SERVER['DOCUMENT_ROOT'] . 'wp-config.php';
 	require_once($wp_config_path);
 	global $wpdb;

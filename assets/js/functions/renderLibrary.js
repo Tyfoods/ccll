@@ -16,8 +16,8 @@ module.exports = function renderLibrary(){
 
     //logic to determine what link list style is loaded
     let linkListUL = document.createElement("ul");
-    linkListUL.setAttribute("class", "cll-link-list__link-list--style-1");
-    cllLinkList.appendChild(linkListUl);
+    linkListUL.setAttribute("class", "cll-link-list__link-list--style-"+list_style);
+    cllLinkList.appendChild(linkListUL);
     //get all posts in the category specified by shortcode
 
     //makeRequest to get postArray
@@ -25,9 +25,9 @@ module.exports = function renderLibrary(){
 
     //If postsArray is not empty
     postsArray.forEach(function(post){
-        let linkListUL = document.querySelector("cll-link-list__link-list--style-1");
+        let linkListUL = document.querySelector("cll-link-list__link-list--style-"+list_style);
         let listItem = document.createElement("li");
-        listItem.setAttribute("class", "link-list--style-1__link-list-item");
+        listItem.setAttribute("class", "link-list--style-"+list_style+"__link-list-item");
 
         //postUrl = post.meta.URL;
         //postTitle = post.meta.title;

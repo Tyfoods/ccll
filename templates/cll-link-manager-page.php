@@ -25,6 +25,7 @@
 		$table_name;
 		// this will get the data from your table
 		$retrieve_data = $wpdb->get_results( "SELECT * FROM $table_name" );
+		//wp_localize_script('cll-backEndAdminManager', 'link_table_data',array($retrieve_data));
 	  ?>
 
 	  <?php $pending_link_id = 1 ?>
@@ -35,7 +36,11 @@
 	    <td title="linkTitle" cllid="<?php echo $pending_link_id ?>" class="pending-link-data__link-title"> <?php echo $retrieved_data->link_title ?> </td>
 	    <td title="content" cllid="<?php echo $pending_link_id ?>" class="pending-link-data__content"> <?php echo $retrieved_data->link_url ?> </td>
 	    <td style="display:none" title="linkId" cllid="<?php echo $pending_link_id ?>" class="pending-link-data__linkId"> <?php echo $retrieved_data->pending_link_id ?> </td>
-		<td style="display:none" title="category" cllid="<?php echo $pending_link_id ?>" class="pending-link-data__category"> <?php echo $retrieved_data->link_categories ?> </td>
+
+		<td style="display:none" title="category" cllid="<?php echo $pending_link_id ?>" class="pending-link-data__category">
+			<?php echo $retrieved_data->link_categories ?>
+		</td>
+
 	    <td> <button type="button" cllid="<?php echo $pending_link_id ?>" class="pending-link-data__approve-btn">Approve</button> </td>
 	    <td> <button type="button" cllid="<?php echo $pending_link_id ?>" class="pending-link-data__decline-btn">Decline</button> </td>
 	  </tr>
@@ -80,6 +85,12 @@ if(empty($retrieve_data)){
 	   <?php $pending_list_cllid = 1 ?>
 	  <?php foreach ($retrieved_list_data as $list_data){ ?>
 	  <tr class="pending-link-data-table__pending-list-data">
+	  	<td style="display: none" title="screen_type" cllid="<?php echo $pending_list_cllid ?>" class="pending-list-data__screen-type">
+			<?php echo $list_data->screen_type ?>
+		</td>
+		<td style="display: none" title="shortcode_source_id" cllid="<?php echo $pending_list_cllid ?>" class="pending-list-data__shortcode-source-id">
+			<?php echo $list_data->shortcode_source_id ?>
+		</td>
 	  	<td title="list_page_origin" cllid="<?php echo $pending_list_cllid ?>" class="pending-list-data__list-page-origin"> <?php echo $list_data->list_page_origin ?> </td>
 	    <td title="listId" cllid="<?php echo $pending_list_cllid ?>" class="pending-list-data__list-id"> <?php echo $list_data->pending_list_id ?> </td>
 	    <td title="userId" cllid="<?php echo $pending_list_cllid ?>" class="pending-list-data__user-id"> <?php echo $list_data->common_user_id ?> </td>

@@ -13,11 +13,11 @@ if(!defined('ABSPATH')){
 	exit;
 }
 
-// Define URL Based DIR
+// Define Web PAth (URL) Based on plugin DIR
 if ( ! defined( 'CLL_PLUGIN_DIR' ) ) {
 	define( 'CLL_PLUGIN_DIR', plugin_dir_url(__FILE__) );
 }
-// Define Server based CLL_PLUGIN_FILE
+// Define Server path based on CLL_PLUGIN_FILE
 if ( ! defined( 'CCLL_PLUGIN_FILE' ) ) {
 	define( 'CCLL_PLUGIN_FILE', __FILE__ );
 }
@@ -36,4 +36,4 @@ function CCLL(){
 }
 CCLL();
 
-
+?>

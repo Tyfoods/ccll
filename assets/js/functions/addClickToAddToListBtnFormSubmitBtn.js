@@ -3,6 +3,7 @@ module.exports = function addClickToAddToListBtnFormSubmitBtn(currentAddToListBt
 	var submitBtn = document.querySelector('button.add-to-list-form__submit-btn');
 
 
+
 	if (typeof submitBtn !== 'undefined')
 	{
 		//console.log("Submit Button Existance Verified");
@@ -92,29 +93,7 @@ module.exports = function addClickToAddToListBtnFormSubmitBtn(currentAddToListBt
 						}, 750);
 					}
 
-					/*
-					var createLinkItemQuery = new XMLHttpRequest();
-					createLinkItemQuery.onreadystatechange = function()
-						{
-							if(this.readyState == 4 && this.status == 200)
-							{
-								//Nothing below gets called :O ready state is NEVER 4!!!
-								//console.log('Success - Hello');
-								//console.log(createLinkItemQuery.responseText);
-								////console.log(commonUserId);
-							}
-								//if request fails...?
-						
-						}
-					NewLinkItemData = "commonUserId=" + JSON.stringify(cllUserId) + "json_string=" + JSON.stringify(NewLinkItemData);
-					createLinkItemQuery.open("POST", cllGlobals.currentProtocalDomain+'/wp-content/plugins/curation-link-library/cll-core/request-handlers/common-user-request-handler.php');
-					createLinkItemQuery.setRequestHeader("X-WP-Nonce", magicalData.nonce);
-					createLinkItemQuery.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-					createLinkItemQuery.send(NewLinkItemData);
-					*/
-
-					//var newListItemTitle = document.querySelector('[name="newListItemTitle"].add-to-list-form__add-to-list-input').value //what's this for?
-					//event.stopPropagation();
+					
 			}
 
 		});

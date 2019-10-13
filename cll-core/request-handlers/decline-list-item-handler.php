@@ -20,7 +20,7 @@ function delete_pending_list_item_data(){
 
 
 	//Delete Passed in new_list_item_data from pending List table
-	$wp_config_path = $_SERVER['DOCUMENT_ROOT'] . 'wp-config.php';
+	$wp_config_path = $_SERVER['DOCUMENT_ROOT'] . '/wp-config.php';
 	require_once($wp_config_path);
 
 

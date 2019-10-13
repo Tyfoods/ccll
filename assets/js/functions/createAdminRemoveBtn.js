@@ -1,5 +1,5 @@
 module.exports = function createAdminRemoveBtn(makeRequest, isObjEmpty){
-	var allListItemsArray = document.querySelectorAll('.link-list--style-1__link-list-item');
+	var allListItemsArray = document.querySelectorAll('.link-list--style-'+list_style+'__link-list-item');
 	var allListItemsAnchorArray = document.querySelectorAll('.link-list-item__link-list-title');
 	var deleteBtnIncrementer = 0;
 
