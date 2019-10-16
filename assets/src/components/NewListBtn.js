@@ -18,7 +18,7 @@ class NewListBtn extends React.Component{
 
         const cllListDataRegex = /list_data\s?=\s?(\'|\")\{(.*?)\}(\'|\")/g
         const cllListMatchJson = /(\'|\")\{(.*?)\}(\'|\")/g;
-        const cllListRegex = /\[new_cll_list\s?(.*?)\]/g;
+        const cllListRegex = /\[cll_list\s?(.*?)\]/g;
         const cllIsSearchEngineOnRegex = /is_search_engine_on\s?=\s?(\'|\")(.*?)(\'|\")/g
 
         
@@ -27,7 +27,7 @@ class NewListBtn extends React.Component{
         //Get entire shortcode from which this set of lists was born.
         const entireCurrentShortcodeString = cllListShortcodeArray[this.props.shortcodeSourceId-1];
         
-        const searchEngineSetting = entireCurrentShortcodeString.match(cllIsSearchEngineOnRegex);
+        let searchEngineSetting = entireCurrentShortcodeString.match(cllIsSearchEngineOnRegex);
         if(searchEngineSetting == null){
             searchEngineSetting = '';
         }
@@ -42,8 +42,8 @@ class NewListBtn extends React.Component{
 
         }
         let listDataArrayString = listDataAtt[0].match(cllListMatchJson);
-        console.log(listDataArrayString);
-        console.log(listDataArrayString[0].substr(1, listDataArrayString[0].length-2));
+        //console.log(listDataArrayString);
+        //console.log(listDataArrayString[0].substr(1, listDataArrayString[0].length-2));
         let listDataObj = JSON.parse(listDataArrayString[0].substr(1, listDataArrayString[0].length-2));
 
 
@@ -71,14 +71,14 @@ class NewListBtn extends React.Component{
         listDataObj[`${newListId}`]['style'] = "2";
         
         //createShortCode
-        let newShortcode = `[new_cll_list list_data='${JSON.stringify(listDataObj)}' ${searchEngineSetting}']`;
+        let newShortcode = `[cll_list list_data='${JSON.stringify(listDataObj)}' ${searchEngineSetting}']`;
 
     
-        console.log(objResponse.content.raw);
+        //console.log(objResponse.content.raw);
     
         let newPageContent = objResponse.content.raw.replace(cllListShortcodeArray[this.props.shortcodeSourceId-1], newShortcode);
 
-        console.log(newPageContent);
+        //console.log(newPageContent);
 
         let newPageData = {
             "content": newPageContent
@@ -96,10 +96,10 @@ class NewListBtn extends React.Component{
         
         updatePage(newPageData)
             .then(function(){
-                //console.log("Successfully updated page!");
-            })
+                document.location.reload(true);
+             })
             .catch(function(){
-                //console.log("Unsuccesful page update!");
+                ////console.log("Unsuccesful page update!");
             });
             
     }
@@ -113,7 +113,7 @@ class NewListBtn extends React.Component{
         let ThisNewListBtn = this;
        
 		if (confirm("Are you sure you would like to add a new list?")) {
-			//console.log("You pressed YES!");
+			////console.log("You pressed YES!");
 				(()=>{
 					if(current_screen_type[0] === "page"){
 					return makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/pages/'+current_page_id, "POST");
@@ -127,12 +127,12 @@ class NewListBtn extends React.Component{
                     ThisNewListBtn.processNewListRequest(request);
 				})
 				.catch(function(error){
-					console.log(error);
-					//console.log("Unable to get page with given ID");
+					//console.log(error);
+					////console.log("Unable to get page with given ID");
 				});
 
         } else {
-        //console.log("You pressed NO");
+        ////console.log("You pressed NO");
         }
     }
     

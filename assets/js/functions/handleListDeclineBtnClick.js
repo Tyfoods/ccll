@@ -17,20 +17,20 @@ module.exports = function handleListDeclineBtnClick(cllListDeclineBtn, deps){
                 var rowToDelete = row.rowIndex;
                 if(row.cells[j].title === 'listId'){
                     newListItemData['listId'] = row.cells[j].innerHTML;
-                    //console.log("This userId was found: "+row.cells[j].title);
-                    //console.log("This is the InnerHTML: "+newListItemData['listId']);
+                    ////console.log("This userId was found: "+row.cells[j].title);
+                    ////console.log("This is the InnerHTML: "+newListItemData['listId']);
                 }
                 else if(row.cells[j].title === 'userId'){
                     newListItemData['commonUserId'] = row.cells[j].innerHTML;
-                    //console.log("This userId was found: "+row.cells[j].title);
-                    //console.log("This is the InnerHTML: "+newListItemData['commonUserId']);
+                    ////console.log("This userId was found: "+row.cells[j].title);
+                    ////console.log("This is the InnerHTML: "+newListItemData['commonUserId']);
                 }
 
                 else if(row.cells[j].title === 'list_category'){
                     newListItemData['list_category'] = row.cells[j].innerHTML;
-                    //console.log("The content was found: "+row.cells[j].title);
-                    //console.log("This is the InnerHTML: "+newListItemData['list_category']);
-                    ////console.log("The elements ID is: "+row.cells[j].id);
+                    ////console.log("The content was found: "+row.cells[j].title);
+                    ////console.log("This is the InnerHTML: "+newListItemData['list_category']);
+                    //////console.log("The elements ID is: "+row.cells[j].id);
                     //row.cells[j].parentNode.removeChild(row.cells[j]);
                 }
             }

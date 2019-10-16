@@ -5,7 +5,7 @@ class EditStyleBtn extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            value: "",
+            value: "1",
             isClicked: false,
             
 
@@ -18,16 +18,16 @@ class EditStyleBtn extends React.Component{
     }
 
     processEditStyleRequest(request){
-        console.log(request.responseText);
+        //console.log(request.responseText);
         let objResponse = JSON.parse(request.responseText);
-        console.log("processing edit style request");
-        console.log(objResponse);
+        //console.log("processing edit style request");
+        //console.log(objResponse);
 
 
         const cllListDataRegex = /list_data\s?=\s?(\'|\")\{(.*?)\}(\'|\")/g
         const cllIsSearchEngineOnRegex = /is_search_engine_on\s?=\s?(\'|\")(.*?)(\'|\")/g
         const cllListMatchJson = /(\'|\")\{(.*?)\}(\'|\")/g;
-        const cllListRegex = /\[new_cll_list\s?(.*?)\]/g;
+        const cllListRegex = /\[cll_list\s?(.*?)\]/g;
         
         const cllListShortcodeArray = objResponse.content.raw.match(cllListRegex);
 		//Get entire shortcode from which this set of lists was born.
@@ -41,7 +41,7 @@ class EditStyleBtn extends React.Component{
 		//if data doesn't there is only one "starter" list, that should probably just be deleted off of the page after use confirms
 		if(listDataAtt == null){
             //there is one list and there isn't any listData
-            console.log("There is one list and no data");
+            //console.log("There is one list and no data");
             
             let newShortcode = `[new_list_data list_data='{ "1": { "style": "${this.state.value}", "category_name": "" } }']`
             let newPageContent = objResponse.content.raw.replace(cllListShortcodeArray[this.props.shortcodeSourceId-1], newShortcode);
@@ -65,22 +65,22 @@ class EditStyleBtn extends React.Component{
         else{
             let listDataArrayString = listDataAtt[0].match(cllListMatchJson);
             let listDataObj = JSON.parse(listDataArrayString[0].substr(1, listDataArrayString[0].length-2));
-            console.log(listDataObj);
+            //console.log(listDataObj);
             let currentListStyle = listDataObj[`${this.props.listId}`].style;
             if(currentListStyle === this.state.value){
-                console.log("current style equals state!");
+                //console.log("current style equals state!");
                 alert(this.state.value+" is already the style!");
             }
             else{
-                console.log("Does not equal state!");
+                //console.log("Does not equal state!");
                 //makeRequest to change the state.
 
                 listDataObj[`${this.props.listId}`].style = this.state.value;
-                console.log(listDataObj);
+                //console.log(listDataObj);
 
-                let newShortcode = `[new_cll_list list_data='${JSON.stringify(listDataObj)}' ${searchEngineSetting}]'`;
+                let newShortcode = `[cll_list list_data='${JSON.stringify(listDataObj)}' ${searchEngineSetting}]'`;
 
-                console.log(newShortcode);
+                //console.log(newShortcode);
 
                 
                 
@@ -92,16 +92,21 @@ class EditStyleBtn extends React.Component{
 					"content": newPageContent
 				}
 	
-				//console.log(newPageContent);
+				////console.log(newPageContent);
 	
 	
-				//Delete the appropriate list from the front end and server.
 				if(current_screen_type[0] === "page"){
-					makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/pages/'+current_page_id, "POST", JSON.stringify(newPageData));
+                    makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/pages/'+current_page_id, "POST", JSON.stringify(newPageData))
+                        .then(function(){
+                            document.location.reload(true);
+                        })
 	                    //server side work to change visuals
 				}
 				if(current_screen_type[0] === "post"){
-					makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link/'+current_post_id, "POST", JSON.stringify(newPageData));
+                    makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link/'+current_post_id, "POST", JSON.stringify(newPageData))
+                        .then(function(){
+                            document.location.reload(true);
+                        })
 					    //server side work to change visuals
                 }
     
@@ -118,7 +123,7 @@ class EditStyleBtn extends React.Component{
 					ThisEditStyleBtn.processEditStyleRequest(request);
 				})
 				.catch(function(error){
-					console.log(error);
+					//console.log(error);
 				});
 		}
 		if(current_screen_type[0] === "post"){
@@ -127,7 +132,7 @@ class EditStyleBtn extends React.Component{
 				ThisEditStyleBtn.processEditStyleRequest(request);
 			})
 			.catch(function(error){
-				console.log(error);
+				//console.log(error);
 			});
 		}
 
@@ -168,11 +173,10 @@ class EditStyleBtn extends React.Component{
                 return(
                     <div className="cll-admin-button">
                         <select value={this.state.value} onChange={this.handleChange} className={``}>
-                            <option value="test">test</option>
                             {this.createExistingStyleOptionsArray()}
                         </select>
-                        <button onClick = {this.handleSubmitBtnClick} type="button" className={``}>Submit</button>
-                        <button onClick={this.handleCancelBtnClick} type="button" className={``}></button>
+                        <button onClick = {this.handleSubmitBtnClick} type="button" className={`cll-admin-button`}>Submit</button>
+                        <button onClick={this.handleCancelBtnClick} type="button" className={`cancel-btn edit-style-button__cancel-btn--style-${this.context.style}`}></button>
                     </div>
                 )
             }   

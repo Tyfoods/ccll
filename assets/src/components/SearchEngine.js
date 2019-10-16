@@ -16,8 +16,8 @@ class SearchEngine extends React.Component{
 
   handleChange(event){
     event.persist();
-    //console.log(event.target.value);
-    console.log("set state");
+    ////console.log(event.target.value);
+    //console.log("set state");
     this.setState((prevState)=>{prevState.value=event.target.value; return prevState;});
 
   }
@@ -25,16 +25,16 @@ class SearchEngine extends React.Component{
   handleKeyUp(event){
     this.setState((prevState)=>{prevState.isLoading = true; return prevState;})
     event.persist();
-    console.log(this.state.value);
-    console.log("key up");
+    //console.log(this.state.value);
+    //console.log("key up");
 
     let ThisSearchEngine = this;
     if(this.state.value.replace(/\s/g, '').length !== 0){
       makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link?search='+this.state.value,'GET')
         .then(function(request){
           let objResponse = JSON.parse(request.responseText);
-          console.log(objResponse);
-          console.log("Got Data");
+          //console.log(objResponse);
+          //console.log("Got Data");
           let i = 0;
           let searchResultsArray = [];
           objResponse.forEach(function(linkItem){
@@ -54,11 +54,11 @@ class SearchEngine extends React.Component{
           })
         })
         .catch(function(error){
-          console.log(error);
+          //console.log(error);
         });
     }
     else{
-      console.log("no load, string was empty");
+      //console.log("no load, string was empty");
       this.setState((prevState)=>{prevState.isLoading = "no load"; return prevState;})
     }
     

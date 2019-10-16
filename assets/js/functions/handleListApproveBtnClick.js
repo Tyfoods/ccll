@@ -1,5 +1,5 @@
 function createNewPageData(jsonResponse, shortcode_source_id){
-    console.log("created new page data");
+    //console.log("created new page data");
     var objResponse = JSON.parse(jsonResponse);
     const cllListDataRegex = /list_data\s?=\s?(\'|\")\{(.*?)\}(\'|\")/g
     const cllListMatchJson = /(\'|\")\{(.*?)\}(\'|\")/g;
@@ -12,7 +12,7 @@ function createNewPageData(jsonResponse, shortcode_source_id){
     //Get entire shortcode from which this set of lists was born.
     const entireCurrentShortcodeString = cllListShortcodeArray[shortcode_source_id-1];
 
-    const searchEngineSetting = entireCurrentShortcodeString.match(cllIsSearchEngineOnRegex);
+    let searchEngineSetting = entireCurrentShortcodeString.match(cllIsSearchEngineOnRegex);
     if(searchEngineSetting == null){
         searchEngineSetting = '';
     }
@@ -27,8 +27,8 @@ function createNewPageData(jsonResponse, shortcode_source_id){
 
     }
     let listDataArrayString = listDataAtt[0].match(cllListMatchJson);
-    console.log(listDataArrayString);
-    console.log(listDataArrayString[0].substr(1, listDataArrayString[0].length-2));
+    //console.log(listDataArrayString);
+    //console.log(listDataArrayString[0].substr(1, listDataArrayString[0].length-2));
     let listDataObj = JSON.parse(listDataArrayString[0].substr(1, listDataArrayString[0].length-2));
 
 
@@ -59,7 +59,7 @@ function createNewPageData(jsonResponse, shortcode_source_id){
     let newShortcode = `[new_cll_list list_data='${JSON.stringify(listDataObj)}' ${searchEngineSetting}']`;
 
 
-    console.log(objResponse.content.raw);
+    //console.log(objResponse.content.raw);
 
     let newPageContent = objResponse.content.raw.replace(cllListShortcodeArray[shortcode_source_id-1], newShortcode);
 
@@ -122,13 +122,13 @@ module.exports = function handleListApproveBtnClick(cllListApproveBtn, deps){
     //add some function to refresh form fields and add temporary checkmark symbol
     deps.deletePendingListRequest(newListItemData);
 
-    console.log(newListItemData['screen_type'].replace(/\s/g, ''));
+    //console.log(newListItemData['screen_type'].replace(/\s/g, ''));
 
     let shortcode_source_id = newListItemData['shortcode_source_id'].replace(/\s/g, '');
     let screen_type = newListItemData['screen_type'].replace(/\s/g, '');
     let list_page_origin_id = newListItemData['list_page_origin'].replace(/\s/g, '').replace(/%20/g, '');
     if (confirm("Are you sure you would like to add this new list?")) {
-        ////console.log("You pressed YES!");
+        //////console.log("You pressed YES!");
         if(screen_type === "page"){
 			makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/pages/'+list_page_origin_id, "POST")
                 .then(function(request){
@@ -139,20 +139,20 @@ module.exports = function handleListApproveBtnClick(cllListApproveBtn, deps){
 
                     //creates new category
                     deps.createNewCategory(newListItemData['list_category'], deps);
-                    console.log("making second request to update");
+                    //console.log("making second request to update");
                     makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/pages/'+list_page_origin_id, "POST", JSON.stringify(newPageData))
                         .then(function(request){
-                            console.log("Successfully updated page!");
-                            console.log(request.responseText);
+                            //console.log("Successfully updated page!");
+                            //console.log(request.responseText);
                         })
                         .catch(function(error){
-                            console.log(error);
-                            console.log("Unsuccesful page update!");
+                            //console.log(error);
+                            //console.log("Unsuccesful page update!");
                         });
                 })
             .catch(function(error){
-                console.log(error);
-                console.log("Unable to get page with given ID");
+                //console.log(error);
+                //console.log("Unable to get page with given ID");
             });
 		}
 		if(screen_type === "post"){
@@ -168,17 +168,17 @@ module.exports = function handleListApproveBtnClick(cllListApproveBtn, deps){
 
                 makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link/'+list_page_origin_id, "POST", JSON.stringify(newPageData))
                     .then(function(request){
-                        console.log("Successfully updated page!");
-                        console.log(JSON.parse(request.responseText));
+                        //console.log("Successfully updated page!");
+                        //console.log(JSON.parse(request.responseText));
                     })
                     .catch(function(error){
-                        console.log(error);
-                        //console.log("Unsuccesful page update!");
+                        //console.log(error);
+                        ////console.log("Unsuccesful page update!");
                     });
             })
             .catch(function(error){
-                console.log(error);
-                //console.log("Unable to get page with given ID");
+                //console.log(error);
+                ////console.log("Unable to get page with given ID");
             });
 		}
 
@@ -186,6 +186,6 @@ module.exports = function handleListApproveBtnClick(cllListApproveBtn, deps){
 	}
 	else
 	{
-		//console.log("You pressed NO");
+		////console.log("You pressed NO");
 	}
 }

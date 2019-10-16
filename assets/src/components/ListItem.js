@@ -60,14 +60,14 @@ class ListItem extends React.Component{
                 let objResponse = JSON.parse(request.responseText);
                 let linkItemPostId = objResponse[0].id;
                 let metaObj = objResponse[0].meta;
-                //console.log(metaObj);
+                ////console.log(metaObj);
                 ThisListItem.setState((prevState)=>{prevState.meta = metaObj;
                     prevState.linkItemPostId = linkItemPostId;
                     prevState.dataIsLoading = false
                     return prevState;});
             })
             .catch(function(error){
-                console.log(error);
+                //console.log(error);
             });
     }
     */
@@ -123,7 +123,7 @@ class ListItem extends React.Component{
         }
         else{
             let metaObj = this.state.meta
-            //console.log(metaObj);
+            ////console.log(metaObj);
             try {
                 var voteRecordObj = JSON.parse(metaObj.voteRecord);
                 var currentUserVoteStatus = parseInt(voteRecordObj[cllUserId[0]]);
@@ -134,7 +134,7 @@ class ListItem extends React.Component{
                         //Make other buttons un-clickable, they become clickable again after SetVoterStatus... runs
                         this.makeAllButtonsUnclickable();
                         
-                        //console.log("There is no information for this user on record");
+                        ////console.log("There is no information for this user on record");
 
                         this.setState((prevState)=>{
                             prevState.meta.up_votes+=1;
@@ -161,7 +161,7 @@ class ListItem extends React.Component{
                         //Make other buttons un-clickable, they become clickable again after SetVoterStatus... runs
                         this.makeAllButtonsUnclickable();
 
-                        //console.log("Voter status was 0, incrementing up vote /removing downvote (visually too), changing status to 1");
+                        ////console.log("Voter status was 0, incrementing up vote /removing downvote (visually too), changing status to 1");
                         this.setState((prevState)=>{
                             prevState.meta.up_votes+=1;
                             prevState.meta.down_votes-=1;
@@ -182,7 +182,7 @@ class ListItem extends React.Component{
                     {
                         //Make other buttons un-clickable, they become clickable again after SetVoterStatus... runs
                         this.makeAllButtonsUnclickable();
-                        //console.log("Voter status was 3, incrementing up vote (visually too), changing status to 1");
+                        ////console.log("Voter status was 3, incrementing up vote (visually too), changing status to 1");
 
                         this.setState((prevState)=>{
                             prevState.meta.up_votes+=1;
@@ -206,9 +206,9 @@ class ListItem extends React.Component{
                     this.makeAllButtonsUnclickable();
 
                     
-                    console.log(error);
-                    console.log("Could not parse voteRecord");
-                    //console.log("There is no information on record *assertion");
+                    //console.log(error);
+                    //console.log("Could not parse voteRecord");
+                    ////console.log("There is no information on record *assertion");
 
                     //metaObj.voteRecord = '{"'+cllUserId[0]+'":'+'"1"}';
 
@@ -229,17 +229,17 @@ class ListItem extends React.Component{
                         });
                         
                         let ThisListItem = this;
-                        console.log(newPostMetaData);
+                        //console.log(newPostMetaData);
                         if(typeof is_user_admin !== 'undefined' && is_user_admin[0] === "true"){
                             makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link/'+this.state.linkItemPostId, 'POST', newPostMetaData)
                                 .then(function(request){
-                                    console.log(JSON.parse(request.responseText));
-                                    console.log(this);
+                                    //console.log(JSON.parse(request.responseText));
+                                    //console.log(this);
                                     ThisListItem.refreshButtonClickStates();
                             
                                 })
                                 .catch(function(error){
-                                    console.log(error);
+                                    //console.log(error);
                                 });
                             return;
                         }
@@ -249,7 +249,7 @@ class ListItem extends React.Component{
                                 ThisListItem.refreshButtonClickStates();
                             })
                             .catch(function(error){
-                                console.log(error);
+                                //console.log(error);
                             });
                         }
                     });            
@@ -265,7 +265,7 @@ class ListItem extends React.Component{
         }
         else{
             let metaObj = this.state.meta
-            //console.log(metaObj);
+            ////console.log(metaObj);
             try {
                 var voteRecordObj = JSON.parse(metaObj.voteRecord);
                 var currentUserVoteStatus = parseInt(voteRecordObj[cllUserId[0]]);
@@ -276,7 +276,7 @@ class ListItem extends React.Component{
                         //Make other buttons un-clickable, they become clickable again after SetVoterStatus... runs
                         this.makeAllButtonsUnclickable();
                         
-                        //console.log("There is no information for this user on record");
+                        ////console.log("There is no information for this user on record");
 
                         this.setState((prevState)=>{
                             prevState.meta.down_votes+=1;
@@ -303,7 +303,7 @@ class ListItem extends React.Component{
                         //Make other buttons un-clickable, they become clickable again after SetVoterStatus... runs
                         this.makeAllButtonsUnclickable();
 
-                        //console.log("Voter status was 0, incrementing up vote /removing downvote (visually too), changing status to 1");
+                        ////console.log("Voter status was 0, incrementing up vote /removing downvote (visually too), changing status to 1");
                         this.setState((prevState)=>{
                             prevState.meta.down_votes+=1;
                             prevState.meta.up_votes-=1;
@@ -324,7 +324,7 @@ class ListItem extends React.Component{
                     {
                         //Make other buttons un-clickable, they become clickable again after SetVoterStatus... runs
                         this.makeAllButtonsUnclickable();
-                        //console.log("Voter status was 3, incrementing up vote (visually too), changing status to 1");
+                        ////console.log("Voter status was 3, incrementing up vote (visually too), changing status to 1");
 
                         this.setState((prevState)=>{
                             prevState.meta.down_votes+=1;
@@ -348,9 +348,9 @@ class ListItem extends React.Component{
                     this.makeAllButtonsUnclickable();
 
                     
-                    console.log(error);
-                    console.log("Could not parse voteRecord");
-                    //console.log("There is no information on record *assertion");
+                    //console.log(error);
+                    //console.log("Could not parse voteRecord");
+                    ////console.log("There is no information on record *assertion");
 
                     //metaObj.voteRecord = '{"'+cllUserId[0]+'":'+'"1"}';
 
@@ -371,17 +371,17 @@ class ListItem extends React.Component{
                         });
                         
                         let ThisListItem = this;
-                        console.log(newPostMetaData);
+                        //console.log(newPostMetaData);
                         if(typeof is_user_admin !== 'undefined' && is_user_admin[0] === "true"){
                             makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link/'+this.state.linkItemPostId, 'POST', newPostMetaData)
                                 .then(function(request){
-                                    console.log(JSON.parse(request.responseText));
-                                    console.log(this);
+                                    //console.log(JSON.parse(request.responseText));
+                                    //console.log(this);
                                     ThisListItem.refreshButtonClickStates();
                             
                                 })
                                 .catch(function(error){
-                                    console.log(error);
+                                    //console.log(error);
                                 });
                             return;
                         }
@@ -391,7 +391,7 @@ class ListItem extends React.Component{
                                 ThisListItem.refreshButtonClickStates();
                             })
                             .catch(function(error){
-                                console.log(error);
+                                //console.log(error);
                             });
                         }
                     });            
@@ -407,7 +407,7 @@ class ListItem extends React.Component{
         }
         else{
             let metaObj = this.state.meta
-            //console.log(metaObj);
+            ////console.log(metaObj);
             try {
                 var voteRecordObj = JSON.parse(metaObj.voteRecord);
                 var currentUserVoteStatus = parseInt(voteRecordObj[cllUserId[0]]);
@@ -417,7 +417,7 @@ class ListItem extends React.Component{
                         //Make other buttons un-clickable, they become clickable again after SetVoterStatus... runs
                         this.makeAllButtonsUnclickable();
                         
-                        //console.log("There is no information for this user on record");
+                        ////console.log("There is no information for this user on record");
 
                         this.setState((prevState)=>{
                             //setting users vote record equal to zero, which stands for "has already downvoted"
@@ -487,9 +487,9 @@ class ListItem extends React.Component{
                     this.makeAllButtonsUnclickable();
     
                     
-                    console.log(error);
-                    console.log("Could not parse voteRecord");
-                    //console.log("There is no information on record *assertion");
+                    //console.log(error);
+                    //console.log("Could not parse voteRecord");
+                    ////console.log("There is no information on record *assertion");
 
                     //metaObj.voteRecord = '{"'+cllUserId[0]+'":'+'"1"}';
 
@@ -509,17 +509,17 @@ class ListItem extends React.Component{
                         });
                         
                         let ThisListItem = this;
-                        console.log(newPostMetaData);
+                        //console.log(newPostMetaData);
                         if(typeof is_user_admin !== 'undefined' && is_user_admin[0] === "true"){
                             makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link/'+this.state.linkItemPostId, 'POST', newPostMetaData)
                                 .then(function(request){
-                                    console.log(JSON.parse(request.responseText));
-                                    console.log(this);
+                                    //console.log(JSON.parse(request.responseText));
+                                    //console.log(this);
                                     ThisListItem.refreshButtonClickStates();
                         
                                 })
                                 .catch(function(error){
-                                    console.log(error);
+                                    //console.log(error);
                                 });
                             return;
                         }
@@ -529,7 +529,7 @@ class ListItem extends React.Component{
                                 ThisListItem.refreshButtonClickStates();
                             })
                             .catch(function(error){
-                                console.log(error);
+                                //console.log(error);
                             });
                         }
                     });            
@@ -539,8 +539,8 @@ class ListItem extends React.Component{
     }
 
     render(){
-        //console.log("UpVoteBtn state vote count: "+this.state.meta.up_votes);
-        //console.log(this.state.meta);
+        ////console.log("UpVoteBtn state vote count: "+this.state.meta.up_votes);
+        ////console.log(this.state.meta);
 
         /*
         <ListItem linkToListURL={this.linkToListURL}

@@ -18,7 +18,7 @@ function updateCllListRequest(cllRequestData)
 		.then(function (request) {
 			let objResponse = JSON.parse(request.responseText);
 
-			const cllListRegex = /\[new_cll_list\s?(.*?)\]/g;
+			const cllListRegex = /\[cll_list\s?(.*?)\]/g;
 			const cllListMatchJson = /(\'|\")\{(.*?)\}(\'|\")/g;
 			const cllListDataRegex = /list_data\s?=\s?(\'|\")\{(.*?)\}(\'|\")/g
 			const cllIsSearchEngineOnRegex = /is_search_engine_on\s?=\s?(\'|\")(.*?)(\'|\")/g
@@ -28,9 +28,9 @@ function updateCllListRequest(cllRequestData)
 
 			//later used with "replace()" to editShortCode
 			const entireCurrentShortcodeString = cllListShortCodeArray[shortcodeSourceId-1];
-			console.log(entireCurrentShortcodeString);
+			//console.log(entireCurrentShortcodeString);
 
-			const searchEngineSetting = entireCurrentShortcodeString.match(cllIsSearchEngineOnRegex);
+			let searchEngineSetting = entireCurrentShortcodeString.match(cllIsSearchEngineOnRegex);
 			if(searchEngineSetting == null){
 				searchEngineSetting = '';
 			}
@@ -50,22 +50,22 @@ function updateCllListRequest(cllRequestData)
 
 
 			//Modify Data appropriately
-			console.log(listId);
-			console.log(listDataObj[listId]);
+			//console.log(listId);
+			//console.log(listDataObj[listId]);
 			listDataObj[`${listId}`]['category_name'] = selectedCategory;
-			console.log(listDataObj);
+			//console.log(listDataObj);
 
 			//createShortCode
-			let newShortcode = `[new_cll_list list_data='${JSON.stringify(listDataObj)}' ${searchEngineSetting}']`;
+			let newShortcode = `[cll_list list_data='${JSON.stringify(listDataObj)}' ${searchEngineSetting}']`;
 
-			//console.log(newShortcode);
+			////console.log(newShortcode);
 			let pageContent = objResponse.content.raw;
 
-			console.log(pageContent);
+			//console.log(pageContent);
 
 			let newPageContent = pageContent.replace(entireCurrentShortcodeString, newShortcode);
 
-			console.log(newPageContent);
+			//console.log(newPageContent);
 			
 			
 			(()=>{
@@ -80,15 +80,18 @@ function updateCllListRequest(cllRequestData)
 					return makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link/'+current_post_id, "POST", JSON.stringify(NewShortCodeData));
 				}
 			})()
+			.then(function(){
+				document.location.reload(true);
+			})
 			.catch(function(error){
-				console.log(error);
+				//console.log(error);
 			});
 			
 
 		})
 		.catch(function (error){
-			//console.log("FAILED");
-			console.log(error);
+			////console.log("FAILED");
+			//console.log(error);
 		});
 }
 

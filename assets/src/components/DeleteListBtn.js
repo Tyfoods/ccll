@@ -19,7 +19,7 @@ class DeleteListBtn extends React.Component{
 
 		const cllListDataRegex = /list_data\s?=\s?(\'|\")\{(.*?)\}(\'|\")/g
         const cllListMatchJson = /(\'|\")\{(.*?)\}(\'|\")/g;
-		const cllListRegex = /\[new_cll_list\s?(.*?)\]/g;
+		const cllListRegex = /\[cll_list\s?(.*?)\]/g;
 		
 		//Get array of all shortcodes on page
 		const cllListShortcodeArray = objResponse.content.raw.match(cllListRegex);
@@ -38,7 +38,7 @@ class DeleteListBtn extends React.Component{
 					"content": newPageContent
 				}
 	
-				//console.log(newPageContent);
+				////console.log(newPageContent);
 	
 	
 				//Delete the appropriate list from the front end and server.
@@ -68,8 +68,8 @@ class DeleteListBtn extends React.Component{
 			delete listDataObj[`${this.props.listId}`];
 
 			//Create newShortcode
-			let newShortcode = "[new_cll_list = "+"list_data='"+JSON.stringify(listDataObj)+"']";
-			console.log(Object.keys(listDataObj));
+			let newShortcode = "[cll_list = "+"list_data='"+JSON.stringify(listDataObj)+"']";
+			//console.log(Object.keys(listDataObj));
 			if(Object.keys(listDataObj).length === 0){
 				if(confirm("There's only one list! Would you like to delete the shortcode from the page?")){
 					newShortcode = '';
@@ -87,7 +87,7 @@ class DeleteListBtn extends React.Component{
 				"content": newPageContent
 			}
 
-			//console.log(newPageContent);
+			////console.log(newPageContent);
 
 
 			//Delete the appropriate list from the front end and server.
@@ -110,8 +110,8 @@ class DeleteListBtn extends React.Component{
 	handleDeleteListBtnClick(){
 		let ThisDeleteBtn = this;
 
-		console.log(current_screen_type[0] === "page");
-		console.log(current_screen_type[0] === "post");
+		//console.log(current_screen_type[0] === "page");
+		//console.log(current_screen_type[0] === "post");
 
 
 		if(current_screen_type[0] === "page"){
@@ -120,7 +120,7 @@ class DeleteListBtn extends React.Component{
 					ThisDeleteBtn.processDeleteRequest(request);
 				})
 				.catch(function(error){
-					console.log(error);
+					//console.log(error);
 				});
 		}
 		if(current_screen_type[0] === "post"){
@@ -129,7 +129,7 @@ class DeleteListBtn extends React.Component{
 				ThisDeleteBtn.processDeleteRequest(request);
 			})
 			.catch(function(error){
-				console.log(error);
+				//console.log(error);
 			});
 		}
 

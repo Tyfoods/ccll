@@ -3,12 +3,12 @@ module.exports = function replaceOccurrence (string, regex, n, replace) {
 	return string.replace(regex, function(match) {
 		//i+=1;
 		if(i===n){
-			//console.log(replace);
+			////console.log(replace);
 			i+=1;
 			return replace;
 		}
 		i+=1;
-		//console.log(match);
+		////console.log(match);
 		return match;
 	});
 };

@@ -6,7 +6,7 @@ function throughLinkRequest(categoryId, style){
 	makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/users/'+cllUserId[0], 'GET')
 		.then(function(request){
 			var objResponse = JSON.parse(request.responseText);
-			//console.log(objResponse.name);
+			////console.log(objResponse.name);
 			return objResponse.name;
 		})
 		.then(function(username){
@@ -14,10 +14,10 @@ function throughLinkRequest(categoryId, style){
 						'GET')
 				.then(function(request){
 
-					//console.log(request);
+					////console.log(request);
 					if(request.responseText === "[]"){
 
-						//console.log("There was no reponseText - Post does not exist");
+						////console.log("There was no reponseText - Post does not exist");
 						
 						var NewLinkItemData = {
 							"title": document.querySelector('[name="newListItemTitle"].add-to-list-form__add-to-list-input--style-'+style).value,
@@ -33,15 +33,18 @@ function throughLinkRequest(categoryId, style){
 					
 							//create new link post type
 							makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link', 'POST', JSON.stringify(NewLinkItemData))
+								.then(function(){
+									document.location.reload(true);
+								})
 								.catch(function(error){
-									console.log("Failed to create new post");
-									console.log(error);
+									//console.log("Failed to create new post");
+									//console.log(error);
 								});
 					}
 					else{
 						alert("Link already exists! We'll add this link to the list");
 						let objResponse = JSON.parse(request.responseText);
-						//console.log(objResponse);
+						////console.log(objResponse);
 						let linkCategoryArray = objResponse[0].link_category;
 						linkCategoryArray.push(categoryId[0]);
 
@@ -58,7 +61,7 @@ function throughLinkRequest(categoryId, style){
 						let newLinkCategory = (function ()
 							{for (mentionSlug of mentionSlugArray){
 								if(currentPageUrl !== mentionSlug){
-									//console.log("This page doesn't yet exist in the record, adding now");
+									////console.log("This page doesn't yet exist in the record, adding now");
 									//change meta here such that mention record contains the new mention
 									let mentionObjKeysArray = Object.keys(mentionObj);
 
@@ -76,7 +79,7 @@ function throughLinkRequest(categoryId, style){
 									};
 								}
 								else{
-									//console.log("This page exists in the record already, not adding");
+									////console.log("This page exists in the record already, not adding");
 									return {
 										"link_category": linkCategoryArray
 									};
@@ -84,18 +87,21 @@ function throughLinkRequest(categoryId, style){
 							}})();
 
 						makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link/'+objResponse[0].id, 'POST', JSON.stringify(newLinkCategory))
+							.then(function(){
+								document.location.reload(true);
+							})
 							.catch(function(error){
-								console.log(error);
+								//console.log(error);
 							});
 					}
 					
 				})
 				.catch(function(error){
-					console.log(error);
+					//console.log(error);
 				});
 		})
 		.catch(function(error){
-			console.log(error);
+			//console.log(error);
 		});
 }
 

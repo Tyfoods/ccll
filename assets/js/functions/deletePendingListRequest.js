@@ -5,8 +5,8 @@ module.exports = function deletePendingListRequest(newListItemData){
 			if(this.readyState == 4 && this.status == 200)
 			{
 				//Nothing below gets called :O ready state is NEVER 4!!!
-				//console.log('Successful Pending List Deletion - Hello');
-				//console.log(deletePendingListRequest.responseText);
+				////console.log('Successful Pending List Deletion - Hello');
+				////console.log(deletePendingListRequest.responseText);
 			}
 				//if request fails...?
 		}

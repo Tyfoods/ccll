@@ -1,5 +1,5 @@
 module.exports = function fadeIn(element) {
-	//console.log(element);
+	////console.log(element);
 	/*
     var op = 0.1;  // initial opacity
     element.style.display = 'block';

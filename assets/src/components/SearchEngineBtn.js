@@ -14,16 +14,16 @@ class SearchEngineBtn extends React.Component{
     }
     
     processTurnOnSearchEngineRequest(request){
-        console.log(request.responseText);
+        //console.log(request.responseText);
         let objResponse = JSON.parse(request.responseText);
-        console.log("processing turn ons search engine request");
-        console.log(objResponse);
+        //console.log("processing turn ons search engine request");
+        //console.log(objResponse);
 
 
         const cllListDataRegex = /list_data\s?=\s?(\'|\")\{(.*?)\}(\'|\")/g
    
         const cllListMatchJson = /(\'|\")\{(.*?)\}(\'|\")/g;
-        const cllListRegex = /\[new_cll_list\s?(.*?)\]/g;
+        const cllListRegex = /\[cll_list\s?(.*?)\]/g;
         
         const cllListShortcodeArray = objResponse.content.raw.match(cllListRegex);
 		//Get entire shortcode from which this set of lists was born.
@@ -37,9 +37,9 @@ class SearchEngineBtn extends React.Component{
         else{
             let listDataArrayString = listDataAtt[0].match(cllListMatchJson);
             let listDataObj = JSON.parse(listDataArrayString[0].substr(1, listDataArrayString[0].length-2));
-            console.log(listDataObj);
+            //console.log(listDataObj);
 
-            let newShortcode = `[new_cll_list list_data='${JSON.stringify(listDataObj)}' is_search_engine_on='${!this.state.value}']`;
+            let newShortcode = `[cll_list list_data='${JSON.stringify(listDataObj)}' is_search_engine_on='${!this.state.value}']`;
             
             let newPageContent = objResponse.content.raw.replace(cllListShortcodeArray[0], newShortcode);
 
@@ -49,11 +49,17 @@ class SearchEngineBtn extends React.Component{
 
 
             if(current_screen_type[0] === "page"){
-                makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/pages/'+current_page_id, "POST", JSON.stringify(newPageData));
+                makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/pages/'+current_page_id, "POST", JSON.stringify(newPageData))
+                    .then(function(){
+                        document.location.reload(true);
+                    })
                     //server side work to change visuals
             }
             if(current_screen_type[0] === "post"){
-                makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link/'+current_post_id, "POST", JSON.stringify(newPageData));
+                makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link/'+current_post_id, "POST", JSON.stringify(newPageData))
+                    .then(function(){
+                        document.location.reload(true);
+                    })
                     //server side work to change visuals
             }
     
@@ -71,7 +77,7 @@ class SearchEngineBtn extends React.Component{
                         ThisSearchEngineBtn.processTurnOnSearchEngineRequest(request);
                     })
                     .catch(function(error){
-                        console.log(error);
+                        //console.log(error);
                     });
             }
             if(current_screen_type[0] === "post"){
@@ -80,7 +86,7 @@ class SearchEngineBtn extends React.Component{
                     ThisSearchEngineBtn.processTurnOnSearchEngineRequest(request);
                 })
                 .catch(function(error){
-                    console.log(error);
+                    //console.log(error);
                 });
             }
         }

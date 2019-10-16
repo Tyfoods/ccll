@@ -25,13 +25,12 @@ final class CCLL {
 	/**
 	 * Hook into actions and filters.
 	 *
-	 * @since 2.3
+	 * 
 	 */
 	private function init_hooks() {
 		register_activation_hook( CCLL_PLUGIN_FILE, array($this, 'cll_activate') );
 		add_action('rest_api_init', array( $this, 'register_ccll_rest_routes'));
 
-		add_shortcode( 'new_cll_list', array( $this, 'new_cll_list_shortcode'));
 		add_shortcode( 'cll_list', array( $this, 'cll_list_shortcode'));
 		//add_shortcode( 'cll_search_engine', array( $this, 'cll_search_engine_shortcode')); deprecated
 		add_shortcode( 'cll_react', array( $this, 'cll_react' ) );
@@ -210,50 +209,42 @@ final class CCLL {
 			//$GLOBALS['cll_include_count'] = 0; initilizing as 0 makes global immutable
 			$GLOBALS['cll_include_count'] +=1;
 
-			wp_localize_script('cll-newFEAM','cll_category_ids'.'_'.$GLOBALS['cll_include_count'], array($final_category_id));
+			wp_localize_script('cll-frontEnd','cll_category_ids'.'_'.$GLOBALS['cll_include_count'], array($final_category_id));
 
 			if(!empty($final_category)){
-				wp_localize_script('cll-newFEAM','cll_category_names'.'_'.$GLOBALS['cll_include_count'], array($final_category));
+				wp_localize_script('cll-frontEnd','cll_category_names'.'_'.$GLOBALS['cll_include_count'], array($final_category));
 			}
 
-			wp_localize_script('cll-newFEAM','cll_category_ids'.'_'.$GLOBALS['cll_include_count'], array($final_category_id));
+			wp_localize_script('cll-frontEnd','cll_category_ids'.'_'.$GLOBALS['cll_include_count'], array($final_category_id));
 
 			if(!empty($final_category)){
-				wp_localize_script('cll-newFEAM','cll_category_names'.'_'.$GLOBALS['cll_include_count'], array($final_category));
+				wp_localize_script('cll-frontEnd','cll_category_names'.'_'.$GLOBALS['cll_include_count'], array($final_category));
 			}
 
 			return $cll_php_template_path;
 
 		}
 		else{
-			wp_localize_script('cll-newFEAM','cll_category_ids_0', array($final_category_id));
+			wp_localize_script('cll-frontEnd','cll_category_ids_0', array($final_category_id));
 
 			if(!empty($final_category)){
-				wp_localize_script('cll-newFEAM','cll_category_names_0', array($final_category));
+				wp_localize_script('cll-frontEnd','cll_category_names_0', array($final_category));
 			}
 
-			wp_localize_script('cll-newFEAM','existing_category_names_array', array($processed_existing_category_name_array));
+			wp_localize_script('cll-frontEnd','existing_category_names_array', array($processed_existing_category_name_array));
 
-			wp_localize_script('cll-newFEAM','cll_category_ids_0', array($final_category_id));
+			wp_localize_script('cll-frontEnd','cll_category_ids_0', array($final_category_id));
 
 			if(!empty($final_category)){
-				wp_localize_script('cll-newFEAM','cll_category_names_0', array($final_category));
+				wp_localize_script('cll-frontEnd','cll_category_names_0', array($final_category));
 			}
 
-			wp_localize_script('cll-newFEAM','existing_category_names_array', array($processed_existing_category_name_array));
+			wp_localize_script('cll-frontEnd','existing_category_names_array', array($processed_existing_category_name_array));
 
 			return $cll_php_template_path;
 		}
 	}
-	/* deprecated
-	public function cll_search_engine_shortcode(){
-		ob_start(); 
-		include CCLL_SERVER_DIR . '/templates/cll-search-engine.php';
-		$output = ob_get_clean();
-		return $output;
-	
-	}
-	*/
+
 	public function cll_react(){
 		wp_enqueue_script( 'cll-AppCompiled',CLL_PLUGIN_DIR.'assets/js/AppCompiled.js');
 		return '<div class="cll-link-list"></div>';
@@ -297,7 +288,7 @@ final class CCLL {
 								),
 				)
 			);
-			//$link_list_query = new WP_Query( $link_list_query_args );
+
 		}
 		else
 		{
@@ -307,36 +298,11 @@ final class CCLL {
 			'post_type' => 'cll_link',
 			);
 	
-			//$link_list_query = new WP_Query( $link_list_query_args );
 		}
 		return $link_list_query_args;
 	}
 
-	/* DEPRECATED
-	public function list_generator($atts){
-		$list_quantity = (int) $atts['list_quantity'];
-		$style_array = json_decode($atts["style"], true);
-		$category_name_array = json_decode($atts["category_name"], true);
-
-		$list_array = array();
-
-		for ($current_list_number = 1; $current_list_number <= $list_quantity; $current_list_number++){
-
-			$current_list_category = $category_name_array[$current_list_number];
-			$current_list_style = $style_array[$current_list_number];
-
-			$list_array[$current_list_number] = array("style"=>$current_list_style,
-													  "category" =>$current_list_category);
-		}
-
-		//echo (var_dump($list_array));
-		return $list_array;
-		//$this->shortcode_master_category_input_handler()
-
-	}
-	*/
-
-	public function new_cll_list_shortcode($atts){
+	public function cll_list_shortcode($atts){
 
 		$atts = shortcode_atts( array(
 			'is_search_engine_on' => 'false',
@@ -349,49 +315,25 @@ final class CCLL {
 							}'
 		), $atts );
 
-		header('Content-Type: text/event-stream');
-		header('Cache-Control: no-cache');
-
-		$time = date('r');
-		echo "data: The server time is: {$time}\n\n";
-		flush();
-
-		echo CLL_PLUGIN_DIR;
-		//$this_file_path = CCLL_SERVER_DIR.'/includes/class-ccll.php/';
-		//wp_localize_script('cll-newFEAM', 'time_sse_path', array(CCLL_SERVER_DIR.'/includes/class-ccll.php/') );
-
 		$list_array = json_decode($atts['list_data'], true);
 		$is_search_engine_on = ($atts['is_search_engine_on']);
-
-
-		
 
 		$user = wp_get_current_user();
 		$allowed_roles = array('library_manager', 'administrator');
 
-		//Always load NewFEAM and it will be behave differently according to if user logged in, is admin/library_manager
-		wp_enqueue_script( 'cll-newFEAM',CLL_PLUGIN_DIR.'assets/js/newFEAM.js');
-		//test sse below
-		wp_localize_script('cll-newFEAM', 'time_sse_path', array(CLL_PLUGIN_DIR.'/includes/class-ccll.php/') );
+		//Always load frontEnd and it will be behave differently according to if user logged in, is admin/library_manager
+		wp_enqueue_script( 'cll-frontEnd',CLL_PLUGIN_DIR.'assets/js/frontEnd.js');
 
 		if(!is_user_logged_in()){
-			wp_localize_script('cll-newFEAM', 'is_user_logged_in', array("false"));
+			wp_localize_script('cll-frontEnd', 'is_user_logged_in', array("false"));
 		}
 		if(is_user_logged_in()){
-			wp_localize_script('cll-newFEAM', 'is_user_logged_in', array("true"));
+			wp_localize_script('cll-frontEnd', 'is_user_logged_in', array("true"));
 		}
 		if(array_intersect($allowed_roles, $user->roles )){
-			wp_localize_script('cll-newFEAM', 'is_user_admin', array("true"));
+			wp_localize_script('cll-frontEnd', 'is_user_admin', array("true"));
 		}
 
-
-		//checkUserPermissions if admin, or if Library Manager then execute following, else load "newFEAM.js"
-		//if(is_user_logged_in() && array_intersect($allowed_roles, $user->roles ) && !is_admin() ){
-		// echo array_intersect($allowed_roles, $empty_array ); This seems to always return an array.. doesn't seem to test roles
-		//INVESTIGATE!
-
-		//LOAD ADMIN JAVASCRIPT newFEAM.js
-		//wp_enqueue_script( 'cll-newFEAM',CLL_PLUGIN_DIR.'assets/js/newFEAM.js');
 
 		/* Is this weird? when I localize the non-global variable "is_search_engine_on",
 		it is over written if there are multiple shortcodes on one page, so I use a global 
@@ -399,38 +341,38 @@ final class CCLL {
 		"cll-searchEngineValue" to "true"  */
 		if($is_search_engine_on === "true"){
 			$GLOBALS['cll-searchEngineValue'] = "true";
-			wp_localize_script('cll-newFEAM', 'is_search_engine_on', array("true"));
+			wp_localize_script('cll-frontEnd', 'is_search_engine_on', array("true"));
 		}
 
 		$style_array = json_decode($atts["style"], true);
 		//wp_localize_script("cll-list-style$style_array["1"];
 
-		wp_localize_script('cll-newFEAM', 'list_style', array($style_array["1"]));
+		wp_localize_script('cll-frontEnd', 'list_style', array($style_array["1"]));
 
 		$GLOBALS["atts_counter"]+=1;
-		wp_localize_script('cll-newFEAM', 'atts_'.$GLOBALS["atts_counter"], array($atts['list_data']));
+		wp_localize_script('cll-frontEnd', 'atts_'.$GLOBALS["atts_counter"], array($atts['list_data']));
 
 		
 		if(is_page()){
-			wp_localize_script('cll-newFEAM', 'current_page_id', array( get_queried_object_id() ));
-			wp_localize_script('cll-newFEAM', 'current_screen_type', array("page"));
+			wp_localize_script('cll-frontEnd', 'current_page_id', array( get_queried_object_id() ));
+			wp_localize_script('cll-frontEnd', 'current_screen_type', array("page"));
 		}
 		else if(is_single()){
-			wp_localize_script('cll-newFEAM', 'current_post_id', array( get_queried_object_id() ));
-			wp_localize_script('cll-newFEAM', 'current_screen_type', array("post"));
+			wp_localize_script('cll-frontEnd', 'current_post_id', array( get_queried_object_id() ));
+			wp_localize_script('cll-frontEnd', 'current_screen_type', array("post"));
 		}
 
-		wp_localize_script('cll-newFEAM','magicalData',array(
+		wp_localize_script('cll-frontEnd','magicalData',array(
 			'nonce' => wp_create_nonce('wp_rest'),
 		));
 
-		wp_localize_script('cll-newFEAM', 'cllUserId', array(get_current_user_id()));
+		wp_localize_script('cll-frontEnd', 'cllUserId', array(get_current_user_id()));
 
 		if(current_user_can("manage_options")){
-			wp_localize_script('cll-newFEAM', 'cllIsAdmin', array("true"));
+			wp_localize_script('cll-frontEnd', 'cllIsAdmin', array("true"));
 		}
 		else{
-			wp_localize_script('cll-newFEAM', 'cllIsAdmin', array("false"));
+			wp_localize_script('cll-frontEnd', 'cllIsAdmin', array("false"));
 		}
 		//}
 		?>
@@ -442,9 +384,9 @@ final class CCLL {
 
 		
 						$final_category_data = $this->shortcode_master_category_input_handler($list_data['category_name']);
-						wp_localize_script("cll-newFEAM", 'final_category_id_'.$GLOBALS["cll_shortcode_id"].'_'.$key, array($final_category_data['final_category_id']));
+						wp_localize_script("cll-frontEnd", 'final_category_id_'.$GLOBALS["cll_shortcode_id"].'_'.$key, array($final_category_data['final_category_id']));
 
-						wp_localize_script("cll-newFEAM", 'final_category_data_'.$GLOBALS["cll_shortcode_id"].'_'.$key, array($final_category_data));
+						wp_localize_script("cll-frontEnd", 'final_category_data_'.$GLOBALS["cll_shortcode_id"].'_'.$key, array($final_category_data));
 
 						$list_category_query_args = $this->generate_list_category_query($final_category_data);
 
@@ -455,146 +397,10 @@ final class CCLL {
 		<?php } ?>
 		<?php
 
-
-		
-
 		return '<div class="link-list-container"> </div>';
 	}
 
-	public function cll_list_shortcode($atts){
 
-		$atts = shortcode_atts( array(
-			'style' => '1',
-			'category_name' => '' //Shortcode master must seperate with +'s for valid'
-		), $atts );
-	
-		$final_category_data = $this->shortcode_master_category_input_handler($atts['category_name']);
-		
-		//Controls query based on shortcode input
-		if(isset($final_category_data['final_category']))
-		{
-			//echo $final_category_data['final_category'];
-			//query specified by ShortCode Master input
-			$link_list_query_args = array( 
-				'orderby' => 'title',
-				'post_type' => 'cll_link',
-				'tax_query' => array(
-								array(
-										'taxonomy' => 'link_category',
-										'field' => 'name',
-										'terms'    => $final_category_data['final_category']
-								),
-				)
-			);
-			$link_list_query = new WP_Query( $link_list_query_args );
-	
-		}
-		else
-		{
-			//query specified by ShortCode Master input
-			$link_list_query_args = array( 
-			'orderby' => 'title',
-			'post_type' => 'cll_link',
-			);
-	
-			$link_list_query = new WP_Query( $link_list_query_args );
-		}
-	
-		$user = wp_get_current_user();
-		$allowed_roles = array('library_manager', 'administrator');
-		//checkUserPermissions if admin, or if Library Manager then execute following, else load "frontEndLoggedInUser.js"
-		if(is_user_logged_in() === true){
-			if( array_intersect($allowed_roles, $user->roles ) ) 
-			{
-				if(!is_admin()){
-					//LOAD ADMIN JAVASCRIPT frontEndAdminManager.js
-					wp_enqueue_script( 'cll-frontEndAdminManager',CLL_PLUGIN_DIR.'assets/js/frontEndAdminManager.js');
-					//pass "magicalData" to cll-main JS by echoing data through HTML
-
-					wp_localize_script('cll-frontEndAdminManager','magicalData',array(
-						'nonce' => wp_create_nonce('wp_rest'),
-						//'cllUserId' => get_current_user_id()
-					));
-	
-					wp_localize_script('cll-frontEndAdminManager', 'cllUserId', array(get_current_user_id()));
-	
-					if(current_user_can("manage_options")){
-						wp_localize_script('cll-frontEndAdminManager', 'cllIsAdmin', array("true"));
-					}
-					else{
-						wp_localize_script('cll-frontEndAdminManager', 'cllIsAdmin', array("false"));
-					}
-	
-					/*
-					wp_localize_script( 'cll-frontEndAdminManager', 'cllAjaxUrl', array(
-							'ajax_url' => admin_url( 'admin-ajax.php' )
-						));
-					*/
-	
-	
-	
-					$style_template = $this->cll_list_style_processor($atts["style"], $final_category_data);
-					if (isset($style_template)){
-	
-	
-						ob_start(); 
-						include $style_template;
-						$output = ob_get_clean();
-						wp_localize_script('cll-frontEndAdminManager','current_page_id', array($current_page_id));
-						wp_localize_script('cll-frontEndLoggedInUser','current_page_id', array($current_page_id));
-						wp_enqueue_style( 'cll-list-style-'.$atts["style"]);
-						return $output;
-					}
-					return;
-				}
-			}
-			else
-			{
-				//Load frontEndLoggedInUser.js
-				if(!is_admin()){
-					wp_enqueue_script( 'cll-frontEndLoggedInUser', CLL_PLUGIN_DIR.'assets/js/frontEndLoggedInUser.js');
-					wp_localize_script('cll-frontEndLoggedInUser','magicalData',array(
-						'nonce' => wp_create_nonce('wp_rest'),
-						//'cllUserId' => get_current_user_id(),
-					));
-	
-					wp_localize_script('cll-frontEndLoggedInUser', 'cllUserId', array(get_current_user_id()));
-	
-					wp_localize_script('cll-frontEndLoggedInUser', 'cllIsAdmin', array("false"));
-					
-	
-					$style_template = $this->cll_list_style_processor($atts["style"], $final_category_data);
-					if (isset($style_template)){
-	
-						ob_start();
-						include $style_template;
-						wp_localize_script('cll-frontEndAdminManager','current_page_id', $current_page_id);
-						wp_localize_script('cll-frontEndLoggedInUser','current_page_id', $current_page_id);
-						$output = ob_get_clean();
-						return $output;
-					}
-					return;
-				}
-			}
-		}
-		else{
-			if(!is_admin()){
-	
-				wp_enqueue_script( 'cll-frontEndLoggedOutUser.js',CLL_PLUGIN_DIR.'assets/js/frontEndLoggedOutUser.js');
-				wp_localize_script('cll-frontEndLoggedOutUser.js','magicalData',array(
-					'nonce' => wp_create_nonce('wp_rest'),
-				));
-				$style_template = $this->cll_list_style_processor($atts["style"], $final_category_data);
-				if (isset($style_template)){
-					ob_start();
-					include $style_template;
-					$output = ob_get_clean();
-					return $output;
-				}
-			}
-		}
-	
-	}
 
 	public function cll_main_plugin_page(){
 		echo "Coming Soon, for now here are basic instructions:";

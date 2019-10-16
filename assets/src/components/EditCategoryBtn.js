@@ -27,7 +27,7 @@ class EditCategoryBtn extends React.Component{
 
     updateStateInputValue(){
         this.setComponentState('inputValue', event.target.value);
-        //console.log(event.target.value);
+        ////console.log(event.target.value);
     }
 
     updateStateValue(){
@@ -126,7 +126,7 @@ class EditCategoryBtn extends React.Component{
                             })()
                     }
                     <button onClick = {this.handleSubmitBtnClick} name="settingsSubmitBtn" type="button" className={`cll-admin-button edit-categoy-btn__submit-btn--style-${this.context.style}`}>Submit</button>
-                    <button onClick={this.handleCancelBtnClick} name="cancelBtn" type="button" className={`edit-category-btn__cancel-btn--style-${this.context.style}`}></button>
+                    <button onClick={this.handleCancelBtnClick} name="cancelBtn" type="button" className={`cancel-btn edit-category-btn__cancel-btn--style-${this.context.style}`}></button>
                 </div>
             )
         }

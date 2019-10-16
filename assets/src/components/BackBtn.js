@@ -29,7 +29,7 @@ export default class BackBtn extends React.Component{
                 this.createBackRouteOptionsArray();
             }
             else {
-                console.log("You pressed NO");
+                //console.log("You pressed NO");
                 }
         }
     }
@@ -49,7 +49,7 @@ export default class BackBtn extends React.Component{
                 try{
                     let mentionObj = JSON.parse( (JSON.parse(request.responseText))[0].meta.mention_record );
                     let mentionArray = Object.values(mentionObj);
-                    //console.log(mentionArray);
+                    ////console.log(mentionArray);
 
                     let mentionSlugArray = mentionArray.map(function(mention){
                         mention = mention.replace(cllGlobals.currentProtocalDomain+'/', '').replace(/link[/]/g, '');
@@ -57,8 +57,8 @@ export default class BackBtn extends React.Component{
                         return mention;
                     });
 
-                    //console.log(mentionArray);
-                    //console.log(mentionSlugArray);
+                    ////console.log(mentionArray);
+                    ////console.log(mentionSlugArray);
 
 
                     let backOptionsArray = [];
@@ -67,7 +67,7 @@ export default class BackBtn extends React.Component{
                         backOptionsArray.push(<option key={i} value={`${mentionSlug}`}>{mentionSlug}</option>);
                         i+=1;
                     });
-                    //console.log(backOptionsArray);
+                    ////console.log(backOptionsArray);
                     ThisBackBtn.setState((prevState)=>{
                         prevState.backOptionsArray = backOptionsArray;
                         prevState.isBackBtnClicked = true;
@@ -77,9 +77,9 @@ export default class BackBtn extends React.Component{
 
                 }
                 catch(error){
-                    //console.log("Unable to parse, it is likely that there is no mention_record available");
+                    ////console.log("Unable to parse, it is likely that there is no mention_record available");
                     alert("Sorry, we couldn't find a back route for this page!");
-                    console.log(error);
+                    //console.log(error);
                 }
             })
     }
@@ -87,7 +87,7 @@ export default class BackBtn extends React.Component{
 
     render(){
 
-        //console.log(DataStorageContext);
+        ////console.log(DataStorageContext);
 
 
         if(this.state.value !== ''){

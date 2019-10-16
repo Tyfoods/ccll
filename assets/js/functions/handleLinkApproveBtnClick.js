@@ -50,24 +50,24 @@ module.exports = function handleLinkApproveBtnClick(cllApproveBtn, deps){
             return;
         })
         .then(function(){
-            //console.log(newLinkItemData);
+            ////console.log(newLinkItemData);
             makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link', 'POST', JSON.stringify(newLinkItemData))
            // makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link', 'GET')
             .then(function(request){
-                console.log("Successful Link Addition");
+                //console.log("Successful Link Addition");
                 alert("You have approved a link!");
                 makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/cll-link/v1/link-approved-request/'+userId, 'POST', JSON.stringify(newLinkItemData))
                     .then(function(request){
-                        //console.log(request.responseText);
-                        //console.log("Successful pending link deletion");
+                        ////console.log(request.responseText);
+                        ////console.log("Successful pending link deletion");
                     });
             })
             .catch(function(error){
-                console.log(error);
+                //console.log(error);
             });
         })
         .catch(function(error){
-            console.log(error);
+            //console.log(error);
         })
 
 }

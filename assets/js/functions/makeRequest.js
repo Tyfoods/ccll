@@ -4,7 +4,7 @@ module.exports = function makeRequest (url, method, sendData, refresh) {
 	var refreshInput = refresh || '';
 
 
-	//console.log("request made");
+	////console.log("request made");
 	// Create the XHR request
 	var request = new XMLHttpRequest();
 
@@ -25,7 +25,7 @@ module.exports = function makeRequest (url, method, sendData, refresh) {
 				if(typeof sendData !== 'undefined')
 				{
 					//document.location.reload(true);
-					//console.log('sendData was present!');
+					////console.log('sendData was present!');
 				}
 
 				if(refreshInput === false){
@@ -53,10 +53,10 @@ module.exports = function makeRequest (url, method, sendData, refresh) {
 		// Send the request
 		if(typeof sendData === 'undefined'){
 			request.send();	
-			//console.log("Data is undefined! No data was sent");
+			////console.log("Data is undefined! No data was sent");
 		}
 		else{
-			//console.log(sendData);
+			////console.log(sendData);
 			request.send(sendData);
 		}
 

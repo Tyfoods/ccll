@@ -80,10 +80,10 @@ class AddToListBtn extends React.Component{
                             }
                         })()}
 
-                        <button onClick = {this.handleSubmitBtnClick} name="submitBtn" type="button" className={`add-to-list-form__submit-btn--style-${this.context.style}`}>
+                        <button onClick = {this.handleSubmitBtnClick} name="submitBtn" type="button" className={`cll-admin-button add-to-list-form__submit-btn--style-${this.context.style}`}>
                             Submit
                         </button>
-                        <button onClick={this.handleCancelBtnClick} name="cancelBtn" type="button" className={`add-to-list-form__cancel-btn--style-${this.context.style}`}></button>
+                        <button onClick={this.handleCancelBtnClick} name="cancelBtn" type="button" className={`cancel-btn add-to-list-form__cancel-btn--style-${this.context.style}`}></button>
                     </form>
                 </div>
             )

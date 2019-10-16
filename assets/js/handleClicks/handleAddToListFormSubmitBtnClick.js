@@ -65,11 +65,11 @@ function handleAddToListFormSubmitBtnClick(categoryId, style){
 
             makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/cll-link/v1/link-request/'+cllUserId[0], 'POST', JSON.stringify(linkRequestData))
                 .then(function(request){
-                    console.log(request.responseText);
+                    //console.log(request.responseText);
                     
                 })
                 .catch(function(error){
-                    console.log(error);
+                    //console.log(error);
                 });
 
             alert("Thank you for submitting!") //Change this so the JS instead says "Thank you for submitting, maybe an alert?"

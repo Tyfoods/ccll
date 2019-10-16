@@ -17,7 +17,7 @@ class UpVoteBtn extends React.Component{
     }
 
     render(){
-        //console.log(this.props.upVotes);
+        ////console.log(this.props.upVotes);
 
         return(
             <>

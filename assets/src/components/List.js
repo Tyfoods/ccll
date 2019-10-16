@@ -40,9 +40,9 @@ class List extends React.Component{
         .then(function(request){
             
             let objResponse = JSON.parse(request.responseText);
-            //console.log(objResponse);
-            //console.log("Obj Response Below");
-            //console.log(objResponse);
+            ////console.log(objResponse);
+            ////console.log("Obj Response Below");
+            ////console.log(objResponse);
 
             if(isObjEmpty(objResponse)){
                 let newListState = ThisList.state;
@@ -50,7 +50,7 @@ class List extends React.Component{
                 ThisList.setState(newListState)
             }
             else{
-                //console.log("Object is not empty");
+                ////console.log("Object is not empty");
                 let newListState = ThisList.state;
                 //get information from each link and save it in List State
                 let iterator = 1;
@@ -70,13 +70,13 @@ class List extends React.Component{
                     iterator+=1;
                 })
                 ThisList.setState(newListState);
-                //console.log(ThisList);
+                ////console.log(ThisList);
                 ThisList.buildListItemComponents();
 
             }
         })
         .catch(function(error){
-            console.log(error);
+            //console.log(error);
         })
     }
 
@@ -87,9 +87,9 @@ class List extends React.Component{
         let linkItemsArray = ThisListState.linkItems;
 
         /*
-        console.log(linkItemsArray);
-        console.log(ThisListProps);
-        console.log(ThisListProps.children);
+        //console.log(linkItemsArray);
+        //console.log(ThisListProps);
+        //console.log(ThisListProps.children);
         */
 
 

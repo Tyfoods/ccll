@@ -7,9 +7,7 @@ const config = {
 	// One for frontend and one for the admin area.
 	entry: {
 		//the key here will replace the [name] portion of the output config below.
-		frontEndAdminManager: './assets/src/frontEndAdminManager.js',
-		frontEndLoggedOutUser: './assets/src/frontEndLoggedOutUser.js',
-		frontEndLoggedInUser: './assets/src/frontEndLoggedInUser.js',
+		frontEnd: './assets/src/frontEnd.js',
 		backEndAdminManager: './assets/src/backEndAdminManager.js',
 	},
 
