@@ -104,7 +104,7 @@ window.onload=function(){
         }
         else
         {
-            ////console.log("Search bar doesn't exist");
+            //console.log("Search bar doesn't exist");
             ReactDOM.render(<>
                             <div className="control-buttons-container">
                                 <BackBtn />

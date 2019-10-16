@@ -20,23 +20,22 @@ final class CCLL {
 		$this->includes();
 		$this->init_hooks();
 		$this->cll_register_all_meta();
-		//add_shortcode( 'cll_list', $this::cll_list_shortcode());
-		//add_shortcode( 'cll_search_engine', $this::cll_search_engine_shortcode());
 		do_action( 'CCLL_loaded' );
 	}
 	/**
 	 * Hook into actions and filters.
 	 *
-	 * @since 2.3
+	 * 
 	 */
 	private function init_hooks() {
 		register_activation_hook( CCLL_PLUGIN_FILE, array($this, 'cll_activate') );
 		add_action('rest_api_init', array( $this, 'register_ccll_rest_routes'));
 
 		add_shortcode( 'cll_list', array( $this, 'cll_list_shortcode'));
-		add_shortcode( 'cll_search_engine', array( $this, 'cll_search_engine_shortcode'));
+		//add_shortcode( 'cll_search_engine', array( $this, 'cll_search_engine_shortcode')); deprecated
+		add_shortcode( 'cll_react', array( $this, 'cll_react' ) );
 
-		add_action( 'wp_enqueue_scripts', array( $this, 'cll_enqueue_styles')); //LOADS CSS
+		add_action( 'wp_enqueue_scripts', array( $this, 'cll_register_styles')); //REGISTERS CSS for conditional loading later
 		add_action( 'init', array( $this, 'cll_register_link_post_type'));
 		add_action( 'admin_enqueue_scripts', array( $this, 'load_link_manager_css_and_js' ));
 		add_action( 'admin_menu', array( $this, 'cll_create_menu' ));
@@ -51,9 +50,25 @@ final class CCLL {
 
 	public function register_ccll_rest_routes(){
 
-		register_rest_route( 'cll-link/v1', '/create-page/',array(
+		register_rest_route( 'cll-link/v1', '/list-declined-request/(?P<list_data>[\s\S]+)',array(
 			'methods'  => WP_REST_Server::EDITABLE,
-			'callback' => array($this, 'create_new_page')
+			'callback' => array($this, 'handle_list_declined_request')
+		));
+
+		register_rest_route( 'cll-link/v1', '/list-request/(?P<list_data>[\s\S]+)',array(
+			'methods'  => WP_REST_Server::EDITABLE,
+			'callback' => array($this, 'handle_list_request')
+		));
+
+
+		register_rest_route( 'cll-link/v1', '/link-approved-request/(?P<link_data>[\s\S]+)',array(
+			'methods'  => WP_REST_Server::EDITABLE,
+			'callback' => array($this, 'handle_link_approved_request')
+		));
+
+		register_rest_route( 'cll-link/v1', '/link-request/(?P<link_data>[\s\S]+)',array(
+			'methods'  => WP_REST_Server::EDITABLE,
+			'callback' => array($this, 'handle_link_request')
 		));
 
 		register_rest_route( 'cll-link-category/v1', '/cll-link/(?P<category_name>[\s\S]+)',array(
@@ -75,10 +90,13 @@ final class CCLL {
 			'callback' => array($this, 'vote_against_link')
 		));
 	}
-	public function cll_enqueue_styles(){
-		if(!is_admin()){
-		 wp_enqueue_style( 'cll-list-style-1',CLL_PLUGIN_DIR.'assets/css/cll-list-style-1.css');
-		}
+	public function cll_register_styles(){
+		//if(!is_admin()){
+		wp_register_style('cll-control-box-style', CLL_PLUGIN_DIR.'assets/css/cll-control-box-style.css');
+
+		 wp_register_style( 'cll-list-style-1',CLL_PLUGIN_DIR.'assets/css/cll-list-style-1.css');
+		 wp_register_style( 'cll-list-style-2',CLL_PLUGIN_DIR.'assets/css/cll-list-style-2.css');
+		//}
 	}
 	public function shortcode_master_category_input_handler($shortcode_master_input){
 		$cll_existing_links = get_posts(
@@ -106,14 +124,15 @@ final class CCLL {
 
 
 		$i = 0;
+		//Make processed_existing_category_name array
 		foreach($cll_link_existing_categories as $raw_existing_category)
 		{
 			//process shortcode master categories
 			$raw_shortcode_master_category = json_encode($shortcode_master_input);
 			$processed_shortcode_master_category = strtolower(str_replace('"','',$raw_shortcode_master_category));
 
-
-			//process existing categories and test against them
+			
+			//process existing categories to test against them
 			$raw_existing_category_name = $raw_existing_category->name;
 			$processed_existing_category_name = strtolower(str_replace('"','',$raw_existing_category_name));
 
@@ -124,9 +143,10 @@ final class CCLL {
 		$i+=1;
 		}
 
-
+		//$iterator = 1;
 		foreach($processed_existing_category_name_array as $category_name)
 		{
+
 			if($processed_shortcode_master_category === $category_name)
 			{
 				//move through existing categorys check their name against the existing name found then get the ID
@@ -134,7 +154,10 @@ final class CCLL {
 				{
 					if(strtolower($matched_category_name->name) === $category_name)
 					{
-						//echo "The Name is ".$matched_category_name->name;
+						/*
+						echo "The Name is ".$matched_category_name->name;
+						?><br><?php
+						*/
 						$final_category_id = $matched_category_name->term_id;
 						//echo $final_category_id;
 						//echo "I've Matched";
@@ -151,6 +174,7 @@ final class CCLL {
 				$final_category = $shortcode_master_input;
 
 				$final_category_data['final_category'] = $final_category;
+				//echo "this is the final category in final category data: ".$final_category;
 				break;
 
 			}
@@ -160,8 +184,10 @@ final class CCLL {
 				$final_category_data['final_category'] = '';
 			}
 		}
+		//echo "Final category data is: ".var_dump($final_category_data);
 		return $final_category_data;
 	}
+
 	//Use specified style to set up style template
 	public function cll_list_style_processor($style, $final_category_data){
 
@@ -183,58 +209,70 @@ final class CCLL {
 			//$GLOBALS['cll_include_count'] = 0; initilizing as 0 makes global immutable
 			$GLOBALS['cll_include_count'] +=1;
 
-			wp_localize_script('cll-frontEndAdminManager','cll_category_ids'.'_'.$GLOBALS['cll_include_count'], $final_category_id);
+			wp_localize_script('cll-frontEnd','cll_category_ids'.'_'.$GLOBALS['cll_include_count'], array($final_category_id));
 
 			if(!empty($final_category)){
-				wp_localize_script('cll-frontEndAdminManager','cll_category_names'.'_'.$GLOBALS['cll_include_count'], $final_category);
+				wp_localize_script('cll-frontEnd','cll_category_names'.'_'.$GLOBALS['cll_include_count'], array($final_category));
 			}
 
-			wp_localize_script('cll-frontEndLoggedInUser','cll_category_ids'.'_'.$GLOBALS['cll_include_count'], $final_category_id);
+			wp_localize_script('cll-frontEnd','cll_category_ids'.'_'.$GLOBALS['cll_include_count'], array($final_category_id));
 
 			if(!empty($final_category)){
-				wp_localize_script('cll-frontEndLoggedInUser','cll_category_names'.'_'.$GLOBALS['cll_include_count'], $final_category);
+				wp_localize_script('cll-frontEnd','cll_category_names'.'_'.$GLOBALS['cll_include_count'], array($final_category));
 			}
 
 			return $cll_php_template_path;
 
 		}
 		else{
-			wp_localize_script('cll-frontEndAdminManager','cll_category_ids_0', $final_category_id);
+			wp_localize_script('cll-frontEnd','cll_category_ids_0', array($final_category_id));
 
 			if(!empty($final_category)){
-				wp_localize_script('cll-frontEndAdminManager','cll_category_names_0', $final_category);
+				wp_localize_script('cll-frontEnd','cll_category_names_0', array($final_category));
 			}
 
-			wp_localize_script('cll-frontEndAdminManager','existing_category_names_array', $processed_existing_category_name_array);
+			wp_localize_script('cll-frontEnd','existing_category_names_array', array($processed_existing_category_name_array));
 
-			wp_localize_script('cll-frontEndLoggedInUser','cll_category_ids_0', $final_category_id);
+			wp_localize_script('cll-frontEnd','cll_category_ids_0', array($final_category_id));
 
 			if(!empty($final_category)){
-				wp_localize_script('cll-frontEndLoggedInUser','cll_category_names_0', $final_category);
+				wp_localize_script('cll-frontEnd','cll_category_names_0', array($final_category));
 			}
 
-			wp_localize_script('cll-frontEndLoggedInUser','existing_category_names_array', $processed_existing_category_name_array);
+			wp_localize_script('cll-frontEnd','existing_category_names_array', array($processed_existing_category_name_array));
 
 			return $cll_php_template_path;
 		}
 	}
-	public function cll_search_engine_shortcode(){
-		ob_start(); 
-		include CCLL_SERVER_DIR . '/templates/cll-search-engine.php';
-		$output = ob_get_clean();
-		return $output;
+
+	public function cll_react(){
+		wp_enqueue_script( 'cll-AppCompiled',CLL_PLUGIN_DIR.'assets/js/AppCompiled.js');
+		return '<div class="cll-link-list"></div>';
 	
 	}
-	public function cll_list_shortcode($atts){
-
-		$atts = shortcode_atts( array(
-			'style' => '1',
-			'category_name' => '' //Shortcode master must seperate with +'s for valid'
-		), $atts );
 	
-		$final_category_data = $this->shortcode_master_category_input_handler($atts['category_name']);
-		
-		//Controls query based on shortcode input
+	
+	public function load_list_style_template($style, $final_category_data, $link_category_query_args){
+		$style_template = $this->cll_list_style_processor($style, $final_category_data);
+		if (isset($style_template)){
+
+
+			ob_start();
+			$link_list_query = new WP_Query( $link_category_query_args );
+			include $style_template;
+			$output = ob_get_clean();
+			wp_localize_script('cll-frontEndAdminManager','current_page_id', array($current_page_id));
+			wp_localize_script('cll-frontEndLoggedInUser','current_page_id', array($current_page_id));
+			wp_enqueue_style( 'cll-list-style-'.$style);
+			wp_enqueue_style('cll-new-list-btn-style');
+			wp_enqueue_style('cll-back-btn-style');
+			wp_enqueue_style('cll-search-engine-btn-style');
+			wp_enqueue_style('cll-control-box-style');
+			return $output;
+		}
+	}
+	
+	public function generate_list_category_query($final_category_data){
 		if(isset($final_category_data['final_category']))
 		{
 			//echo $final_category_data['final_category'];
@@ -250,8 +288,7 @@ final class CCLL {
 								),
 				)
 			);
-			$link_list_query = new WP_Query( $link_list_query_args );
-	
+
 		}
 		else
 		{
@@ -261,102 +298,109 @@ final class CCLL {
 			'post_type' => 'cll_link',
 			);
 	
-			$link_list_query = new WP_Query( $link_list_query_args );
 		}
-	
+		return $link_list_query_args;
+	}
+
+	public function cll_list_shortcode($atts){
+
+		$atts = shortcode_atts( array(
+			'is_search_engine_on' => 'false',
+			'list_data' => '{
+								"1": {
+									"style": "2",
+									"category_name": ""
+								}
+							
+							}'
+		), $atts );
+
+		$list_array = json_decode($atts['list_data'], true);
+		$is_search_engine_on = ($atts['is_search_engine_on']);
+
 		$user = wp_get_current_user();
 		$allowed_roles = array('library_manager', 'administrator');
-		//checkUserPermissions if admin, or if Library Manager then execute following, else load "frontEndLoggedInUser.js"
-		if(is_user_logged_in() === true){
-			if( array_intersect($allowed_roles, $user->roles ) ) 
-			{
-				if(!is_admin()){
-					//LOAD ADMIN JAVASCRIPT frontEndAdminManager.js
-					wp_enqueue_script( 'cll-frontEndAdminManager',CLL_PLUGIN_DIR.'assets/js/frontEndAdminManager.js');
-					//pass "magicalData" to cll-main JS by echoing data through HTML
-					wp_localize_script('cll-frontEndAdminManager','magicalData',array(
-						'nonce' => wp_create_nonce('wp_rest'),
-						//'cllUserId' => get_current_user_id()
-					));
-	
-					wp_localize_script('cll-frontEndAdminManager', 'cllUserId', array(get_current_user_id()));
-	
-					if(current_user_can("manage_options")){
-						wp_localize_script('cll-frontEndAdminManager', 'cllIsAdmin', array("true"));
-					}
-					else{
-						wp_localize_script('cll-frontEndAdminManager', 'cllIsAdmin', array("false"));
-					}
-	
-					/*
-					wp_localize_script( 'cll-frontEndAdminManager', 'cllAjaxUrl', array(
-							'ajax_url' => admin_url( 'admin-ajax.php' )
-						));
-					*/
-	
-	
-	
-					$style_template = $this->cll_list_style_processor($atts["style"], $final_category_data);
-					if (isset($style_template)){
-	
-	
-						ob_start(); 
-						include $style_template;
-						$output = ob_get_clean();
-						wp_localize_script('cll-frontEndAdminManager','current_page_id', array($current_page_id));
-						wp_localize_script('cll-frontEndLoggedInUser','current_page_id', array($current_page_id));
-						return $output;
-					}
-					return;
-				}
-			}
-			else
-			{
-				//Load frontEndLoggedInUser.js
-				if(!is_admin()){
-					wp_enqueue_script( 'cll-frontEndLoggedInUser', CLL_PLUGIN_DIR.'assets/js/frontEndLoggedInUser.js');
-					wp_localize_script('cll-frontEndLoggedInUser','magicalData',array(
-						'nonce' => wp_create_nonce('wp_rest'),
-						//'cllUserId' => get_current_user_id(),
-					));
-	
-					wp_localize_script('cll-frontEndLoggedInUser', 'cllUserId', array(get_current_user_id()));
-	
-					wp_localize_script('cll-frontEndLoggedInUser', 'cllIsAdmin', array("false"));
-					
-	
-					$style_template = $this->cll_list_style_processor($atts["style"], $final_category_data);
-					if (isset($style_template)){
-	
-						ob_start();
-						include $style_template;
-						wp_localize_script('cll-frontEndAdminManager','current_page_id', $current_page_id);
-						wp_localize_script('cll-frontEndLoggedInUser','current_page_id', $current_page_id);
-						$output = ob_get_clean();
-						return $output;
-					}
-					return;
-				}
-			}
+
+		//Always load frontEnd and it will be behave differently according to if user logged in, is admin/library_manager
+		wp_enqueue_script( 'cll-frontEnd',CLL_PLUGIN_DIR.'assets/js/frontEnd.js');
+
+		if(!is_user_logged_in()){
+			wp_localize_script('cll-frontEnd', 'is_user_logged_in', array("false"));
+		}
+		if(is_user_logged_in()){
+			wp_localize_script('cll-frontEnd', 'is_user_logged_in', array("true"));
+		}
+		if(array_intersect($allowed_roles, $user->roles )){
+			wp_localize_script('cll-frontEnd', 'is_user_admin', array("true"));
+		}
+
+
+		/* Is this weird? when I localize the non-global variable "is_search_engine_on",
+		it is over written if there are multiple shortcodes on one page, so I use a global 
+		variable instead that becomes true if there is are any shortcodes on the page that sets
+		"cll-searchEngineValue" to "true"  */
+		if($is_search_engine_on === "true"){
+			$GLOBALS['cll-searchEngineValue'] = "true";
+			wp_localize_script('cll-frontEnd', 'is_search_engine_on', array("true"));
+		}
+
+		$style_array = json_decode($atts["style"], true);
+		//wp_localize_script("cll-list-style$style_array["1"];
+
+		wp_localize_script('cll-frontEnd', 'list_style', array($style_array["1"]));
+
+		$GLOBALS["atts_counter"]+=1;
+		wp_localize_script('cll-frontEnd', 'atts_'.$GLOBALS["atts_counter"], array($atts['list_data']));
+
+		
+		if(is_page()){
+			wp_localize_script('cll-frontEnd', 'current_page_id', array( get_queried_object_id() ));
+			wp_localize_script('cll-frontEnd', 'current_screen_type', array("page"));
+		}
+		else if(is_single()){
+			wp_localize_script('cll-frontEnd', 'current_post_id', array( get_queried_object_id() ));
+			wp_localize_script('cll-frontEnd', 'current_screen_type', array("post"));
+		}
+
+		wp_localize_script('cll-frontEnd','magicalData',array(
+			'nonce' => wp_create_nonce('wp_rest'),
+		));
+
+		wp_localize_script('cll-frontEnd', 'cllUserId', array(get_current_user_id()));
+
+		if(current_user_can("manage_options")){
+			wp_localize_script('cll-frontEnd', 'cllIsAdmin', array("true"));
 		}
 		else{
-			if(!is_admin()){
-	
-				wp_enqueue_script( 'cll-frontEndLoggedOutUser.js',CLL_PLUGIN_DIR.'assets/js/frontEndLoggedOutUser.js');
-				wp_localize_script('cll-frontEndLoggedOutUser.js','magicalData',array(
-					'nonce' => wp_create_nonce('wp_rest'),
-				));
-				$style_template = $this->cll_list_style_processor($atts["style"], $final_category_data);
-				if (isset($style_template)){
-					ob_start();
-					include $style_template;
-					$output = ob_get_clean();
-					return $output;
-				}
-			}
+			wp_localize_script('cll-frontEnd', 'cllIsAdmin', array("false"));
 		}
-	
+		//}
+		?>
+ 		<?php if (!defined("REST_REQUEST")) { ?>
+		<div class = "cll-link-lists">
+			<?php
+				$GLOBALS["cll_shortcode_id"]+=1;
+				foreach ($list_array as $key => $list_data){
+
+		
+						$final_category_data = $this->shortcode_master_category_input_handler($list_data['category_name']);
+						wp_localize_script("cll-frontEnd", 'final_category_id_'.$GLOBALS["cll_shortcode_id"].'_'.$key, array($final_category_data['final_category_id']));
+
+						wp_localize_script("cll-frontEnd", 'final_category_data_'.$GLOBALS["cll_shortcode_id"].'_'.$key, array($final_category_data));
+
+						$list_category_query_args = $this->generate_list_category_query($final_category_data);
+
+						echo ( $this->load_list_style_template($list_data['style'], $final_category_data, $list_category_query_args) );
+				};
+			?>
+		</div>
+		<?php } ?>
+		<?php
+
+		return '<div class="link-list-container"> </div>';
 	}
+
+
 
 	public function cll_main_plugin_page(){
 		echo "Coming Soon, for now here are basic instructions:";
@@ -401,8 +445,25 @@ final class CCLL {
 	   {
 			   return;
 	   }
-		wp_enqueue_style( 'cll-list-manager-page',CLL_PLUGIN_DIR.'assets/css/cll-link-manager-page.css');
-		wp_enqueue_script( 'cll-backEndAdminManager',CLL_PLUGIN_DIR.'assets/js/backEndAdminManager.js');
+	   wp_enqueue_style( 'cll-list-manager-page',CLL_PLUGIN_DIR.'assets/css/cll-link-manager-page.css');
+	   wp_enqueue_script( 'cll-backEndAdminManager',CLL_PLUGIN_DIR.'assets/js/backEndAdminManager.js');
+
+	   //Deliver necessary information to Javascript for React Rendering
+	   $wp_config_path = $_SERVER['DOCUMENT_ROOT'] . '/wp-config.php';
+	   require_once($wp_config_path);
+	   global $wpdb;
+	   $table_name = $wpdb->prefix .'cll_pending_links_data';
+	   $table_name;
+	   $retrieve_data = $wpdb->get_results( "SELECT * FROM $table_name" );
+	   wp_localize_script('cll-backEndAdminManager', 'link_table_data',array($retrieve_data));
+
+	   $table_name2 = $wpdb->prefix .'cll_pending_list_data';
+	   $table_name2;
+	   // this will get the data from your table
+	   $retrieved_list_data = $wpdb->get_results( "SELECT * FROM $table_name2" );
+	   wp_localize_script('cll-backEndAdminManager', 'list_table_data',array($retrieved_list_data));
+	   
+
 		wp_localize_script('cll-backEndAdminManager','magicalData',array(
 			'nonce' => wp_create_nonce('wp_rest')
 		));
@@ -510,6 +571,7 @@ final class CCLL {
 
 	public function cll_activate() {
 
+
 		$this->cll_create_default_category();
 	
 		$this->add_library_manager_role();
@@ -545,6 +607,8 @@ final class CCLL {
 		 common_user_id mediumint(9) NOT NULL,
 		 list_category text NOT NULL,
 		 list_page_origin text NOT NULL,
+		 screen_type text NOT NULL,
+		 shortcode_source_id mediumint(9) NOT NULL,
 		   PRIMARY KEY  (pending_list_id)
 		  ) $charset_collate2;";
 	
@@ -634,13 +698,84 @@ final class CCLL {
 		return wp_insert_term($category_name, 'link_category', $catarr );
 	}
 
-	public function create_new_page($data){
-		//create new page
-		$new_page_data_array = json_decode($data->get_body(), true);
-		
 	
-		return wp_insert_post($new_page_data_array, true);
+	public function handle_list_request($data){
+		$list_data = json_decode($data->get_body(), true);
+
+		$wp_config_path = $_SERVER['DOCUMENT_ROOT'] . '/wp-config.php';
+		//echo $_SERVER['DOCUMENT_ROOT'] . 'wp-config.php';
+		require_once($wp_config_path);
+		global $wpdb;
+		$table_name = $wpdb->prefix .'cll_pending_list_data';
+		//echo $table_name;
+
+		return $wpdb->insert( 
+			$table_name, 
+			array( 
+				//'time' => current_time( 'mysql' ), 
+				'common_user_id' => $list_data['commonUserId'], 
+				'list_category' => $list_data['pendingListData']['list_category'],
+				'list_page_origin' => $list_data['pendingListData']['list_page_orgin'],
+				'screen_type' => $list_data['pendingListData']['screen_type'],
+				'shortcode_source_id' => $list_data['pendingListData']['shortcode_source_id']
+			));
 	}
+
+		
+	public function handle_list_declined_request($data){
+
+		$list_data = json_decode($data->get_body(), true);
+
+		global $wpdb;
+		$table_name = $wpdb->prefix .'cll_pending_list_data';
+	
+		$wpdb_response = $wpdb->delete($table_name, 
+			array( 'pending_list_id' => $list_data['listId'],
+				 )
+			);
+		//echo $wpdb_response;
+
+		return $wpdb_response;
+
+	}
+	
+
+	public function handle_link_request($data){
+		$link_data = json_decode($data->get_body(), true);
+
+		$wp_config_path = $_SERVER['DOCUMENT_ROOT'] . '/wp-config.php';
+		//echo $_SERVER['DOCUMENT_ROOT'] . 'wp-config.php';
+		require_once($wp_config_path);
+		global $wpdb;
+		$table_name = $wpdb->prefix .'cll_pending_links_data';
+
+		return $wpdb->insert( 
+				$table_name, 
+				array( 
+					//'time' => current_time( 'mysql' ), 
+					'common_user_id' => $link_data['commonUserId'],
+					'link_title' => $link_data['newLinkItemData']['title'], 
+					'link_url' => $link_data['newLinkItemData']['content'],
+					'link_status' => $link_data['newLinkItemData']['status'],
+					'link_categories' => $link_data['newLinkItemData']['categories'][0]
+				));
+	}
+
+	public function handle_link_approved_request($data){
+		$link_data = json_decode($data->get_body(), true);
+		
+		global $wpdb;
+		$table_name = $wpdb->prefix .'cll_pending_links_data';
+		$wpdb_response = $wpdb->delete($table_name, 
+			array( 'pending_link_id' => $link_data['pendingLinkId']
+				 )
+			);
+		
+		return var_dump($wpdb_response);
+	}
+
+
+	
 	
 	 
 	public function cll_register_link_post_type() {

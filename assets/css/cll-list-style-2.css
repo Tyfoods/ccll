@@ -1,0 +1,277 @@
+
+/* DESKTOP */
+
+@media (min-width: 557px){
+    .link-stats-container--style-2{
+        padding-left:25%;
+    }
+    ul.cll-link-list__link-list--style-2 {
+        min-height: 450px;
+    }
+}
+@media (max-width: 557px){
+    .link-stats-container{
+        padding-left:0;
+    }
+}
+@media (max-width: 530px){
+    ul.cll-link-list__link-list--style-2 {
+        min-height: auto;
+    }
+}
+
+@media (max-width: 321px){
+    .vote-buttons--style-2{
+        grid-template-columns: repeat(3, 30px);
+    }
+    .submitted-by--style-2{
+        max-width: 50%;
+    }
+}
+
+@media (min-width: 476px) and (max-width: 557px){
+    ul.cll-link-list__link-list--style-2 {
+        min-height: 400px;
+    }
+}
+
+
+/* DESKTOP END */
+
+
+
+/* Main Elements */
+
+input.cll_search_form_input {
+    width: 100%;
+    text-align: center;
+}
+
+.list-title--style-2{
+    text-align: center;
+}
+
+.cll-link-list__list-title--style-2{
+    font-size: 1.25rem;
+    text-align: center;
+    border-bottom: solid;
+    padding: 1rem;
+    margin: 0px;
+    text-align:center;
+}
+
+.cll-link-list__list-title--style-2::before{
+    display:none;
+}
+
+.link-list-item__link-list-title--style-2{
+    grid-row: 2;
+    grid-column: 1 /span 2;
+    font-size: 1rem;
+    margin-left: .25rem;
+    overflow: auto;
+    overflow-wrap: break-word;
+    max-width: 55%;
+    cursor: pointer;
+}
+.link-list-item__link-list-title--style-2::-webkit-scrollbar{
+    display: none;
+}
+
+.link-list-item__link-list-anchor--style-2{
+    grid-row:1;
+    grid-column:1 / span 2;;
+    /*
+    display:grid;
+    flex-direction:column;
+    grid-template-columns: 1fr 45%;
+    */
+}
+
+.link-item-content-container--style-2{
+    display:grid;
+    flex-direction:column;
+    grid-template-columns: 1fr 45%;
+    grid-template-rows: 1fr 90px;
+}
+
+
+
+.cll-link-list--style-2 {
+    border: solid;
+    max-width: 500px;
+    padding-bottom: 15px;
+    margin-top: 15px;
+}
+
+ul.cll-link-list__link-list--style-2 {
+    border: none;
+    margin: 0px;
+}
+
+li.link-list--style-2__link-list-item--style-2 {
+    border: solid;
+    list-style: none;
+    margin: 0 auto;
+    width: 95%;
+}
+
+form#addToListForm {
+    display: flex;
+    flex-direction: column;
+}
+
+.top-buttons-container--style-2{
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+}
+/* buttons */
+
+.back-btn.cll-admin-button{
+    background-color: unset;
+    background-image: url(../images/back-button.png) !important;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    border:none;
+    box-shadow: none;
+}
+
+.cll-admin-button.add-to-list-btn--style-2{
+    margin: 0px auto;
+    display: block;
+    margin-top: 1%;
+}
+
+.cll-admin-button{
+    border-color: #000;
+    background: #fff;
+    color: #000;
+    border-style: outset;
+    border-width: 1px;
+    box-shadow: 2.5px 5px;
+    border-radius: 10px;
+}
+
+button.admin-delete-button--style-2 {
+    grid-row: 1;
+    grid-column: 2;
+    height: 1%;
+    z-index: 1;
+    justify-self: end;
+
+    background-color: unset;
+    background-image: url(../images/cancelBtn.png) !important;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: top right;
+}
+
+.link-stats-container--style-2{
+    display:grid;
+    margin:0px;
+    grid-row: 2;
+    grid-column: 2;
+}
+.vote-buttons--style-2 {
+    display: grid;
+    grid-template-columns: repeat(3, 40px);
+    grid-row: 1;
+    grid-column: 1;
+    padding: 10px;
+    margin: 0px;
+    overflow: auto;
+}
+
+.up-vote-button--style-2{
+    background-image: url("../images/thumb-up.png");
+    background-color:unset;
+    background-size: 1.5em;
+    background-repeat: no-repeat;
+    background-position: center;
+    
+    grid-column: 1;
+    grid-row: 1;
+    border: none;
+}
+
+p.up-votes-counter--style-2 {
+    grid-row: 2;
+    grid-column: 1;
+    text-align: center;
+    position: relative;
+    bottom: 20%;
+}
+
+.neutral-vote-button--style-2{
+    background-image: url("../images/emoticon-neutral-face-outline.png");
+    background-color:unset;
+    background-size: 1.5em;
+    background-repeat: no-repeat;
+    background-position: center;
+    
+    grid-column: 2;
+    grid-row: 1;
+    border: none;
+}
+
+.down-vote-button--style-2{
+    background-image: url("../images/dislike-thumb.png");
+    background-color:unset;
+    background-size: 1.5em;
+    background-repeat: no-repeat;
+    background-position: center;
+
+    grid-column: 3;
+    grid-row: 1;
+    border: none;
+}
+
+p.down-votes-counter--style-2 {
+    grid-row: 2;
+    grid-column: 3;
+    text-align: center;
+    position: relative;
+    bottom: 20%;
+}
+/*submitted by element */
+.submitted-by--style-2{
+    grid-column: 1 /span 2;
+    grid-row: 2;
+    align-self: end;
+    font-size: .75rem;
+    margin: 0px auto;
+    max-width: 70%;
+    overflow: auto;
+    overflow-wrap: break-word;
+}
+
+/* CONTROL SCROLLING OF LISTS */
+ul.cll-link-list__link-list--style-2::-webkit-scrollbar {
+    background-color: #fff;
+}
+
+ul.cll-link-list__link-list--style-2::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey; 
+}
+
+ul.cll-link-list__link-list--style-2::-webkit-scrollbar-thumb{
+  background: #000;
+      border-radius: 10px
+}
+
+ul.cll-link-list__link-list--style-2::-webkit-scrollbar-thumb:hover{
+    background: gray;	
+}
+
+ul.cll-link-list__link-list--style-2{
+    overflow-y:scroll;
+    overflow-x:hidden;
+    max-height:350px;
+    min-width:182px;
+    width: 100%;
+    padding: 5px;
+}
+/* END SCROLL*/
