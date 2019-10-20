@@ -8,8 +8,6 @@ const config = {
 	entry: {
 		//the key here will replace the [name] portion of the output config below.
 		frontEnd: './assets/src/frontEnd.js',
-		backEndAdminManager: './assets/src/backEndAdminManager.js',
-		settingsPage: './assets/src/settingsPage.js',
 	},
 
 	// Create the output files.

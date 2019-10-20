@@ -92,12 +92,18 @@ class DeleteListBtn extends React.Component{
 
 			//Delete the appropriate list from the front end and server.
 			if(current_screen_type[0] === "page"){
-				makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/pages/'+current_page_id, "POST", JSON.stringify(newPageData));
+				makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/pages/'+current_page_id, "POST", JSON.stringify(newPageData))
+					.then(function(){
+						document.location.reload();
+					})
 
 				this.props.setDisplayNoneOnList();
 			}
 			if(current_screen_type[0] === "post"){
-				makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link/'+current_post_id, "POST", JSON.stringify(newPageData));
+				makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link/'+current_post_id, "POST", JSON.stringify(newPageData))
+					.then(function(){
+						document.location.reload();
+					})
 
 				this.props.setDisplayNoneOnList();
 			}

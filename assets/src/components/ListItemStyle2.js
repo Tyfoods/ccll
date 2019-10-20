@@ -3,12 +3,54 @@ import UpVoteBtn from './UpVoteBtn'
 import NeutralVoteBtn from './NeutralVoteBtn'
 import DownVoteBtn from './DownVoteBtn'
 import DeleteLinkBtn from './DeleteLinkBtn';
+import makeRequest from '../../js/functions/makeRequest'
 
 class ListItemStyle2 extends React.Component{
     constructor(props){
         super(props);
+        this.state = {
+            featuredImageUrl: "",
+            imageIsLoading: true,
+
+        }
+
+        this.loadFeaturedImage = this.loadFeaturedImage.bind(this);
     
     }
+
+    loadFeaturedImage(){
+        if(this.state.imageIsLoading===true){
+            return;
+        }
+        else{
+            return this.state.featuredImageUrl;
+        }
+    }
+
+    componentDidMount(){
+        let linkData = {
+            url: this.props.href
+        }
+    
+        let ThisListItem = this;
+        makeRequest(document.location.origin+'/wp-json/cll-link/v1/link-preview-request/', 'POST', JSON.stringify(linkData))
+            .then(function(request){
+                console.log(request.responseText);
+                let objResponse = JSON.parse(request.responseText);
+                console.log(objResponse);
+                console.log(objResponse['image'][0]['url']);
+                ThisListItem.setState((prevState)=>{
+                    prevState.featuredImageUrl = objResponse['image'][0]['url'];
+                    prevState.imageIsLoading = false;
+                    return prevState;
+                })
+            
+            })
+            .catch(function(error){
+                console.log(error);
+            })
+    }
+
     render(){
 
         //const displayNoneStyle = (()=>{if(this.props.isDeleted === true){{display: "none"}}})()
@@ -29,8 +71,9 @@ class ListItemStyle2 extends React.Component{
                         }
                     })()
             }
-            <a className = "link-list-item__link-list-anchor--style-2" href={this.props.URL}>
-                <img src="https://wordpress-170702-826059.cloudwaysapps.com/wp-content/plugins/curation-link-library/assets/images/test-image.png" className = "cll-link-thumbnail--style-2"/>
+            <a className = "link-list-item__link-list-anchor--style-2" href={this.props.href}>
+  
+                <img src={this.loadFeaturedImage()} className = "cll-link-thumbnail--style-2"/>
             </a>
             { (() => {if (this.props.link_type === 'external link'){
                 return(

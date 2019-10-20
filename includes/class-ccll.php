@@ -38,6 +38,7 @@ final class CCLL {
 		add_action( 'wp_enqueue_scripts', array( $this, 'cll_register_styles')); //REGISTERS CSS for conditional loading later
 		add_action( 'init', array( $this, 'cll_register_link_post_type'));
 		add_action( 'admin_enqueue_scripts', array( $this, 'load_link_manager_css_and_js' ));
+		add_action( 'admin_enqueue_scripts', array( $this, 'load_ccll_settings_css_and_js' ));
 		add_action( 'admin_menu', array( $this, 'cll_create_menu' ));
 		add_action( 'admin_init', array( $this, 'cll_remove_menu_pages' ));
 		add_action( 'init', array( $this, 'create_link_taxonomies'), 0 );
@@ -49,6 +50,31 @@ final class CCLL {
 	}
 
 	public function register_ccll_rest_routes(){
+
+		register_rest_route( 'cll-link/v1', '/clear-fb-api-credentials/',array(
+			'methods'  => WP_REST_Server::DELETABLE,
+			'callback' => array($this, 'clear_fb_api_credentials')
+		));
+
+		register_rest_route( 'cll-link/v1', '/api-credentials-request/',array(
+			'methods'  => WP_REST_Server::READABLE,
+			'callback' => array($this, 'api_credentials_request')
+		));
+
+		register_rest_route( 'cll-link/v1', '/link-preview-request/',array(
+			'methods'  => WP_REST_Server::EDITABLE,
+			'callback' => array($this, 'link_preview_request')
+		));
+
+		register_rest_route( 'cll-link/v1', '/handle-api-credentials-update/',array(
+			'methods'  => WP_REST_Server::EDITABLE,
+			'callback' => array($this, 'handle_api_credentials_update')
+		));
+
+		register_rest_route( 'cll-link/v1', '/handle-link-request/(?P<link_data>[\s\S]+)',array(
+			'methods'  => WP_REST_Server::EDITABLE,
+			'callback' => array($this, 'handle_link_request')
+		));
 
 		register_rest_route( 'cll-link/v1', '/list-declined-request/(?P<list_data>[\s\S]+)',array(
 			'methods'  => WP_REST_Server::EDITABLE,
@@ -302,6 +328,62 @@ final class CCLL {
 		return $link_list_query_args;
 	}
 
+	
+	public function add_fb_api_attributes($tag, $handle){
+			if ( 'fbAPIStart' !== $handle ){
+				return $tag;
+			}
+			$tag = str_replace( "type='text/javascript'", ' async defer', $tag );
+
+			return $tag;
+		}
+	
+
+	public function get_link_preview($url){
+		//start
+		$wp_config_path = $_SERVER['DOCUMENT_ROOT'] . '/wp-config.php';
+		require_once($wp_config_path);
+
+		global $wpdb;
+		$table_name = $wpdb->prefix .'cll_settings';
+		$results = $wpdb->get_results( "SELECT * FROM $table_name", 'ARRAY_A');
+
+		require CCLL_SERVER_DIR . '/vendor/autoload.php';
+
+		
+		$fb = new \Facebook\Facebook([
+			'app_id' => $results[0]['app_id'],
+			'app_secret' => '{app-secret}',
+			'default_graph_version' => 'v2.10',
+			'default_access_token' =>  $results[0]['access_token'],
+		  ]);
+
+		try {
+			$response = $fb->post(
+				'/',
+				array (
+				'scrape' => 'true',
+				'id' => $url
+				),
+				$results[0]['access_token']
+			);
+
+			return $response->getGraphNode();
+			echo $response->getGraphNode();
+		  }
+		  catch(FacebookExceptionsFacebookResponseException $e) {
+			return 'Graph returned an error: ' . $e->getMessage();
+			echo 'Graph returned an error: ' . $e->getMessage();
+			//exit;
+		  }
+		  catch(FacebookExceptionsFacebookSDKException $e) {
+			return 'Facebook SDK returned an error: ' . $e->getMessage();
+			echo 'Facebook SDK returned an error: ' . $e->getMessage();
+			//exit;
+		  }
+		  // end
+	}
+
 	public function cll_list_shortcode($atts){
 
 		$atts = shortcode_atts( array(
@@ -318,11 +400,15 @@ final class CCLL {
 		$list_array = json_decode($atts['list_data'], true);
 		$is_search_engine_on = ($atts['is_search_engine_on']);
 
+		//echo $this->get_link_preview('http://www.yahoo.com');
+
 		$user = wp_get_current_user();
 		$allowed_roles = array('library_manager', 'administrator');
 
 		//Always load frontEnd and it will be behave differently according to if user logged in, is admin/library_manager
+
 		wp_enqueue_script( 'cll-frontEnd',CLL_PLUGIN_DIR.'assets/js/frontEnd.js');
+
 
 		if(!is_user_logged_in()){
 			wp_localize_script('cll-frontEnd', 'is_user_logged_in', array("false"));
@@ -436,6 +522,45 @@ final class CCLL {
 		<?php
 	}
 
+	public function ccll_settings_page(){
+		require_once (CCLL_SERVER_DIR . '/templates/ccll-settings-page.php');
+	}
+
+	public function load_ccll_settings_css_and_js($hook){
+		if($hook != 'crowd-curation-link-library_page_ccll_settings_page')
+		{
+				return;
+		}
+		//Set up Database table that stores AppId & AccessToken DONE
+		//check if values are empty
+		global $wpdb;
+		$table_name = $wpdb->prefix .'cll_settings';
+		$results = $wpdb->get_results( "SELECT * FROM $table_name");
+		//if not empty tell react so that it can set up input boxes approptiately (censored data)
+		//if empty then provide input boxes that are empty
+		
+		wp_enqueue_script( 'fbAPI',CLL_PLUGIN_DIR.'assets/js/fbAPI.js');
+
+		wp_enqueue_script( 'fbAPIStart',"https://connect.facebook.net/en_US/sdk.js");
+			add_filter('script_loader_tag', array($this, 'add_fb_api_attributes'), 10, 2);
+
+		wp_enqueue_script( 'ccll-settingsPage',CLL_PLUGIN_DIR.'assets/js/settingsPage.js');
+			if(!empty($results)){
+				wp_localize_script('ccll-settingsPage', 'do_api_credentials_exist', array("true", $results));
+				//wp_localize_script('fbAPI', 'do_api_credentials_exist', array("true", $results));
+				//Commented because do_api_credentials_exist is accessible via fbAPI without it;
+			}
+			else{
+				wp_localize_script('ccll-settingsPage', 'do_api_credentials_exist', array("false", $results));
+			}
+			wp_localize_script('ccll-settingsPage','magicalData',array(
+				'nonce' => wp_create_nonce('wp_rest'),
+			));
+
+		wp_enqueue_style( 'ccll-settings-page',CLL_PLUGIN_DIR.'assets/css/ccll-settings.css');
+
+	}
+
 	public function cll_pending_manager_page(){
 		require_once (CCLL_SERVER_DIR . '/templates/cll-link-manager-page.php');
 	}
@@ -483,6 +608,10 @@ final class CCLL {
 		$cllLinkManagerMainSubMenu = add_submenu_page( 'cll_main_menu', 'Pending Link/List Manager Page',
 		'Pending Link/List Manager', 'edit_others_posts', 'cll_pending_manager_page',
 		array($this, 'cll_pending_manager_page') );
+
+		$CCLL_settings_sub_menu = add_submenu_page( 'cll_main_menu', 'CCLL Settings',
+		'Settings', 'edit_others_posts', 'ccll_settings_page',
+		array($this, 'ccll_settings_page') );
 	
 	}
 
@@ -576,14 +705,31 @@ final class CCLL {
 	
 		$this->add_library_manager_role();
 	
-		//register taxonomies/post types here
+		//register taxonomies/post types here?
+
+		//Create Custom Database Table
+		global $wpdb;
+		$charset_collate = $wpdb->get_charset_collate();
+		//define the custom table name
+		$table_name = $wpdb->prefix .'cll_settings';
+		$sql = "CREATE TABLE $table_name (
+		id mediumint(9) NOT NULL AUTO_INCREMENT,
+		app_id varchar(250) NOT NULL,
+		access_token varchar(250) NOT NULL,
+		PRIMARY KEY  (id)
+		) $charset_collate;";
+	
+		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+		//execute the query creating our table
+		dbDelta( $sql );
+
 		
 		//Create Custom Database Table
 		global $wpdb;
 		$charset_collate = $wpdb->get_charset_collate();
 		//define the custom table name
 		 $table_name = $wpdb->prefix .'cll_pending_links_data';
-		$sql = "CREATE TABLE $table_name (
+		$sql2 = "CREATE TABLE $table_name (
 		 pending_link_id mediumint(9) NOT NULL AUTO_INCREMENT,
 		 common_user_id mediumint(9) NOT NULL,
 		 link_title varchar(250) NOT NULL,
@@ -595,14 +741,14 @@ final class CCLL {
 	
 		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 		//execute the query creating our table
-		dbDelta( $sql );
+		dbDelta( $sql2 );
 	
 		global $wpdb;
 		//Create table for pending list data
 		$charset_collate2 = $wpdb->get_charset_collate();
 		//define the custom table name
 		 $table_name2 = $wpdb->prefix .'cll_pending_list_data';
-		$sql2 = "CREATE TABLE $table_name2 (
+		$sql3 = "CREATE TABLE $table_name2 (
 		 pending_list_id mediumint(9) NOT NULL AUTO_INCREMENT,
 		 common_user_id mediumint(9) NOT NULL,
 		 list_category text NOT NULL,
@@ -614,11 +760,11 @@ final class CCLL {
 	
 		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 		//execute the query creating our table
-		dbDelta( $sql2 );
+		dbDelta( $sql3 );
 	
 		$cll_link_manager_db_version = '1.0';
 	
-		 add_option( 'cll_link_manager_db_version', $cll_link_manager_db_version ); 
+		add_option( 'cll_link_manager_db_version', $cll_link_manager_db_version ); 
 	
 		flush_rewrite_rules();
 	}
@@ -628,6 +774,12 @@ final class CCLL {
 		if( get_role('library_manager') ){
 			remove_role( 'library_manager' );
 		}
+
+		global $wpdb;
+		$table_name = $wpdb->prefix .'cll_settings';
+		$sql = "DROP TABLE IF EXISTS ".$table_name;
+		$wpdb->query($sql);
+		delete_option("cll_link_manager_db_version");
 	
 		global $wpdb;
 		$table_name = $wpdb->prefix .'cll_pending_links_data';
@@ -744,7 +896,6 @@ final class CCLL {
 		$link_data = json_decode($data->get_body(), true);
 
 		$wp_config_path = $_SERVER['DOCUMENT_ROOT'] . '/wp-config.php';
-		//echo $_SERVER['DOCUMENT_ROOT'] . 'wp-config.php';
 		require_once($wp_config_path);
 		global $wpdb;
 		$table_name = $wpdb->prefix .'cll_pending_links_data';
@@ -772,6 +923,59 @@ final class CCLL {
 			);
 		
 		return var_dump($wpdb_response);
+	}
+
+	/* Don't expost API credentials to JS!!!
+	public function api_credentials_request($data){
+
+		$wp_config_path = $_SERVER['DOCUMENT_ROOT'] . '/wp-config.php';
+		require_once($wp_config_path);
+
+		global $wpdb;
+		$table_name = $wpdb->prefix .'cll_settings';
+		$results = $wpdb->get_results( "SELECT * FROM $table_name");
+		return $results;
+	}
+	*/
+
+	public function clear_fb_api_credentials(){
+		$wp_config_path = $_SERVER['DOCUMENT_ROOT'] . '/wp-config.php';
+
+		require_once($wp_config_path);
+		global $wpdb;
+		$table_name = $wpdb->prefix .'cll_settings';
+
+		return $wpdb->delete( 
+			$table_name, 
+			array( 
+					'id' => 1,
+				));
+	}
+
+	public function link_preview_request($data){
+		$link_data = json_decode($data->get_body(), true);
+
+		echo $this->get_link_preview($link_data['url']);
+		exit;
+	}
+
+	public function handle_api_credentials_update($data){
+
+		$api_credentials = json_decode($data->get_body(), true);
+		
+		$wp_config_path = $_SERVER['DOCUMENT_ROOT'] . '/wp-config.php';
+
+		require_once($wp_config_path);
+		global $wpdb;
+		$table_name = $wpdb->prefix .'cll_settings';
+
+		return $wpdb->insert( 
+			$table_name, 
+			array( 
+					'id' => 1,
+					'app_id' => $api_credentials['appId'],
+					'access_token' => $api_credentials['accessToken'],
+				));
 	}
 
 
