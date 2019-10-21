@@ -43,7 +43,7 @@ class EditStyleBtn extends React.Component{
             //there is one list and there isn't any listData
             //console.log("There is one list and no data");
             
-            let newShortcode = `[new_list_data list_data='{ "1": { "style": "${this.state.value}", "category_name": "" } }']`
+            let newShortcode = `[ccll_list list_data='{ "1": { "style": "${this.state.value}", "category_name": "" } }]`
             let newPageContent = objResponse.content.raw.replace(ccllListShortcodeArray[this.props.shortcodeSourceId-1], newShortcode);
             
             let newPageData = {
