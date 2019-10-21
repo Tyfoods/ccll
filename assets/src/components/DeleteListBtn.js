@@ -17,22 +17,28 @@ class DeleteListBtn extends React.Component{
 	processDeleteRequest(request){
 		var objResponse = JSON.parse(request.responseText);
 
-		const cllListDataRegex = /list_data\s?=\s?(\'|\")\{(.*?)\}(\'|\")/g
-        const cllListMatchJson = /(\'|\")\{(.*?)\}(\'|\")/g;
-		const cllListRegex = /\[cll_list\s?(.*?)\]/g;
+		const ccllIsSearchEngineOnRegex = /is_search_engine_on\s?=\s?(\'|\")(.*?)(\'|\")/g
+		const ccllListDataRegex = /list_data\s?=\s?(\'|\")\{(.*?)\}(\'|\")/g
+        const ccllListMatchJson = /(\'|\")\{(.*?)\}(\'|\")/g;
+		const ccllListRegex = /\[ccll_list\s?(.*?)\]/g;
 		
 		//Get array of all shortcodes on page
-		const cllListShortcodeArray = objResponse.content.raw.match(cllListRegex);
+		const ccllListShortcodeArray = objResponse.content.raw.match(ccllListRegex);
 		//Get entire shortcode from which this set of lists was born.
-		const entireCurrentShortcodeString = cllListShortcodeArray[this.props.shortcodeSourceId-1];
+		const entireCurrentShortcodeString = ccllListShortcodeArray[this.props.shortcodeSourceId-1];
+
+		let searchEngineSetting = entireCurrentShortcodeString.match(ccllIsSearchEngineOnRegex);
+        if(searchEngineSetting == null){
+            searchEngineSetting = '';
+        }
 
 		//getData and check if it exists
-		let listDataAtt = entireCurrentShortcodeString.match(cllListDataRegex);
+		let listDataAtt = entireCurrentShortcodeString.match(ccllListDataRegex);
 		//if data doesn't there is only one "starter" list, that should probably just be deleted off of the page after use confirms
 		if(listDataAtt == null){
 			if(confirm("There's only one list! Would you like to delete the shortcode from the page?")){
 							//using -1 because "shortcodeSourceId" starts its count a 1, not 0.
-				let newPageContent = objResponse.content.raw.replace(cllListShortcodeArray[this.props.shortcodeSourceId-1], '');
+				let newPageContent = objResponse.content.raw.replace(ccllListShortcodeArray[this.props.shortcodeSourceId-1], '');
 
 				let newPageData = {
 					"content": newPageContent
@@ -43,12 +49,12 @@ class DeleteListBtn extends React.Component{
 	
 				//Delete the appropriate list from the front end and server.
 				if(current_screen_type[0] === "page"){
-					makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/pages/'+current_page_id, "POST", JSON.stringify(newPageData));
+					makeRequest(ccllGlobals.currentProtocalDomain+'/wp-json/wp/v2/pages/'+current_page_id, "POST", JSON.stringify(newPageData));
 	
 					this.props.setDisplayNoneOnList();
 				}
 				if(current_screen_type[0] === "post"){
-					makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link/'+current_post_id, "POST", JSON.stringify(newPageData));
+					makeRequest(ccllGlobals.currentProtocalDomain+'/wp-json/wp/v2/ccll-link/'+current_post_id, "POST", JSON.stringify(newPageData));
 	
 					this.props.setDisplayNoneOnList();
 				}
@@ -60,7 +66,7 @@ class DeleteListBtn extends React.Component{
 		}
 		else{
 
-			let listDataArrayString = listDataAtt[0].match(cllListMatchJson);
+			let listDataArrayString = listDataAtt[0].match(ccllListMatchJson);
 			let listDataObj = JSON.parse(listDataArrayString[0].substr(1, listDataArrayString[0].length-2));
 
 
@@ -68,7 +74,7 @@ class DeleteListBtn extends React.Component{
 			delete listDataObj[`${this.props.listId}`];
 
 			//Create newShortcode
-			let newShortcode = "[cll_list = "+"list_data='"+JSON.stringify(listDataObj)+"']";
+			let newShortcode = `[ccll_list list_data='${JSON.stringify(listDataObj)}' ${searchEngineSetting}]`;
 			//console.log(Object.keys(listDataObj));
 			if(Object.keys(listDataObj).length === 0){
 				if(confirm("There's only one list! Would you like to delete the shortcode from the page?")){
@@ -81,7 +87,7 @@ class DeleteListBtn extends React.Component{
 
 
 
-			let newPageContent = objResponse.content.raw.replace(cllListShortcodeArray[this.props.shortcodeSourceId-1], newShortcode);
+			let newPageContent = objResponse.content.raw.replace(ccllListShortcodeArray[this.props.shortcodeSourceId-1], newShortcode);
 
 			let newPageData = {
 				"content": newPageContent
@@ -92,7 +98,7 @@ class DeleteListBtn extends React.Component{
 
 			//Delete the appropriate list from the front end and server.
 			if(current_screen_type[0] === "page"){
-				makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/pages/'+current_page_id, "POST", JSON.stringify(newPageData))
+				makeRequest(ccllGlobals.currentProtocalDomain+'/wp-json/wp/v2/pages/'+current_page_id, "POST", JSON.stringify(newPageData))
 					.then(function(){
 						document.location.reload();
 					})
@@ -100,7 +106,7 @@ class DeleteListBtn extends React.Component{
 				this.props.setDisplayNoneOnList();
 			}
 			if(current_screen_type[0] === "post"){
-				makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link/'+current_post_id, "POST", JSON.stringify(newPageData))
+				makeRequest(ccllGlobals.currentProtocalDomain+'/wp-json/wp/v2/ccll-link/'+current_post_id, "POST", JSON.stringify(newPageData))
 					.then(function(){
 						document.location.reload();
 					})
@@ -121,7 +127,7 @@ class DeleteListBtn extends React.Component{
 
 
 		if(current_screen_type[0] === "page"){
-			makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/pages/'+current_page_id, "POST")
+			makeRequest(ccllGlobals.currentProtocalDomain+'/wp-json/wp/v2/pages/'+current_page_id, "POST")
 				.then(function(request){
 					ThisDeleteBtn.processDeleteRequest(request);
 				})
@@ -130,7 +136,7 @@ class DeleteListBtn extends React.Component{
 				});
 		}
 		if(current_screen_type[0] === "post"){
-			makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link/'+current_post_id, "POST")
+			makeRequest(ccllGlobals.currentProtocalDomain+'/wp-json/wp/v2/ccll-link/'+current_post_id, "POST")
 			.then(function(request){
 				ThisDeleteBtn.processDeleteRequest(request);
 			})
@@ -146,7 +152,7 @@ class DeleteListBtn extends React.Component{
     
     render(){
         return(
-            <button className={`cll-admin-button delete-list-btn--style-${this.context.style}`} onClick={this.handleDeleteListBtnClick.bind(this)}>Delete List</button>
+            <button className={`ccll-admin-button delete-list-btn--style-${this.context.style}`} onClick={this.handleDeleteListBtnClick.bind(this)}>Delete List</button>
         )
     }
 }

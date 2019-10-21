@@ -1,5 +1,5 @@
 	
-import cllGlobals from '../js/cllGlobals';
+import ccllGlobals from '../js/ccllGlobals';
 import makeRequest from '../js/functions/makeRequest';
 import createNewCategory from '../js/functions/createNewCategory';
 import deletePendingListRequest from '../js/functions/deletePendingListRequest';

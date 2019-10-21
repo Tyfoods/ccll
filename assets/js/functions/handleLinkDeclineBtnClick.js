@@ -1,6 +1,6 @@
-module.exports = function handleLinkDeclineBtnClick(cllDeclineBtn, deps){
+module.exports = function handleLinkDeclineBtnClick(ccllDeclineBtn, deps){
   
-    var cllDeclineBtnCllId = cllDeclineBtn.getAttribute('cllid'); 
+    var ccllDeclineBtnCcllId = ccllDeclineBtn.getAttribute('ccllid'); 
     var newLinkItemData = {};
     var table = document.getElementById("pending-link-data-table");
     for (var i = 0, row; row = table.rows[i]; i++) {
@@ -9,7 +9,7 @@ module.exports = function handleLinkDeclineBtnClick(cllDeclineBtn, deps){
         for (var j = 0, col; col = row.cells[j]; j++){
             //var element = row.cells[j];
             if(row.cells[j].nodeName.toLowerCase() === "td"){ //Check if it is table data
-                if(row.cells[j].getAttribute('cllId') === cllDeclineBtnCllId){
+                if(row.cells[j].getAttribute('ccllId') === ccllDeclineBtnCcllId){
                     var rowToDelete = row.rowIndex;
                     if(row.cells[j].title === 'linkId'){ //check if element.title is equal to 'string'
                         newLinkItemData['pendingLinkId'] = row.cells[j].innerHTML;
@@ -41,7 +41,7 @@ module.exports = function handleLinkDeclineBtnClick(cllDeclineBtn, deps){
                 //do something
             }
     }
-    deletePendingLinkRequest.open("POST", cllGlobals.currentProtocalDomain+'/wp-content/plugins/curation-link-library/cll-core/request-handlers/approve-link-item-handler.php');
+    deletePendingLinkRequest.open("POST", ccllGlobals.currentProtocalDomain+'/wp-content/plugins/curation-link-library/ccll-core/request-handlers/approve-link-item-handler.php');
     deletePendingLinkRequest.setRequestHeader("X-WP-Nonce", magicalData.nonce);
     deletePendingLinkRequest.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
     deletePendingLinkRequest.send("json_string="+JSON.stringify(newLinkItemData));

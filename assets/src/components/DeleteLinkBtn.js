@@ -21,7 +21,7 @@ class DeleteLinkBtn extends React.Component{
 
         //Delete post if it exists
         let ThisDeleteLinkBtn = this;
-        makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link?slug='+listItemSlug, 'GET')
+        makeRequest(ccllGlobals.currentProtocalDomain+'/wp-json/wp/v2/ccll-link?slug='+listItemSlug, 'GET')
             .then(function(request){
                 var objResponse = JSON.parse(request.responseText);
                 ////console.log(objResponse);
@@ -40,7 +40,7 @@ class DeleteLinkBtn extends React.Component{
                         
 
                         for (let i=0; i < linkCategoryArray.length; i++){
-                            makeRequest(cllGlobals.currentProtocalDomain+"/wp-json/cll-link-category/v1/cll-link/"+linkCategoryArray[i], 'GET')
+                            makeRequest(ccllGlobals.currentProtocalDomain+"/wp-json/ccll-link-category/v1/ccll-link/"+linkCategoryArray[i], 'GET')
                                 .then(function(request){
                                     //console.log(request);
 
@@ -52,7 +52,7 @@ class DeleteLinkBtn extends React.Component{
                                         let newLinkCategory = {
                                             "link_category": linkCategoryArray
                                         };
-                                        makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link/'+objResponse[0].id, 'POST', JSON.stringify(newLinkCategory))
+                                        makeRequest(ccllGlobals.currentProtocalDomain+'/wp-json/wp/v2/ccll-link/'+objResponse[0].id, 'POST', JSON.stringify(newLinkCategory))
                                             .then(function(request){
                                                 //console.log(request);
                                                 //console.log("Succesfully removed category");
@@ -72,7 +72,7 @@ class DeleteLinkBtn extends React.Component{
                     else{
                         //console.log("Post only had one category, deleting post");
                         
-                        makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link/'+objResponse[0].id, 'DELETE')
+                        makeRequest(ccllGlobals.currentProtocalDomain+'/wp-json/wp/v2/ccll-link/'+objResponse[0].id, 'DELETE')
                             .then(function(){
                                 //console.log("Successfully deleted post!");
                                 ThisDeleteLinkBtn.props.setIsDeletedTrue();

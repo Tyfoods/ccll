@@ -10,7 +10,7 @@ module.exports = function deletePendingListRequest(newListItemData){
 			}
 				//if request fails...?
 		}
-	deletePendingListRequest.open("POST", cllGlobals.currentProtocalDomain+'/wp-json/cll-link/v1/list-declined-request/'+newListItemData['listId']);
+	deletePendingListRequest.open("POST", ccllGlobals.currentProtocalDomain+'/wp-json/ccll-link/v1/list-declined-request/'+newListItemData['listId']);
 	deletePendingListRequest.setRequestHeader("X-WP-Nonce", magicalData.nonce);
 	deletePendingListRequest.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
 	deletePendingListRequest.send(JSON.stringify(newListItemData));

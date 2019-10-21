@@ -36,7 +36,7 @@ class List extends React.Component{
 
     getData(){
         let ThisList = this;
-        makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link/'+'?link_category='+ThisList.props.categoryId.toString(), 'GET')
+        makeRequest(ccllGlobals.currentProtocalDomain+'/wp-json/wp/v2/ccll-link/'+'?link_category='+ThisList.props.categoryId.toString(), 'GET')
         .then(function(request){
             
             let objResponse = JSON.parse(request.responseText);

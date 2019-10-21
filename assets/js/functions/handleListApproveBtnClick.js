@@ -1,32 +1,32 @@
-function createNewPageData(jsonResponse, shortcode_source_id){
+function createNewPageData(jsonResponse, shortcode_source_id, newCategory){
     //console.log("created new page data");
     var objResponse = JSON.parse(jsonResponse);
-    const cllListDataRegex = /list_data\s?=\s?(\'|\")\{(.*?)\}(\'|\")/g
-    const cllListMatchJson = /(\'|\")\{(.*?)\}(\'|\")/g;
-    const cllListRegex = /\[new_cll_list\s?(.*?)\]/g;
-    const cllIsSearchEngineOnRegex = /is_search_engine_on\s?=\s?(\'|\")(.*?)(\'|\")/g
+    const ccllListDataRegex = /list_data\s?=\s?(\'|\")\{(.*?)\}(\'|\")/g
+    const ccllListMatchJson = /(\'|\")\{(.*?)\}(\'|\")/g;
+    const ccllListRegex = /\[ccll_list\s?(.*?)\]/g;
+    const ccllIsSearchEngineOnRegex = /is_search_engine_on\s?=\s?(\'|\")(.*?)(\'|\")/g
 
 
     //Get array of all shortcodes on page
-    const cllListShortcodeArray = objResponse.content.raw.match(cllListRegex);
+    const ccllListShortcodeArray = objResponse.content.raw.match(ccllListRegex);
     //Get entire shortcode from which this set of lists was born.
-    const entireCurrentShortcodeString = cllListShortcodeArray[shortcode_source_id-1];
+    const entireCurrentShortcodeString = ccllListShortcodeArray[shortcode_source_id-1];
 
-    let searchEngineSetting = entireCurrentShortcodeString.match(cllIsSearchEngineOnRegex);
+    let searchEngineSetting = entireCurrentShortcodeString.match(ccllIsSearchEngineOnRegex);
     if(searchEngineSetting == null){
         searchEngineSetting = '';
     }
 
     //getData and check if it exists
-    let listDataAtt = entireCurrentShortcodeString.match(cllListDataRegex);
+    let listDataAtt = entireCurrentShortcodeString.match(ccllListDataRegex);
     if(listDataAtt == null){ //if data doesn't exist do this
         listDataAtt = [];
-        listDataAtt[0] = '"{ "1": { "style": "2", "category_name": "" } }"'
+        listDataAtt[0] = `"{ "1": { "style": "2", "category_name": "${newCategory}" } }"`
         //when not null, "listDataArrayString" requires one to strip the first and last character
         //To leverage the code below, we'll stick extra characters in hence the extra quotes outside jSon
 
     }
-    let listDataArrayString = listDataAtt[0].match(cllListMatchJson);
+    let listDataArrayString = listDataAtt[0].match(ccllListMatchJson);
     //console.log(listDataArrayString);
     //console.log(listDataArrayString[0].substr(1, listDataArrayString[0].length-2));
     let listDataObj = JSON.parse(listDataArrayString[0].substr(1, listDataArrayString[0].length-2));
@@ -52,16 +52,16 @@ function createNewPageData(jsonResponse, shortcode_source_id){
 
     //Modify Data appropriately
     listDataObj[`${newListId}`] = {};
-    listDataObj[`${newListId}`]['category_name'] = "";
+    listDataObj[`${newListId}`]['category_name'] = newCategory;
     listDataObj[`${newListId}`]['style'] = "2";
 
     //createShortCode
-    let newShortcode = `[new_cll_list list_data='${JSON.stringify(listDataObj)}' ${searchEngineSetting}']`;
+    let newShortcode = `[ccll_list list_data='${JSON.stringify(listDataObj)}' ${searchEngineSetting}']`;
 
 
     //console.log(objResponse.content.raw);
 
-    let newPageContent = objResponse.content.raw.replace(cllListShortcodeArray[shortcode_source_id-1], newShortcode);
+    let newPageContent = objResponse.content.raw.replace(ccllListShortcodeArray[shortcode_source_id-1], newShortcode);
 
     let newPageData = {
         "content": newPageContent
@@ -70,9 +70,9 @@ function createNewPageData(jsonResponse, shortcode_source_id){
     return newPageData;
 }
 
-module.exports = function handleListApproveBtnClick(cllListApproveBtn, deps){
+module.exports = function handleListApproveBtnClick(ccllListApproveBtn, deps){
     //Get Title/Content I.E. Link Title Link URL based on which ApproveBtn was picked
-    var cllListApproveBtnCllId = cllListApproveBtn.getAttribute('cllid'); //get cllid of Approvebtn
+    var ccllListApproveBtnCcllId = ccllListApproveBtn.getAttribute('ccllid'); //get ccllid of Approvebtn
     const makeRequest = deps.makeRequest;
     var newListItemData = {};
     var table = document.getElementById("pending-list-data-table");
@@ -82,7 +82,7 @@ module.exports = function handleListApproveBtnClick(cllListApproveBtn, deps){
         for (var j = 0, col; col = row.cells[j]; j++){
             //var element = row.cells[j];
             if(row.cells[j].nodeName.toLowerCase() === "td"){ //Check if it is table data
-                if(row.cells[j].getAttribute('cllid') === cllListApproveBtnCllId){
+                if(row.cells[j].getAttribute('ccllid') === ccllListApproveBtnCcllId){
                     var rowToDelete = row.rowIndex;
                     if(row.cells[j].title === 'listId'){
                         newListItemData['listId'] = row.cells[j].innerHTML;
@@ -130,17 +130,17 @@ module.exports = function handleListApproveBtnClick(cllListApproveBtn, deps){
     if (confirm("Are you sure you would like to add this new list?")) {
         //////console.log("You pressed YES!");
         if(screen_type === "page"){
-			makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/pages/'+list_page_origin_id, "POST")
+			makeRequest(ccllGlobals.currentProtocalDomain+'/wp-json/wp/v2/pages/'+list_page_origin_id, "POST")
                 .then(function(request){
                     var rawResponse = request.responseText.split('{"id":'+list_page_origin_id).pop();
                     var jsonResponse = '{"id":'+list_page_origin_id+rawResponse;
 
-                    let newPageData = createNewPageData(jsonResponse, shortcode_source_id);
+                    let newPageData = createNewPageData(jsonResponse, shortcode_source_id, newListItemData['list_category']);
 
                     //creates new category
                     deps.createNewCategory(newListItemData['list_category'], deps);
                     //console.log("making second request to update");
-                    makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/pages/'+list_page_origin_id, "POST", JSON.stringify(newPageData))
+                    makeRequest(ccllGlobals.currentProtocalDomain+'/wp-json/wp/v2/pages/'+list_page_origin_id, "POST", JSON.stringify(newPageData))
                         .then(function(request){
                             //console.log("Successfully updated page!");
                             //console.log(request.responseText);
@@ -156,7 +156,7 @@ module.exports = function handleListApproveBtnClick(cllListApproveBtn, deps){
             });
 		}
 		if(screen_type === "post"){
-            makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link/'+list_page_origin_id, "POST")
+            makeRequest(ccllGlobals.currentProtocalDomain+'/wp-json/wp/v2/ccll-link/'+list_page_origin_id, "POST")
             .then(function(request){
                 var rawResponse = request.responseText.split('{"id":'+list_page_origin_id).pop();
                 var jsonResponse = '{"id":'+list_page_origin_id+rawResponse;
@@ -166,7 +166,7 @@ module.exports = function handleListApproveBtnClick(cllListApproveBtn, deps){
                 //creates new category
                 deps.createNewCategory(newListItemData['list_category'], deps);
 
-                makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link/'+list_page_origin_id, "POST", JSON.stringify(newPageData))
+                makeRequest(ccllGlobals.currentProtocalDomain+'/wp-json/wp/v2/ccll-link/'+list_page_origin_id, "POST", JSON.stringify(newPageData))
                     .then(function(request){
                         //console.log("Successfully updated page!");
                         //console.log(JSON.parse(request.responseText));

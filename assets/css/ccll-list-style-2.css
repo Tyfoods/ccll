@@ -5,7 +5,7 @@
     .link-stats-container--style-2{
         padding-left:25%;
     }
-    ul.cll-link-list__link-list--style-2 {
+    ul.ccll-link-list__link-list--style-2 {
         min-height: 450px;
     }
 }
@@ -15,7 +15,7 @@
     }
 }
 @media (max-width: 530px){
-    ul.cll-link-list__link-list--style-2 {
+    ul.ccll-link-list__link-list--style-2 {
         min-height: auto;
     }
 }
@@ -30,7 +30,7 @@
 }
 
 @media (min-width: 476px) and (max-width: 557px){
-    ul.cll-link-list__link-list--style-2 {
+    ul.ccll-link-list__link-list--style-2 {
         min-height: 400px;
     }
 }
@@ -44,7 +44,7 @@
 
 
 
-input.cll_search_form_input {
+input.ccll_search_form_input {
     width: 100%;
     text-align: center;
 }
@@ -53,7 +53,7 @@ input.cll_search_form_input {
     text-align: center;
 }
 
-.cll-link-list__list-title--style-2{
+.ccll-link-list__list-title--style-2{
     font-size: 1.25rem;
     text-align: center;
     border-bottom: solid;
@@ -62,7 +62,7 @@ input.cll_search_form_input {
     text-align:center;
 }
 
-.cll-link-list__list-title--style-2::before{
+.ccll-link-list__list-title--style-2::before{
     display:none;
 }
 
@@ -99,14 +99,14 @@ input.cll_search_form_input {
 
 
 
-.cll-link-list--style-2 {
+.ccll-link-list--style-2 {
     border: solid;
     max-width: 500px;
     padding-bottom: 15px;
     margin-top: 15px;
 }
 
-ul.cll-link-list__link-list--style-2 {
+ul.ccll-link-list__link-list--style-2 {
     border: none;
     margin: 0px;
 }
@@ -148,7 +148,7 @@ form#addToListForm {
     padding: 4% 5% 4% 5%;
 }
 
-.back-btn.cll-admin-button{
+.back-btn.ccll-admin-button{
     background-color: unset;
     background-image: url(../images/back-button.png) !important;
     background-size: contain;
@@ -158,13 +158,13 @@ form#addToListForm {
     box-shadow: none;
 }
 
-.cll-admin-button.add-to-list-btn--style-2{
+.ccll-admin-button.add-to-list-btn--style-2{
     margin: 0px auto;
     display: block;
     margin-top: 1%;
 }
 
-.cll-admin-button{
+.ccll-admin-button{
     border-color: #000;
     background: #fff;
     color: #000;
@@ -268,24 +268,24 @@ p.down-votes-counter--style-2 {
 }
 
 /* CONTROL SCROLLING OF LISTS */
-ul.cll-link-list__link-list--style-2::-webkit-scrollbar {
+ul.ccll-link-list__link-list--style-2::-webkit-scrollbar {
     background-color: #fff;
 }
 
-ul.cll-link-list__link-list--style-2::-webkit-scrollbar-track {
+ul.ccll-link-list__link-list--style-2::-webkit-scrollbar-track {
     box-shadow: inset 0 0 5px grey; 
 }
 
-ul.cll-link-list__link-list--style-2::-webkit-scrollbar-thumb{
+ul.ccll-link-list__link-list--style-2::-webkit-scrollbar-thumb{
   background: #000;
       border-radius: 10px
 }
 
-ul.cll-link-list__link-list--style-2::-webkit-scrollbar-thumb:hover{
+ul.ccll-link-list__link-list--style-2::-webkit-scrollbar-thumb:hover{
     background: gray;	
 }
 
-ul.cll-link-list__link-list--style-2{
+ul.ccll-link-list__link-list--style-2{
     overflow-y:scroll;
     overflow-x:hidden;
     max-height:350px;

@@ -11,9 +11,9 @@
  */
 ?>
 
-<div  class = "cll-link-list cll-link-list--style-2">
-	<h2 class = 'cll-link-list__list-title'>Category: <?php  echo $final_category_data['final_category'] ?></h2>
-	<ul class = 'cll-link-list__link-list--style-2'>
+<div  class = "ccll-link-list ccll-link-list--style-2">
+	<h2 class = 'ccll-link-list__list-title'>Category: <?php  echo $final_category_data['final_category'] ?></h2>
+	<ul class = 'ccll-link-list__link-list--style-2'>
 
 		<?php if ( $link_list_query->have_posts() ) : while ( $link_list_query->have_posts() ) : $link_list_query->the_post(); ?>
 
@@ -27,7 +27,7 @@
 		<li class="link-list--style-2__link-list-item">
 			<a class = "link-list-item__link-list-anchor" href="#">
 				<h3 class = "link-list-item__link-list-title">Test Title sdglshdfskdhjfgklsjdfhgskdghskdjfhglkjh</h3>
-				<img src="https://wordpress-170702-826059.cloudwaysapps.com/wp-content/plugins/curation-link-library/assets/images/test-image.png" class = "cll-link-thumbnail"/>
+				<img src="https://wordpress-170702-826059.cloudwaysapps.com/wp-content/plugins/curation-link-library/assets/images/test-image.png" class = "ccll-link-thumbnail"/>
 				<div class = "link-stats-container">
 					<div class = "vote-buttons">
 						<button class = "up-vote-button"></button>

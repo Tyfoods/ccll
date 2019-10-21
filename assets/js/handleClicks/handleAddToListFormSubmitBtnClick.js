@@ -24,6 +24,7 @@ function handleAddToListFormSubmitBtnClick(categoryId, style){
             }
             else
             {
+                console.log("running endlinkrequest");
                 endLinkRequest(categoryId, style);
             }
         }
@@ -60,10 +61,10 @@ function handleAddToListFormSubmitBtnClick(categoryId, style){
                     "categories": multiListPageCategoryIds,
                     "status": "publish"
                 },
-                commonUserId: cllUserId[0]
+                commonUserId: ccllUserId[0]
             }
 
-            makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/cll-link/v1/link-request/'+cllUserId[0], 'POST', JSON.stringify(linkRequestData))
+            makeRequest(ccllGlobals.currentProtocalDomain+'/wp-json/ccll-link/v1/link-request/'+ccllUserId[0], 'POST', JSON.stringify(linkRequestData))
                 .then(function(request){
                     //console.log(request.responseText);
                     
@@ -81,7 +82,7 @@ function handleAddToListFormSubmitBtnClick(categoryId, style){
             f.appendChild(checkmark_symbol);
             checkmark_symbol.setAttribute('name',"checkmark_symbol");
             checkmark_symbol.setAttribute('id',"checkmark_symbol");
-            checkmark_symbol.setAttribute('src', cllGlobals.currentProtocalDomain+'/wp-content/plugins/curation-link-library/assets/images/checkmark.jpg');
+            checkmark_symbol.setAttribute('src', ccllGlobals.currentProtocalDomain+'/wp-content/plugins/curation-link-library/assets/images/checkmark.jpg');
 
             //fadeIn(checkmark_symbol);
 

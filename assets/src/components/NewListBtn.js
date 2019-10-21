@@ -16,24 +16,24 @@ class NewListBtn extends React.Component{
     processNewListRequest(request){
         var objResponse = JSON.parse(request.responseText);
 
-        const cllListDataRegex = /list_data\s?=\s?(\'|\")\{(.*?)\}(\'|\")/g
-        const cllListMatchJson = /(\'|\")\{(.*?)\}(\'|\")/g;
-        const cllListRegex = /\[cll_list\s?(.*?)\]/g;
-        const cllIsSearchEngineOnRegex = /is_search_engine_on\s?=\s?(\'|\")(.*?)(\'|\")/g
+        const ccllListDataRegex = /list_data\s?=\s?(\'|\")\{(.*?)\}(\'|\")/g
+        const ccllListMatchJson = /(\'|\")\{(.*?)\}(\'|\")/g;
+        const ccllListRegex = /\[ccll_list\s?(.*?)\]/g;
+        const ccllIsSearchEngineOnRegex = /is_search_engine_on\s?=\s?(\'|\")(.*?)(\'|\")/g
 
         
         //Get array of all shortcodes on page
-        const cllListShortcodeArray = objResponse.content.raw.match(cllListRegex);
+        const ccllListShortcodeArray = objResponse.content.raw.match(ccllListRegex);
         //Get entire shortcode from which this set of lists was born.
-        const entireCurrentShortcodeString = cllListShortcodeArray[this.props.shortcodeSourceId-1];
+        const entireCurrentShortcodeString = ccllListShortcodeArray[this.props.shortcodeSourceId-1];
         
-        let searchEngineSetting = entireCurrentShortcodeString.match(cllIsSearchEngineOnRegex);
+        let searchEngineSetting = entireCurrentShortcodeString.match(ccllIsSearchEngineOnRegex);
         if(searchEngineSetting == null){
             searchEngineSetting = '';
         }
 
         //getData and check if it exists
-        let listDataAtt = entireCurrentShortcodeString.match(cllListDataRegex);
+        let listDataAtt = entireCurrentShortcodeString.match(ccllListDataRegex);
         if(listDataAtt == null){ //if data doesn't exist do this
             listDataAtt = [];
             listDataAtt[0] = '"{ "1": { "style": "2", "category_name": "" } }"'
@@ -41,7 +41,7 @@ class NewListBtn extends React.Component{
             //To leverage the code below, we'll stick extra characters in hence the extra quotes outside jSon
 
         }
-        let listDataArrayString = listDataAtt[0].match(cllListMatchJson);
+        let listDataArrayString = listDataAtt[0].match(ccllListMatchJson);
         //console.log(listDataArrayString);
         //console.log(listDataArrayString[0].substr(1, listDataArrayString[0].length-2));
         let listDataObj = JSON.parse(listDataArrayString[0].substr(1, listDataArrayString[0].length-2));
@@ -71,12 +71,12 @@ class NewListBtn extends React.Component{
         listDataObj[`${newListId}`]['style'] = "2";
         
         //createShortCode
-        let newShortcode = `[cll_list list_data='${JSON.stringify(listDataObj)}' ${searchEngineSetting}']`;
+        let newShortcode = `[ccll_list list_data='${JSON.stringify(listDataObj)}' ${searchEngineSetting}]`;
 
     
         //console.log(objResponse.content.raw);
     
-        let newPageContent = objResponse.content.raw.replace(cllListShortcodeArray[this.props.shortcodeSourceId-1], newShortcode);
+        let newPageContent = objResponse.content.raw.replace(ccllListShortcodeArray[this.props.shortcodeSourceId-1], newShortcode);
 
         //console.log(newPageContent);
 
@@ -86,10 +86,10 @@ class NewListBtn extends React.Component{
     
         const updatePage = (newPageData)=>{
             if(current_screen_type[0] === "page"){
-            return makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/pages/'+current_page_id, "POST", JSON.stringify(newPageData));
+            return makeRequest(ccllGlobals.currentProtocalDomain+'/wp-json/wp/v2/pages/'+current_page_id, "POST", JSON.stringify(newPageData));
             }
             if(current_screen_type[0] === "post"){
-                return makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link/'+current_post_id, "POST", JSON.stringify(newPageData));
+                return makeRequest(ccllGlobals.currentProtocalDomain+'/wp-json/wp/v2/ccll-link/'+current_post_id, "POST", JSON.stringify(newPageData));
             }
         }
 
@@ -116,10 +116,10 @@ class NewListBtn extends React.Component{
 			////console.log("You pressed YES!");
 				(()=>{
 					if(current_screen_type[0] === "page"){
-					return makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/pages/'+current_page_id, "POST");
+					return makeRequest(ccllGlobals.currentProtocalDomain+'/wp-json/wp/v2/pages/'+current_page_id, "POST");
 					}
 					if(current_screen_type[0] === "post"){
-						return makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link/'+current_post_id, "POST");
+						return makeRequest(ccllGlobals.currentProtocalDomain+'/wp-json/wp/v2/ccll-link/'+current_post_id, "POST");
 					}
 				})()
 				.then(function(request){
@@ -138,7 +138,7 @@ class NewListBtn extends React.Component{
     
     render(){
         return(
-            <button onClick={this.handleClick} className={`new-list-btn cll-admin-button`}>Add New List +</button>
+            <button onClick={this.handleClick} className={`new-list-btn ccll-admin-button`}>Add New List +</button>
         )
     }
     

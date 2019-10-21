@@ -3,14 +3,14 @@ import makeRequest from '../functions/makeRequest'
 
 function throughLinkRequest(categoryId, style){
 
-	makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/users/'+cllUserId[0], 'GET')
+	makeRequest(ccllGlobals.currentProtocalDomain+'/wp-json/wp/v2/users/'+ccllUserId[0], 'GET')
 		.then(function(request){
 			var objResponse = JSON.parse(request.responseText);
 			////console.log(objResponse.name);
 			return objResponse.name;
 		})
 		.then(function(username){
-			makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link?slug='+slugify(document.querySelector('[name="newListItemTitle"].add-to-list-form__add-to-list-input--style-'+style).value),
+			makeRequest(ccllGlobals.currentProtocalDomain+'/wp-json/wp/v2/ccll-link?slug='+slugify(document.querySelector('[name="newListItemTitle"].add-to-list-form__add-to-list-input--style-'+style).value),
 						'GET')
 				.then(function(request){
 
@@ -22,8 +22,8 @@ function throughLinkRequest(categoryId, style){
 						var NewLinkItemData = {
 							"title": document.querySelector('[name="newListItemTitle"].add-to-list-form__add-to-list-input--style-'+style).value,
 							"slug": "/"+document.querySelector('[name="newListItemTitle"].add-to-list-form__add-to-list-input--style-'+style).value.replace(/ /g,'-').toLowerCase(),
-							"content": '[cll_list]',
-							"meta" : {"URL" : cllGlobals.currentProtocalDomain+'/link/'+document.querySelector('[name="newListItemTitle"].add-to-list-form__add-to-list-input--style-'+style).value.replace(/ /g, '-').replace(/%20/g,'-'),
+							"content": '[ccll_list]',
+							"meta" : {"URL" : ccllGlobals.currentProtocalDomain+'/link/'+document.querySelector('[name="newListItemTitle"].add-to-list-form__add-to-list-input--style-'+style).value.replace(/ /g, '-').replace(/%20/g,'-'),
 									 "link_type" : "internal link",
 									 "submitted_by": username,
 									 "mention_record": '{ "0" : "'+window.location.href+'" }'},
@@ -32,7 +32,7 @@ function throughLinkRequest(categoryId, style){
 						}
 					
 							//create new link post type
-							makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link', 'POST', JSON.stringify(NewLinkItemData))
+							makeRequest(ccllGlobals.currentProtocalDomain+'/wp-json/wp/v2/ccll-link', 'POST', JSON.stringify(NewLinkItemData))
 								.then(function(){
 									document.location.reload(true);
 								})
@@ -53,7 +53,7 @@ function throughLinkRequest(categoryId, style){
 
 						let mentionArray = Object.values(mentionObj);
 						let mentionSlugArray = mentionArray.map(function(mention){
-							mention = mention.replace(cllGlobals.currentProtocalDomain+'/', '').replace(/link[/]/g, '');
+							mention = mention.replace(ccllGlobals.currentProtocalDomain+'/', '').replace(/link[/]/g, '');
 							mention = mention.slice(0, -1);
 							return mention;
 						});
@@ -86,7 +86,7 @@ function throughLinkRequest(categoryId, style){
 								}
 							}})();
 
-						makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link/'+objResponse[0].id, 'POST', JSON.stringify(newLinkCategory))
+						makeRequest(ccllGlobals.currentProtocalDomain+'/wp-json/wp/v2/ccll-link/'+objResponse[0].id, 'POST', JSON.stringify(newLinkCategory))
 							.then(function(){
 								document.location.reload(true);
 							})

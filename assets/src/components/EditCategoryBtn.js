@@ -1,6 +1,6 @@
 import React from 'react'
 import createNewCategoryRequest from '../../js/functions/createNewCategoryRequest'
-import updateCllListRequest from '../../js/functions/updateCllListRequest'
+import updateCcllListRequest from '../../js/functions/updateCcllListRequest'
 import {DataStorageContext} from './MyProvider'
 
 class EditCategoryBtn extends React.Component{
@@ -81,24 +81,24 @@ class EditCategoryBtn extends React.Component{
                 if(confirm('Would you like to make a new category called: '+this.state.inputValue+'?')){
                     //create new category with this value and change page to this category
                     createNewCategoryRequest(this.state.inputValue.toLowerCase());
-                    var cllRequestData = {
+                    var ccllRequestData = {
                         "selectedCategory":this.state.inputValue,
                         "shortcodeSourceId":this.props.shortcodeSourceId,
                         "listId": this.props.listId,
                     }
-                    updateCllListRequest(cllRequestData);
+                    updateCcllListRequest(ccllRequestData);
                     //break;
                     
                 }
             }
         }
         else if(this.state.value !== 'new category'){
-            var cllRequestData = {
+            var ccllRequestData = {
                 "selectedCategory":this.state.value.toLowerCase(),
                 "shortcodeSourceId":this.props.shortcodeSourceId,
                 "listId": this.props.listId,
             }
-            updateCllListRequest(cllRequestData);
+            updateCcllListRequest(ccllRequestData);
             
         }
     }
@@ -111,9 +111,9 @@ class EditCategoryBtn extends React.Component{
 
         if(this.state.isClicked === true){
             return(
-                <div className="cll-admin-button edit-category-btn--style-">
+                <div className="ccll-admin-button edit-category-btn--style-">
                     Edit Category Btn
-                    <select value={this.state.value} onChange={this.updateStateValue} className={`cll-edit-category-btn__list-category-selector--style-${this.context.style}`}>
+                    <select value={this.state.value} onChange={this.updateStateValue} className={`ccll-edit-category-btn__list-category-selector--style-${this.context.style}`}>
                         <option value="new category">New Category + </option>
                         {this.createExistingCategoryOptionsArray()}
                     </select>
@@ -125,14 +125,14 @@ class EditCategoryBtn extends React.Component{
                                 }
                             })()
                     }
-                    <button onClick = {this.handleSubmitBtnClick} name="settingsSubmitBtn" type="button" className={`cll-admin-button edit-categoy-btn__submit-btn--style-${this.context.style}`}>Submit</button>
+                    <button onClick = {this.handleSubmitBtnClick} name="settingsSubmitBtn" type="button" className={`ccll-admin-button edit-categoy-btn__submit-btn--style-${this.context.style}`}>Submit</button>
                     <button onClick={this.handleCancelBtnClick} name="cancelBtn" type="button" className={`cancel-btn edit-category-btn__cancel-btn--style-${this.context.style}`}></button>
                 </div>
             )
         }
         else{
             return(
-                <button onClick={this.handleClick} className={`cll-admin-button edit-category-btn--style-${this.context.style}`}>
+                <button onClick={this.handleClick} className={`ccll-admin-button edit-category-btn--style-${this.context.style}`}>
                     Edit Category
                 </button>
             )

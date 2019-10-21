@@ -33,12 +33,12 @@ class ListItemStyle2 extends React.Component{
         }
     
         let ThisListItem = this;
-        makeRequest(document.location.origin+'/wp-json/cll-link/v1/link-preview-request/', 'POST', JSON.stringify(linkData))
+        makeRequest(document.location.origin+'/wp-json/ccll-link/v1/link-preview-request/', 'POST', JSON.stringify(linkData))
             .then(function(request){
-                console.log(request.responseText);
+                //console.log(request.responseText);
                 let objResponse = JSON.parse(request.responseText);
-                console.log(objResponse);
-                console.log(objResponse['image'][0]['url']);
+                //console.log(objResponse);
+                //console.log(objResponse['image'][0]['url']);
                 ThisListItem.setState((prevState)=>{
                     prevState.featuredImageUrl = objResponse['image'][0]['url'];
                     prevState.imageIsLoading = false;
@@ -73,7 +73,13 @@ class ListItemStyle2 extends React.Component{
             }
             <a className = "link-list-item__link-list-anchor--style-2" href={this.props.href}>
   
-                <img src={this.loadFeaturedImage()} className = "cll-link-thumbnail--style-2"/>
+                {
+                    (()=>{if (this.props.link_type === 'external link'){
+                        return(
+                            <img src={this.loadFeaturedImage()} className = "ccll-link-thumbnail--style-2"/>
+                    )}
+                    })()
+                }
             </a>
             { (() => {if (this.props.link_type === 'external link'){
                 return(

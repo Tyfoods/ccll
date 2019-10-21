@@ -1,8 +1,8 @@
 module.exports = function addClickToLinkApproveBtn(deps){
-    var cllApproveBtnArray = document.querySelectorAll(".pending-link-data__approve-btn");
-    cllApproveBtnArray.forEach(function(cllApproveBtn) {
-        cllApproveBtn.addEventListener("click", function(){
-            deps.handleLinkApproveBtnClick(cllApproveBtn, deps);
+    var ccllApproveBtnArray = document.querySelectorAll(".pending-link-data__approve-btn");
+    ccllApproveBtnArray.forEach(function(ccllApproveBtn) {
+        ccllApproveBtn.addEventListener("click", function(){
+            deps.handleLinkApproveBtnClick(ccllApproveBtn, deps);
         });
     });
 }

@@ -1,6 +1,6 @@
-module.exports = function handleListDeclineBtnClick(cllListDeclineBtn, deps){
+module.exports = function handleListDeclineBtnClick(ccllListDeclineBtn, deps){
     //Get Title/Content I.E. Link Title Link URL based on which ApproveBtn was picked
-    var cllListDeclineBtnCllId = cllListDeclineBtn.getAttribute('cllid'); //get cllid of Approvebtn
+    var ccllListDeclineBtnCcllId = ccllListDeclineBtn.getAttribute('ccllid'); //get ccllid of Approvebtn
     var newListItemData = {};
     var table = document.getElementById("pending-list-data-table");
     for (var i = 0, row; row = table.rows[i]; i++) 
@@ -12,7 +12,7 @@ module.exports = function handleListDeclineBtnClick(cllListDeclineBtn, deps){
             //var element = row.cells[j];
             if(row.cells[j].nodeName.toLowerCase() === "td"){ //Check if it is table data
 
-            if(row.cells[j].getAttribute('cllid') === cllListDeclineBtnCllId)
+            if(row.cells[j].getAttribute('ccllid') === ccllListDeclineBtnCcllId)
             {
                 var rowToDelete = row.rowIndex;
                 if(row.cells[j].title === 'listId'){

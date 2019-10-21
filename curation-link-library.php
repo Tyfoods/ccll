@@ -2,7 +2,7 @@
 /*
 Plugin Name: Crowd Curation Link Library
 Plugin URI: https://www.propdanceculture.com
-Description: Crowd Curation Link Library allows you to create your own crowd sourced library of links. Users on your website can up/down vote, or 5-star review different links and criteria for how links stay or do not stay in your library is customizable. All in all, this tool allows you to outsource the job of finding quality content to host on your website.
+Description: CCLL allows you to create your own crowd sourced library of links. Users on your website can up/down vote different links and admins have easy user friendly ways to manage the library. All in all, this tool allows you to outsource the job of finding quality content to host on your website.
 Author: TyFoods
 Author URI: https://www.propdanceculture.com/profile/?tyfooodsgmail-com-2/
 Version: 1.0.0
@@ -14,10 +14,10 @@ if(!defined('ABSPATH')){
 }
 
 // Define Web PAth (URL) Based on plugin DIR
-if ( ! defined( 'CLL_PLUGIN_DIR' ) ) {
-	define( 'CLL_PLUGIN_DIR', plugin_dir_url(__FILE__) );
+if ( ! defined( 'CCLL_PLUGIN_DIR' ) ) {
+	define( 'CCLL_PLUGIN_DIR', plugin_dir_url(__FILE__) );
 }
-// Define Server path based on CLL_PLUGIN_FILE
+// Define Server path based on CCL_PLUGIN_FILE
 if ( ! defined( 'CCLL_PLUGIN_FILE' ) ) {
 	define( 'CCLL_PLUGIN_FILE', __FILE__ );
 }

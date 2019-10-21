@@ -15,7 +15,7 @@ class ListStyle2 extends React.Component{
     render(){
         
         return(
-            <div style={this.props.style} className="cll-link-list cll-link-list--style-2">
+            <div style={this.props.style} className="ccll-link-list ccll-link-list--style-2">
                 <div className="top-buttons-container--style-2">
                 {
                 (()=>{if(typeof is_user_admin !== 'undefined' && is_user_admin[0] === "true"){
@@ -35,7 +35,7 @@ class ListStyle2 extends React.Component{
                 }
                 </div>
             <h4 className="list-title--style-2">Category: {this.props.category}</h4>
-            <ul className="cll-link-list__link-list--style-2">
+            <ul className="ccll-link-list__link-list--style-2">
                 {
                     (()=>{if(this.props.noPosts === true){
                             return(

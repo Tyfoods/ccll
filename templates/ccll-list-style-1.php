@@ -17,9 +17,9 @@
 
  <?php if (! defined("REST_REQUEST")) { ?>
 
-<div class = "cll-link-list cll-link-list--style-1">
-	<h4 class = 'cll-link-list__list-title'>Category: <?php  echo $atts['category_name']; ?></h4>
-	<ul class = 'cll-link-list__link-list--style-1'>
+<div class = "ccll-link-list ccll-link-list--style-1">
+	<h4 class = 'ccll-link-list__list-title'>Category: <?php  echo $atts['category_name']; ?></h4>
+	<ul class = 'ccll-link-list__link-list--style-1'>
 
 		<?php if ( $link_list_query->have_posts() ) : while ( $link_list_query->have_posts() ) : $link_list_query->the_post(); ?>
 

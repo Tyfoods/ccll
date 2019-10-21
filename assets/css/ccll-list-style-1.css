@@ -1,7 +1,7 @@
 /*
 
 @media only screen and (min-width: 768px){
-  div.cll-link-list{
+  div.ccll-link-list{
     display: inline-block !important;
     width: 25% !important;
     min-width: 165px !important;
@@ -10,7 +10,7 @@
 }
 
 @media only screen and (min-width: 1168px){
-  input.cll_search_form_input {
+  input.ccll_search_form_input {
     width: 100% !important;
     text-align: center !important;
     position: center !important;
@@ -20,7 +20,7 @@
 
 */
 
-input.cll_search_form_input {
+input.ccll_search_form_input {
   width: 100%;
   text-align: center;
 }
@@ -31,7 +31,7 @@ input[name="newCategoryRequestElement"] {
 }
 
 
-.cll-link-list__link-list--style-1 {
+.ccll-link-list__link-list--style-1 {
   border-top: 3px solid #000;
   border-bottom: 3px solid #000;
   display: inline-block;
@@ -45,7 +45,7 @@ select#linkTypeSelecter {
   background-color: #fff;
 }
 
-select.cll-edit-category-btn__list-category-selector--style-1 {
+select.ccll-edit-category-btn__list-category-selector--style-1 {
   width: 100%;
   background-color: #fff !important;
 }
@@ -55,7 +55,7 @@ select.cll-edit-category-btn__list-category-selector--style-1 {
   background-color: #fff !important;
 }
 
-.cll-link-list__link-list--style-1 li {
+.ccll-link-list__link-list--style-1 li {
  padding: 1.5%;
  border-color: #000;
  list-style: none;
@@ -79,12 +79,12 @@ select.cll-edit-category-btn__list-category-selector--style-1 {
   font-size: 80%;
 }
 
-.cll-link-list__link-list--style-1 input{
+.ccll-link-list__link-list--style-1 input{
  	width: 100%;
 	margin-bottom: 5%;
 }
 
-.cll-link-list__link-list--style-1 select{
+.ccll-link-list__link-list--style-1 select{
   width: 100%;
   margin-bottom: 5%;
 }
@@ -93,11 +93,17 @@ button.link-list-item__admin-delete-button--style-1:hover{
   opacity:.5 !important;
 }
 
-.button{
-  color:white;
+.ccll-admin-button{
+  border-color: #000;
+  background: #fff;
+  color: #000;
+  border-style: outset;
+  border-width: 1px;
+  box-shadow: 2.5px 5px;
+  border-radius: 10px;
 }
 
-.cll-link-list--style-1 button.cll-link-list__delete-list-btn--style-1:hover{
+.ccll-link-list--style-1 button.ccll-link-list__delete-list-btn--style-1:hover{
   color: #fff;
   background-color: #0C808E;
   background-size: 1.5em;
@@ -106,7 +112,7 @@ button.link-list-item__admin-delete-button--style-1:hover{
   opacity: 1;
  }
 
-.cll-link-list--style-1 button.cll-link-list__cll-edit-category-btn--style-1:hover{
+.ccll-link-list--style-1 button.ccll-link-list__ccll-edit-category-btn--style-1:hover{
   color: #fff;
   background-color: #0C808E;
   background-size: 1.5em;
@@ -120,7 +126,7 @@ button.link-list-item__admin-delete-button--style-1:hover{
    width:100%;
  }
 
- .cll-link-list--style-1 button.cll-link-list__add-to-list-btn--style-1:hover{
+ .ccll-link-list--style-1 button.ccll-link-list__add-to-list-btn--style-1:hover{
   color: #fff;
   background-color: #0C808E;
   background-size: 1.5em;
@@ -129,7 +135,7 @@ button.link-list-item__admin-delete-button--style-1:hover{
   opacity: 1;
  }
 
- .cll-link-list--style-1 button.cll-link-list__add-to-list-btn--style-1:focus{
+ .ccll-link-list--style-1 button.ccll-link-list__add-to-list-btn--style-1:focus{
   color: #fff;
   background-color: #0C808E;
   background-size: 1.5em;
@@ -139,7 +145,7 @@ button.link-list-item__admin-delete-button--style-1:hover{
  }
 
 
-.cll-link-list__link-list--style-1 button:hover{
+.ccll-link-list__link-list--style-1 button:hover{
  background-color: unset;
  background-size: 1.5em;
  background-repeat: no-repeat;
@@ -148,18 +154,18 @@ button.link-list-item__admin-delete-button--style-1:hover{
 }
 
 
-.cll-link-list__link-list--style-1 li.cll-link-list__add-to-list-btn--style-1:hover{
+.ccll-link-list__link-list--style-1 li.ccll-link-list__add-to-list-btn--style-1:hover{
 
   background-color: #0C808E;
   color: white;
  }
 
- button.cll-admin-button.add-to-list-btn--style-1 {
+ button.ccll-admin-button.add-to-list-btn--style-1 {
   margin-bottom: 5%;
 }
 
 
-.cll-link-list__link-list--style-1 button--style-1:focus{
+.ccll-link-list__link-list--style-1 button--style-1:focus{
   background-color: unset;
   background-size: 1.5em;
   background-repeat: no-repeat;
@@ -199,7 +205,7 @@ button.admin-delete-button--style-1{
   padding: 4% 5% 4% 5%;
 }
 
-.cll-edit-category-btn__cancel-btn--style-1 {
+.ccll-edit-category-btn__cancel-btn--style-1 {
 	padding: 8.5% 10% 8.5% 10%;
   position: relative;
   margin-left: 14%;
@@ -293,7 +299,7 @@ button.add-to-list-form__submit-btn--style-1 {
     border-radius: 10px;
 }
 
-button.cll-edit-categoy-btn__submit-btn--style-1 {
+button.ccll-edit-categoy-btn__submit-btn--style-1 {
   padding: 4%;
   border-color: #000;
   background: #fff;
@@ -311,7 +317,7 @@ button.cll-edit-categoy-btn__submit-btn--style-1 {
   width: 60%;
 }
 
-input.cll_search_form_input--style-1 {
+input.ccll_search_form_input--style-1 {
     width: 100%;
     text-align: center;
     border: solid 2.5px #000!important;
@@ -323,7 +329,7 @@ div.search-result-element--style-1 {
 }
 
 
-div.cll-link-list--style-1{
+div.ccll-link-list--style-1{
   display: inline-block;
   vertical-align: top;
   width: 25%;
@@ -337,7 +343,7 @@ div.cll-link-list--style-1{
 }
 
 
-.cll-link-list--style-1 > button {
+.ccll-link-list--style-1 > button {
   margin-left: 16%;
   padding: 1.5%;
   border-color: #000;
@@ -352,7 +358,7 @@ div.cll-link-list--style-1{
   right: 12%;
 }
 
-h4.cll-link-list__list-title--style-1 {
+h4.ccll-link-list__list-title--style-1 {
   margin: 10px 0px 0px 0px;
   overflow-wrap: break-word;
   text-align: center;
@@ -361,24 +367,24 @@ h4.cll-link-list__list-title--style-1 {
 }
 
 /* CONTROL SCROLLING OF LISTS */
-ul.cll-link-list__link-list--style-1::-webkit-scrollbar {
+ul.ccll-link-list__link-list--style-1::-webkit-scrollbar {
       background-color: #fff;
 }
 
-ul.cll-link-list__link-list--style-1::-webkit-scrollbar-track {
+ul.ccll-link-list__link-list--style-1::-webkit-scrollbar-track {
 	  box-shadow: inset 0 0 5px grey; 
 }
 
-ul.cll-link-list__link-list--style-1::-webkit-scrollbar-thumb{
+ul.ccll-link-list__link-list--style-1::-webkit-scrollbar-thumb{
     background: #000;
 		border-radius: 10px
 }
 
-ul.cll-link-list__link-list--style-1::-webkit-scrollbar-thumb:hover{
+ul.ccll-link-list__link-list--style-1::-webkit-scrollbar-thumb:hover{
       background: gray;	
 }
 
-ul.cll-link-list__link-list--style-1{
+ul.ccll-link-list__link-list--style-1{
 	overflow-y:scroll;
 	overflow-x:hidden;
 	max-height:350px;

@@ -1,6 +1,6 @@
-module.exports = function handleLinkApproveBtnClick(cllApproveBtn, deps){
+module.exports = function handleLinkApproveBtnClick(ccllApproveBtn, deps){
     const makeRequest = deps.makeRequest;
-    var cllApproveBtnCllId = cllApproveBtn.getAttribute('cllid'); 
+    var ccllApproveBtnCcllId = ccllApproveBtn.getAttribute('ccllid'); 
         var newLinkItemData = {};
         var table = document.getElementById("pending-link-data-table");
         for (var i = 0, row; row = table.rows[i]; i++) 
@@ -11,7 +11,7 @@ module.exports = function handleLinkApproveBtnClick(cllApproveBtn, deps){
                 //var element = row.cells[j];
                 if(row.cells[j].nodeName.toLowerCase() === "td"){ //Check if it is table data
 
-                    if(row.cells[j].getAttribute('cllid') === cllApproveBtnCllId){
+                    if(row.cells[j].getAttribute('ccllid') === ccllApproveBtnCcllId){
                         var rowToDelete = row.rowIndex;
                         if(row.cells[j].title === 'linkId'){
                             newLinkItemData['pendingLinkId'] = row.cells[j].innerHTML;
@@ -41,7 +41,7 @@ module.exports = function handleLinkApproveBtnClick(cllApproveBtn, deps){
     var userId = newLinkItemData['commonUserId'];
     var userId = parseInt(newLinkItemData['commonUserId']).toString();
 
-    makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/users/'+userId, 'GET')
+    makeRequest(ccllGlobals.currentProtocalDomain+'/wp-json/wp/v2/users/'+userId, 'GET')
         .then(function(request){
             var objResponse = JSON.parse(request.responseText);
             newLinkItemData['meta'] = {"submitted_by" : objResponse.name,
@@ -51,12 +51,12 @@ module.exports = function handleLinkApproveBtnClick(cllApproveBtn, deps){
         })
         .then(function(){
             ////console.log(newLinkItemData);
-            makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link', 'POST', JSON.stringify(newLinkItemData))
-           // makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link', 'GET')
+            makeRequest(ccllGlobals.currentProtocalDomain+'/wp-json/wp/v2/ccll-link', 'POST', JSON.stringify(newLinkItemData))
+           // makeRequest(ccllGlobals.currentProtocalDomain+'/wp-json/wp/v2/ccll-link', 'GET')
             .then(function(request){
                 //console.log("Successful Link Addition");
                 alert("You have approved a link!");
-                makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/cll-link/v1/link-approved-request/'+userId, 'POST', JSON.stringify(newLinkItemData))
+                makeRequest(ccllGlobals.currentProtocalDomain+'/wp-json/ccll-link/v1/link-approved-request/'+userId, 'POST', JSON.stringify(newLinkItemData))
                     .then(function(request){
                         ////console.log(request.responseText);
                         ////console.log("Successful pending link deletion");

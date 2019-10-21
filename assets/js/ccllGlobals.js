@@ -1,4 +1,4 @@
-module.exports = cllGlobals = {
+module.exports = ccllGlobals = {
     isAddToListBtnClicked: false,
     isSubmitBtnClicked: false,
     isEditCategoryFormCreated: false,

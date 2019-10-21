@@ -1,10 +1,10 @@
 module.exports = function addClickToLinkDeclineBtn(deps)
 {
 
-	var cllDeclineBtnArray = document.querySelectorAll(".pending-link-data__decline-btn");
-	cllDeclineBtnArray.forEach(function(cllDeclineBtn) {
-		cllDeclineBtn.addEventListener("click", function(){
-			deps.handleLinkDeclineBtnClick(cllDeclineBtn, deps);
+	var ccllDeclineBtnArray = document.querySelectorAll(".pending-link-data__decline-btn");
+	ccllDeclineBtnArray.forEach(function(ccllDeclineBtn) {
+		ccllDeclineBtn.addEventListener("click", function(){
+			deps.handleLinkDeclineBtnClick(ccllDeclineBtn, deps);
 		});
 	});
 }

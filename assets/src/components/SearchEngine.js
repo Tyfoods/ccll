@@ -30,7 +30,7 @@ class SearchEngine extends React.Component{
 
     let ThisSearchEngine = this;
     if(this.state.value.replace(/\s/g, '').length !== 0){
-      makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link?search='+this.state.value,'GET')
+      makeRequest(ccllGlobals.currentProtocalDomain+'/wp-json/wp/v2/ccll-link?search='+this.state.value,'GET')
         .then(function(request){
           let objResponse = JSON.parse(request.responseText);
           //console.log(objResponse);
@@ -75,9 +75,9 @@ class SearchEngine extends React.Component{
   render() {
       return (
           
-        <form className = 'cll_search_form'>
-          <input type="text" onChange={this.handleChange} onKeyUp={this.handleKeyUp} onKeyDown={this.handleKeyDown} className = 'cll_search_form_input' placeholder = 'Search here!'></input>
-          <div className = "cll-suggestions">
+        <form className = 'ccll_search_form'>
+          <input type="text" onChange={this.handleChange} onKeyUp={this.handleKeyUp} onKeyDown={this.handleKeyDown} className = 'ccll_search_form_input' placeholder = 'Search here!'></input>
+          <div className = "ccll-suggestions">
             {
               (()=>{
                 if(this.state.isLoading===false && this.state.searchResultsArray.length > 0 && this.state.value.replace(/\s/g, '').length !== 0){

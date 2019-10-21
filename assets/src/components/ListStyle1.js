@@ -12,7 +12,7 @@ class ListStyle1 extends React.Component{
 
     render(){
         return(
-        <div className="cll-link-list cll-link-list--style-1">
+        <div className="ccll-link-list ccll-link-list--style-1">
             {
             (()=>{if(typeof is_user_admin !== 'undefined' && is_user_admin[0] === "true"){
                     return(
@@ -29,8 +29,8 @@ class ListStyle1 extends React.Component{
                     }
                 })()
             }
-            <h4  className="cll-link-list__list-title--style-1">Category: {this.props.category}</h4>
-            <ul  className="cll-link-list__link-list--style-1">
+            <h4  className="ccll-link-list__list-title--style-1">Category: {this.props.category}</h4>
+            <ul  className="ccll-link-list__link-list--style-1">
                 {
                     (()=>{if(this.props.noPosts === true){
                             return(

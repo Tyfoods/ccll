@@ -1,43 +1,43 @@
-import makeRequest from '../functions/makeRequest'
+import makeRequest from './makeRequest'
 
 //Function for updating shortcode of current page
-function updateCllListRequest(cllRequestData)
+function updateCcllListRequest(ccllRequestData)
 {
-	var selectedCategory = cllRequestData['selectedCategory'];
-	var shortcodeSourceId = parseInt(cllRequestData['shortcodeSourceId']);
-	var listId = cllRequestData['listId'];
+	var selectedCategory = ccllRequestData['selectedCategory'];
+	var shortcodeSourceId = parseInt(ccllRequestData['shortcodeSourceId']);
+	var listId = ccllRequestData['listId'];
 
 		(()=>{
 			if(current_screen_type[0] === "page"){
-			return makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/pages/'+current_page_id, "POST");
+			return makeRequest(ccllGlobals.currentProtocalDomain+'/wp-json/wp/v2/pages/'+current_page_id, "POST");
 			}
 			if(current_screen_type[0] === "post"){
-				return makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link/'+current_post_id, "POST");
+				return makeRequest(ccllGlobals.currentProtocalDomain+'/wp-json/wp/v2/ccll-link/'+current_post_id, "POST");
 			}
 		})()
 		.then(function (request) {
 			let objResponse = JSON.parse(request.responseText);
 
-			const cllListRegex = /\[cll_list\s?(.*?)\]/g;
-			const cllListMatchJson = /(\'|\")\{(.*?)\}(\'|\")/g;
-			const cllListDataRegex = /list_data\s?=\s?(\'|\")\{(.*?)\}(\'|\")/g
-			const cllIsSearchEngineOnRegex = /is_search_engine_on\s?=\s?(\'|\")(.*?)(\'|\")/g
+			const ccllListRegex = /\[ccll_list\s?(.*?)\]/g;
+			const ccllListMatchJson = /(\'|\")\{(.*?)\}(\'|\")/g;
+			const ccllListDataRegex = /list_data\s?=\s?(\'|\")\{(.*?)\}(\'|\")/g
+			const ccllIsSearchEngineOnRegex = /is_search_engine_on\s?=\s?(\'|\")(.*?)(\'|\")/g
 
 			
-			const cllListShortCodeArray = objResponse.content.raw.match(cllListRegex);
+			const ccllListShortCodeArray = objResponse.content.raw.match(ccllListRegex);
 
 			//later used with "replace()" to editShortCode
-			const entireCurrentShortcodeString = cllListShortCodeArray[shortcodeSourceId-1];
+			const entireCurrentShortcodeString = ccllListShortCodeArray[shortcodeSourceId-1];
 			//console.log(entireCurrentShortcodeString);
 
-			let searchEngineSetting = entireCurrentShortcodeString.match(cllIsSearchEngineOnRegex);
+			let searchEngineSetting = entireCurrentShortcodeString.match(ccllIsSearchEngineOnRegex);
 			if(searchEngineSetting == null){
 				searchEngineSetting = '';
 			}
 
 
 			//getData
-			let listDataAtt = entireCurrentShortcodeString.match(cllListDataRegex);
+			let listDataAtt = entireCurrentShortcodeString.match(ccllListDataRegex);
 			if(listDataAtt == null){ //if data doesn't exist set to default
 				listDataAtt = [];
 				listDataAtt[0] = '"{ "1": { "style": "2", "category_name": "" } }"'
@@ -45,7 +45,7 @@ function updateCllListRequest(cllRequestData)
 				//To leverage the code below, we'll stick extra characters in hence the extra quotes outside jSon
 
         	}
-			let listDataArrayString = listDataAtt[0].match(cllListMatchJson);
+			let listDataArrayString = listDataAtt[0].match(ccllListMatchJson);
 			let listDataObj = JSON.parse(listDataArrayString[0].substr(1, listDataArrayString[0].length-2));
 
 
@@ -56,7 +56,7 @@ function updateCllListRequest(cllRequestData)
 			//console.log(listDataObj);
 
 			//createShortCode
-			let newShortcode = `[cll_list list_data='${JSON.stringify(listDataObj)}' ${searchEngineSetting}']`;
+			let newShortcode = `[ccll_list list_data='${JSON.stringify(listDataObj)}' ${searchEngineSetting}]`;
 
 			////console.log(newShortcode);
 			let pageContent = objResponse.content.raw;
@@ -74,10 +74,10 @@ function updateCllListRequest(cllRequestData)
 
 				}
 				if(current_screen_type[0] === "page"){
-				return makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/pages/'+current_page_id, "POST", JSON.stringify(NewShortCodeData));
+				return makeRequest(ccllGlobals.currentProtocalDomain+'/wp-json/wp/v2/pages/'+current_page_id, "POST", JSON.stringify(NewShortCodeData));
 				}
 				if(current_screen_type[0] === "post"){
-					return makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link/'+current_post_id, "POST", JSON.stringify(NewShortCodeData));
+					return makeRequest(ccllGlobals.currentProtocalDomain+'/wp-json/wp/v2/ccll-link/'+current_post_id, "POST", JSON.stringify(NewShortCodeData));
 				}
 			})()
 			.then(function(){
@@ -95,4 +95,4 @@ function updateCllListRequest(cllRequestData)
 		});
 }
 
-export default updateCllListRequest;
+export default updateCcllListRequest;

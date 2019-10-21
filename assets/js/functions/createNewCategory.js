@@ -7,7 +7,7 @@ module.exports = function createNewCategory(newCategoryValue, deps)
 	}
 
 	////console.log("Submit Button was clicked, now I'll post");
-	deps.makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/cll-link-category/v1/cll-link/'+NewCategoryData.name, 'POST')
+	deps.makeRequest(ccllGlobals.currentProtocalDomain+'/wp-json/ccll-link-category/v1/ccll-link/'+NewCategoryData.name, 'POST')
 		.then(function(){
 			////console.log("Request for new category has been made successfully");
 		})

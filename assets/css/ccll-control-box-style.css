@@ -13,6 +13,15 @@
 
 /* Control Box CSS END */
 
+/* request list button */
+
+.request-new-category-btn {
+  display: block;
+  margin-bottom: 10px;
+}
+
+/* end request list button */
+
 
 
 /* search engine btn style */
@@ -20,6 +29,14 @@
     grid-row: 1;
     grid-column: 2;
     justify-self: end;
+
+    border-color: #000;
+    background: #fff;
+    color: #000;
+    border-style: outset;
+    border-width: 1px;
+    box-shadow: 2.5px 5px;
+    border-radius: 10px;
 }
 
 /* Search Engine Btn CSS END */
@@ -36,6 +53,7 @@ button.back-btn{
     background-position: center;
     background-repeat: no-repeat;
 
+    box-shadow: none;
     border: none;
     position: relative;
     display: inline;

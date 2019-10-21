@@ -44,7 +44,7 @@ export default class BackBtn extends React.Component{
     createBackRouteOptionsArray(){
         let ThisBackBtn = this;
         let postSlug = window.location.pathname.replace(/[/]link[/]/g, '').replace(/[/]/g, '');
-        makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link?slug='+postSlug, "GET")
+        makeRequest(ccllGlobals.currentProtocalDomain+'/wp-json/wp/v2/ccll-link?slug='+postSlug, "GET")
             .then(function(request){
                 try{
                     let mentionObj = JSON.parse( (JSON.parse(request.responseText))[0].meta.mention_record );
@@ -52,7 +52,7 @@ export default class BackBtn extends React.Component{
                     ////console.log(mentionArray);
 
                     let mentionSlugArray = mentionArray.map(function(mention){
-                        mention = mention.replace(cllGlobals.currentProtocalDomain+'/', '').replace(/link[/]/g, '');
+                        mention = mention.replace(ccllGlobals.currentProtocalDomain+'/', '').replace(/link[/]/g, '');
                         mention = mention.slice(0, -1);
                         return mention;
                     });
@@ -107,7 +107,7 @@ export default class BackBtn extends React.Component{
             )
         }
         return(
-                <button onClick={this.handleClick} className={`back-btn cll-admin-button`}></button>
+                <button onClick={this.handleClick} className={`back-btn ccll-admin-button`}></button>
 
         )
     }

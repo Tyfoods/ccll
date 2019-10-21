@@ -2,7 +2,7 @@
 
 module.exports = function handleCategoryEdit(editCategoryForm, selectedCategory, deps){
     if(selectedCategory === 'new category'){
-        if(cllGlobals.isCategoryInputCreated === false)
+        if(ccllGlobals.isCategoryInputCreated === false)
         {
         alert('You are making a New Category Request!');
         var newCategoryRequestElement = document.createElement("input"); //input element, text
@@ -12,19 +12,19 @@ module.exports = function handleCategoryEdit(editCategoryForm, selectedCategory,
 
         editCategoryForm.appendChild(newCategoryRequestElement);
 
-        cllGlobals.isCategoryInputCreated = true;
+        ccllGlobals.isCategoryInputCreated = true;
         }
-        else if(cllGlobals.isCategoryInputCreated === true)
+        else if(ccllGlobals.isCategoryInputCreated === true)
         {
             var newCategoryValue = document.querySelector('[name="newCategoryRequestElement"]').value
             ////console.log(newCategoryValue);
             deps.createNewCategoryRequest(newCategoryValue.toLowerCase(), deps);
             //create new category with this value and change page to this category
-            var cllRequestData = {
+            var ccllRequestData = {
                 "selectedCategory":newCategoryValue.toLowerCase(),
-                "currentCllId":editCategoryForm.getAttribute('cllid')
+                "currentccllId":editCategoryForm.getAttribute('ccllid')
             }
-            deps.updateCllListRequest(cllRequestData, deps);
+            deps.updateCcllListRequest(ccllRequestData, deps);
         }
     }
     else{
@@ -35,11 +35,11 @@ module.exports = function handleCategoryEdit(editCategoryForm, selectedCategory,
             } else if(selectedCategory !== ''){
                 ////console.log("Successfully adding "+selectedCategory);
                 //HTTP Request to update page FUNCTION
-                var cllRequestData = {
+                var ccllRequestData = {
                     "selectedCategory":selectedCategory,
-                    "currentCllId":editCategoryForm.getAttribute('cllid')
+                    "currentCcllId":editCategoryForm.getAttribute('ccllid')
                 }
-                deps.updateCllListRequest(cllRequestData, deps);
+                deps.updateCcllListRequest(ccllRequestData, deps);
                 break;
             }
         }

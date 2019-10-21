@@ -35,19 +35,22 @@ class RequestNewCategoryBtn extends React.Component{
 				let newListData = {
 						pendingListData: {
 							"list_category": requestMsg,
-							"list_page_orgin":current_screen_id,
+							"list_page_orgin":current_screen_id[0],
 							"screen_type": current_screen_type[0],
 							"shortcode_source_id": parseInt(this.props.shortcodeSourceId)
 						},
-						commonUserId: cllUserId[0]
+						commonUserId: ccllUserId[0]
 				}
 
-				makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/cll-link/v1/list-request/'+cllUserId[0], "POST", JSON.stringify(newListData))
+				//console.log(newListData);
+
+				makeRequest(ccllGlobals.currentProtocalDomain+'/wp-json/ccll-link/v1/list-request/'+ccllUserId[0], "POST", JSON.stringify(newListData))
 					.then(function(request){
 						//console.log(request.responseText);
+						alert("Thank you for submitting!");
 					})
 					.catch(function(error){
-						//console.log(error);
+						console.log(error);
 					});
 			}
 			else
@@ -60,7 +63,7 @@ class RequestNewCategoryBtn extends React.Component{
 
     render(){
         return(
-            <button onClick ={this.handleClick} className = "cll-admin-button request-new-category-btn">
+            <button onClick ={this.handleClick} className = "ccll-admin-button request-new-category-btn">
                 Request New Category +
             </button>
         )

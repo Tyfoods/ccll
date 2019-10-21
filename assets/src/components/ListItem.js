@@ -55,7 +55,7 @@ class ListItem extends React.Component{
         let ThisListItem = this;
         let postSlug = slugify(this.props.title.trim());
 
-        makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link?slug='+postSlug, 'GET')
+        makeRequest(ccllGlobals.currentProtocalDomain+'/wp-json/wp/v2/ccll-link?slug='+postSlug, 'GET')
             .then(function(request){
                 let objResponse = JSON.parse(request.responseText);
                 let linkItemPostId = objResponse[0].id;
@@ -126,11 +126,11 @@ class ListItem extends React.Component{
             ////console.log(metaObj);
             try {
                 var voteRecordObj = JSON.parse(metaObj.voteRecord);
-                var currentUserVoteStatus = parseInt(voteRecordObj[cllUserId[0]]);
+                var currentUserVoteStatus = parseInt(voteRecordObj[ccllUserId[0]]);
 
 
                 if(this.state.isUpVoteBtnClicked === false){
-                    if(typeof voteRecordObj[cllUserId[0]]  === "undefined"){ //if current user has never voted then...
+                    if(typeof voteRecordObj[ccllUserId[0]]  === "undefined"){ //if current user has never voted then...
                         //Make other buttons un-clickable, they become clickable again after SetVoterStatus... runs
                         this.makeAllButtonsUnclickable();
                         
@@ -140,7 +140,7 @@ class ListItem extends React.Component{
                             prevState.meta.up_votes+=1;
                             //setting users vote record equal to one, which stands for "has already upvoted"
                             let voteRecordObj = JSON.parse(prevState.meta.voteRecord);
-                            voteRecordObj[cllUserId[0]] = "1";
+                            voteRecordObj[ccllUserId[0]] = "1";
                             let newVoteRecordData = JSON.stringify(voteRecordObj);
                             prevState.meta.voteRecord = newVoteRecordData;
                             return prevState;}, function(){
@@ -167,7 +167,7 @@ class ListItem extends React.Component{
                             prevState.meta.down_votes-=1;
                             //setting users vote record equal to one, which stands for "has already upvoted"
                             let voteRecordObj = JSON.parse(prevState.meta.voteRecord);
-                            voteRecordObj[cllUserId[0]] = "1";
+                            voteRecordObj[ccllUserId[0]] = "1";
                             let newVoteRecordData = JSON.stringify(voteRecordObj);
                             prevState.meta.voteRecord = newVoteRecordData;
                             return prevState;}, function(){
@@ -188,7 +188,7 @@ class ListItem extends React.Component{
                             prevState.meta.up_votes+=1;
                             //setting users vote record equal to one, which stands for "has already upvoted"
                             let voteRecordObj = JSON.parse(prevState.meta.voteRecord);
-                            voteRecordObj[cllUserId[0]] = "1";
+                            voteRecordObj[ccllUserId[0]] = "1";
                             let newVoteRecordData = JSON.stringify(voteRecordObj);
                             prevState.meta.voteRecord = newVoteRecordData;
                             return prevState;},
@@ -210,14 +210,14 @@ class ListItem extends React.Component{
                     //console.log("Could not parse voteRecord");
                     ////console.log("There is no information on record *assertion");
 
-                    //metaObj.voteRecord = '{"'+cllUserId[0]+'":'+'"1"}';
+                    //metaObj.voteRecord = '{"'+ccllUserId[0]+'":'+'"1"}';
 
 
                     this.setState((prevState)=>{
                         prevState.meta.up_votes+=1;
                         //setting users vote record equal to one, which stands for "has already upvoted"
                         let voteRecordObj = {};
-                        voteRecordObj[cllUserId[0]] = "1"
+                        voteRecordObj[ccllUserId[0]] = "1"
                         let newVoteRecordData = JSON.stringify(voteRecordObj);
                         prevState.meta.voteRecord = newVoteRecordData;
                         return prevState;
@@ -231,7 +231,7 @@ class ListItem extends React.Component{
                         let ThisListItem = this;
                         //console.log(newPostMetaData);
                         if(typeof is_user_admin !== 'undefined' && is_user_admin[0] === "true"){
-                            makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link/'+this.state.linkItemPostId, 'POST', newPostMetaData)
+                            makeRequest(ccllGlobals.currentProtocalDomain+'/wp-json/wp/v2/ccll-link/'+this.state.linkItemPostId, 'POST', newPostMetaData)
                                 .then(function(request){
                                     //console.log(JSON.parse(request.responseText));
                                     //console.log(this);
@@ -244,7 +244,7 @@ class ListItem extends React.Component{
                             return;
                         }
                         else{
-                            makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/cll-vote/v1/cll-link/'+ThisListItem.state.linkItemPostId, 'POST', JSON.stringify(ThisListItem.state.meta))
+                            makeRequest(ccllGlobals.currentProtocalDomain+'/wp-json/ccll-vote/v1/ccll-link/'+ThisListItem.state.linkItemPostId, 'POST', JSON.stringify(ThisListItem.state.meta))
                             .then(function(){
                                 ThisListItem.refreshButtonClickStates();
                             })
@@ -268,11 +268,11 @@ class ListItem extends React.Component{
             ////console.log(metaObj);
             try {
                 var voteRecordObj = JSON.parse(metaObj.voteRecord);
-                var currentUserVoteStatus = parseInt(voteRecordObj[cllUserId[0]]);
+                var currentUserVoteStatus = parseInt(voteRecordObj[ccllUserId[0]]);
 
 
                 if(this.state.isDownVoteBtnClicked === false){
-                    if(typeof voteRecordObj[cllUserId[0]]  === "undefined"){ //if current user has never voted then...
+                    if(typeof voteRecordObj[ccllUserId[0]]  === "undefined"){ //if current user has never voted then...
                         //Make other buttons un-clickable, they become clickable again after SetVoterStatus... runs
                         this.makeAllButtonsUnclickable();
                         
@@ -282,7 +282,7 @@ class ListItem extends React.Component{
                             prevState.meta.down_votes+=1;
                             //setting users vote record equal to zero, which stands for "has already downvoted"
                             let voteRecordObj = JSON.parse(prevState.meta.voteRecord);
-                            voteRecordObj[cllUserId[0]] = "0";
+                            voteRecordObj[ccllUserId[0]] = "0";
                             let newVoteRecordData = JSON.stringify(voteRecordObj);
                             prevState.meta.voteRecord = newVoteRecordData;
                             return prevState;}, function(){
@@ -309,7 +309,7 @@ class ListItem extends React.Component{
                             prevState.meta.up_votes-=1;
                             //setting users vote record equal to zero, which stands for "has already downvoted"
                             let voteRecordObj = JSON.parse(prevState.meta.voteRecord);
-                            voteRecordObj[cllUserId[0]] = "0";
+                            voteRecordObj[ccllUserId[0]] = "0";
                             let newVoteRecordData = JSON.stringify(voteRecordObj);
                             prevState.meta.voteRecord = newVoteRecordData;
                             return prevState;}, function(){
@@ -330,7 +330,7 @@ class ListItem extends React.Component{
                             prevState.meta.down_votes+=1;
                             //setting users vote record equal to zero, which stands for "has already downvoted"
                             let voteRecordObj = JSON.parse(prevState.meta.voteRecord);
-                            voteRecordObj[cllUserId[0]] = "0";
+                            voteRecordObj[ccllUserId[0]] = "0";
                             let newVoteRecordData = JSON.stringify(voteRecordObj);
                             prevState.meta.voteRecord = newVoteRecordData;
                             return prevState;},
@@ -352,14 +352,14 @@ class ListItem extends React.Component{
                     //console.log("Could not parse voteRecord");
                     ////console.log("There is no information on record *assertion");
 
-                    //metaObj.voteRecord = '{"'+cllUserId[0]+'":'+'"1"}';
+                    //metaObj.voteRecord = '{"'+ccllUserId[0]+'":'+'"1"}';
 
 
                     this.setState((prevState)=>{
                         prevState.meta.down_votes+=1;
                         //setting users vote record equal to zero, which stands for "has already downvoted"
                         let voteRecordObj = {};
-                        voteRecordObj[cllUserId[0]] = "0"
+                        voteRecordObj[ccllUserId[0]] = "0"
                         let newVoteRecordData = JSON.stringify(voteRecordObj);
                         prevState.meta.voteRecord = newVoteRecordData;
                         return prevState;
@@ -373,7 +373,7 @@ class ListItem extends React.Component{
                         let ThisListItem = this;
                         //console.log(newPostMetaData);
                         if(typeof is_user_admin !== 'undefined' && is_user_admin[0] === "true"){
-                            makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link/'+this.state.linkItemPostId, 'POST', newPostMetaData)
+                            makeRequest(ccllGlobals.currentProtocalDomain+'/wp-json/wp/v2/ccll-link/'+this.state.linkItemPostId, 'POST', newPostMetaData)
                                 .then(function(request){
                                     //console.log(JSON.parse(request.responseText));
                                     //console.log(this);
@@ -386,7 +386,7 @@ class ListItem extends React.Component{
                             return;
                         }
                         else{
-                            makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/cll-vote/v1/cll-link/'+ThisListItem.state.linkItemPostId, 'POST', JSON.stringify(ThisListItem.state.meta))
+                            makeRequest(ccllGlobals.currentProtocalDomain+'/wp-json/ccll-vote/v1/ccll-link/'+ThisListItem.state.linkItemPostId, 'POST', JSON.stringify(ThisListItem.state.meta))
                             .then(function(){
                                 ThisListItem.refreshButtonClickStates();
                             })
@@ -410,10 +410,10 @@ class ListItem extends React.Component{
             ////console.log(metaObj);
             try {
                 var voteRecordObj = JSON.parse(metaObj.voteRecord);
-                var currentUserVoteStatus = parseInt(voteRecordObj[cllUserId[0]]);
+                var currentUserVoteStatus = parseInt(voteRecordObj[ccllUserId[0]]);
 
                 if(this.state.isDownVoteBtnClicked === false){
-                    if(typeof voteRecordObj[cllUserId[0]]  === "undefined"){ //if current user has never voted then...
+                    if(typeof voteRecordObj[ccllUserId[0]]  === "undefined"){ //if current user has never voted then...
                         //Make other buttons un-clickable, they become clickable again after SetVoterStatus... runs
                         this.makeAllButtonsUnclickable();
                         
@@ -422,7 +422,7 @@ class ListItem extends React.Component{
                         this.setState((prevState)=>{
                             //setting users vote record equal to zero, which stands for "has already downvoted"
                             let voteRecordObj = JSON.parse(prevState.meta.voteRecord);
-                            voteRecordObj[cllUserId[0]] = "3";
+                            voteRecordObj[ccllUserId[0]] = "3";
                             let newVoteRecordData = JSON.stringify(voteRecordObj);
                             prevState.meta.voteRecord = newVoteRecordData;
                             return prevState;}, function(){
@@ -448,7 +448,7 @@ class ListItem extends React.Component{
                         prevState.meta.down_votes-=1;
                         //setting users vote record equal to three, which stands for "has already voted neutral"
                         let voteRecordObj = JSON.parse(prevState.meta.voteRecord);
-                        voteRecordObj[cllUserId[0]] = "3";
+                        voteRecordObj[ccllUserId[0]] = "3";
                         let newVoteRecordData = JSON.stringify(voteRecordObj);
                         prevState.meta.voteRecord = newVoteRecordData;
                         return prevState;}, function(){
@@ -469,7 +469,7 @@ class ListItem extends React.Component{
                         prevState.meta.up_votes-=1;
                         //setting users vote record equal to three, which stands for "has already voted neutral"
                         let voteRecordObj = JSON.parse(prevState.meta.voteRecord);
-                        voteRecordObj[cllUserId[0]] = "3";
+                        voteRecordObj[ccllUserId[0]] = "3";
                         let newVoteRecordData = JSON.stringify(voteRecordObj);
                         prevState.meta.voteRecord = newVoteRecordData;
                         return prevState;},
@@ -491,13 +491,13 @@ class ListItem extends React.Component{
                     //console.log("Could not parse voteRecord");
                     ////console.log("There is no information on record *assertion");
 
-                    //metaObj.voteRecord = '{"'+cllUserId[0]+'":'+'"1"}';
+                    //metaObj.voteRecord = '{"'+ccllUserId[0]+'":'+'"1"}';
 
 
                     this.setState((prevState)=>{
                         //setting users vote record equal to three, which stands for "has already voted neutrally"
                         let voteRecordObj = {};
-                        voteRecordObj[cllUserId[0]] = "3"
+                        voteRecordObj[ccllUserId[0]] = "3"
                         let newVoteRecordData = JSON.stringify(voteRecordObj);
                         prevState.meta.voteRecord = newVoteRecordData;
                         return prevState;
@@ -511,7 +511,7 @@ class ListItem extends React.Component{
                         let ThisListItem = this;
                         //console.log(newPostMetaData);
                         if(typeof is_user_admin !== 'undefined' && is_user_admin[0] === "true"){
-                            makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/wp/v2/cll-link/'+this.state.linkItemPostId, 'POST', newPostMetaData)
+                            makeRequest(ccllGlobals.currentProtocalDomain+'/wp-json/wp/v2/ccll-link/'+this.state.linkItemPostId, 'POST', newPostMetaData)
                                 .then(function(request){
                                     //console.log(JSON.parse(request.responseText));
                                     //console.log(this);
@@ -524,7 +524,7 @@ class ListItem extends React.Component{
                             return;
                         }
                         else{
-                            makeRequest(cllGlobals.currentProtocalDomain+'/wp-json/cll-vote/v1/cll-link/'+ThisListItem.state.linkItemPostId, 'POST', JSON.stringify(ThisListItem.state.meta))
+                            makeRequest(ccllGlobals.currentProtocalDomain+'/wp-json/ccll-vote/v1/ccll-link/'+ThisListItem.state.linkItemPostId, 'POST', JSON.stringify(ThisListItem.state.meta))
                             .then(function(){
                                 ThisListItem.refreshButtonClickStates();
                             })
@@ -582,6 +582,7 @@ class ListItem extends React.Component{
         if(this.props.style==="1"){
             return(
                 <ListItemStyle1 linkToListURL={this.linkToListURL}
+                        submitted_by={this.state.meta.submitted_by}
                         title={this.props.title}
                         href={this.state.meta.URL}
                         link_type={this.props.link_type}

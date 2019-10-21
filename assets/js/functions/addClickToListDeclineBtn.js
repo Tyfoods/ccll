@@ -1,9 +1,9 @@
 module.exports = function addClickToListDeclineBtn(deps){
 
-	var cllListDeclineBtnArray = document.querySelectorAll(".pending-list-data__decline-btn");
-	cllListDeclineBtnArray.forEach(function(cllListDeclineBtn) {
-		cllListDeclineBtn.addEventListener("click", function(){
-            deps.handleListDeclineBtnClick(cllListDeclineBtn, deps);
+	var ccllListDeclineBtnArray = document.querySelectorAll(".pending-list-data__decline-btn");
+	ccllListDeclineBtnArray.forEach(function(ccllListDeclineBtn) {
+		ccllListDeclineBtn.addEventListener("click", function(){
+            deps.handleListDeclineBtnClick(ccllListDeclineBtn, deps);
         });
     });
 }

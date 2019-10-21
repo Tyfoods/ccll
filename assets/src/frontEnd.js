@@ -1,4 +1,4 @@
-import cllGlobals from '../js/cllGlobals'; 
+import ccllGlobals from '../js/ccllGlobals'; 
 import makeRequest from '../js/functions/makeRequest'
 
 /* React Components */
@@ -20,7 +20,7 @@ window.onload=function(){
 
         //For each Shortcode I must create an "Add New List Button";
 
-        let linkListContainerArray = document.querySelectorAll(".cll-link-lists");
+        let linkListContainerArray = document.querySelectorAll(".ccll-link-lists");
         //console.log("Length of array AKA amount of shortcodes: "+linkListContainerArray.length);
 
         //For each shortcode output...
@@ -81,8 +81,8 @@ window.onload=function(){
         controlBoxElement.setAttribute('class', 'control-box');
 
         //insert it as the first element
-        let cll_link_list = document.querySelector('.cll-link-lists');
-        cll_link_list.parentElement.insertBefore(controlBoxElement, cll_link_list.parentElement.firstChild);
+        let ccll_link_list = document.querySelector('.ccll-link-lists');
+        ccll_link_list.parentElement.insertBefore(controlBoxElement, ccll_link_list.parentElement.firstChild);
 
         //select control box to render imported <BackBtn/>
         let controlBox = document.querySelector('.control-box')
@@ -127,7 +127,7 @@ window.onload=function(){
     }
 
 
-    makeRequest(document.location.origin+'/wp-json/cll-link/v1/link-preview-request/', 'POST', JSON.stringify(linkData))
+    makeRequest(document.location.origin+'/wp-json/ccll-link/v1/link-preview-request/', 'POST', JSON.stringify(linkData))
     .then(function(request){
         console.log(request.responseText);
         //console.log(JSON.parse(request.responseText));

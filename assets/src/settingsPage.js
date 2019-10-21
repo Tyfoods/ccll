@@ -27,7 +27,7 @@ window.onload=function(){
         clearFbApiCredentialsFromDatabase(){
             event.preventDefault();
             if(confirm("Are you sure you would like to clear API credentials from the database?")){
-                makeRequest(document.location.origin+'/wp-json/cll-link/v1/clear-fb-api-credentials', 'DELETE')
+                makeRequest(document.location.origin+'/wp-json/ccll-link/v1/clear-fb-api-credentials', 'DELETE')
                     .then(function(response){
                         console.log(response.responseText);
                         alert("API Credentials have been deleted");
@@ -95,7 +95,7 @@ window.onload=function(){
                                     accessToken: ThisSettingsPage.state.fbAccessTokenValue,
                                 }
 
-                                makeRequest(document.location.origin+"/wp-json/cll-link/v1/handle-api-credentials-update/", "POST", JSON.stringify(apiCredentials))
+                                makeRequest(document.location.origin+"/wp-json/ccll-link/v1/handle-api-credentials-update/", "POST", JSON.stringify(apiCredentials))
                                     .then(function(response){
                                         console.log(response.responseText);
                                         ThisSettingsPage.setFbValuesToDefaultAndValid();
