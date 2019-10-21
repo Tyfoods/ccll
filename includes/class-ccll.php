@@ -461,29 +461,31 @@ final class CCLL {
 			wp_localize_script('ccll-frontEnd', 'ccllIsAdmin', array("false"));
 		}
 		//}
-		?>
- 		<?php if (!defined("REST_REQUEST")) { ?>
-		<div class = "ccll-link-lists">
-			<?php
+
+		ob_start();
+		?> <div class = "ccll-link-lists"> <?php 
+		
+ 		if (!defined("REST_REQUEST")) {
 				$GLOBALS["ccll_shortcode_id"]+=1;
 				foreach ($list_array as $key => $list_data){
-
 		
 						$final_category_data = $this->shortcode_master_category_input_handler($list_data['category_name']);
 						wp_localize_script("ccll-frontEnd", 'final_category_id_'.$GLOBALS["ccll_shortcode_id"].'_'.$key, array($final_category_data['final_category_id']));
-
+	
 						wp_localize_script("ccll-frontEnd", 'final_category_data_'.$GLOBALS["ccll_shortcode_id"].'_'.$key, array($final_category_data));
-
+	
 						$list_category_query_args = $this->generate_list_category_query($final_category_data);
+						//ob_start();
+						echo ( $this->load_list_style_template($list_data['style'], $final_category_data, $list_category_query_args) );
+						//return ob_get_clean();
 
-						return ( $this->load_list_style_template($list_data['style'], $final_category_data, $list_category_query_args) );
 				};
-			?>
-		</div>
-		<?php } ?>
-		<?php
+		}
+		
+		?> </div> <?php
+		return ob_get_clean();
 
-		return '<div class="link-list-container"> </div>';
+		//return '<div class="link-list-container"> </div>';
 	}
 
 
