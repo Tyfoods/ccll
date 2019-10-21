@@ -1,10 +1,10 @@
 <?php
 /*
 Plugin Name: Crowd Curation Link Library
-Plugin URI: https://www.propdanceculture.com
+Plugin URI: https://github.com/Tyfoods/ccll
 Description: CCLL allows you to create your own crowd sourced library of links. Users on your website can up/down vote different links and admins have easy user friendly ways to manage the library. All in all, this tool allows you to outsource the job of finding quality content to host on your website.
 Author: TyFoods
-Author URI: https://www.propdanceculture.com/profile/?tyfooodsgmail-com-2/
+Author URI: https://www.tyfoodsforthought.com
 Version: 1.0.0
 */
 
