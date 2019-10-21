@@ -476,7 +476,7 @@ final class CCLL {
 
 						$list_category_query_args = $this->generate_list_category_query($final_category_data);
 
-						echo ( $this->load_list_style_template($list_data['style'], $final_category_data, $list_category_query_args) );
+						return ( $this->load_list_style_template($list_data['style'], $final_category_data, $list_category_query_args) );
 				};
 			?>
 		</div>
