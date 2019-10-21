@@ -121,6 +121,10 @@ button.link-list-item__admin-delete-button--style-1:hover{
   opacity: 1;
  }
 
+ form#addToListForm {
+  display: flex;
+  flex-direction: column;
+}
 
  input.add-to-list-form__add-to-list-input--style-1{
    width:100%;

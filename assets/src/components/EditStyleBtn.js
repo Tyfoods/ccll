@@ -40,24 +40,34 @@ class EditStyleBtn extends React.Component{
         }
 		//if data doesn't there is only one "starter" list, that should probably just be deleted off of the page after use confirms
 		if(listDataAtt == null){
-            //there is one list and there isn't any listData
             //console.log("There is one list and no data");
             
-            let newShortcode = `[ccll_list list_data='{ "1": { "style": "${this.state.value}", "category_name": "" } }]`
+            let newShortcode = `[ccll_list list_data='{ "1": { "style": "${this.state.value}", "category_name": "" } }']`
             let newPageContent = objResponse.content.raw.replace(ccllListShortcodeArray[this.props.shortcodeSourceId-1], newShortcode);
             
             let newPageData = {
                 "content": newPageContent
             }
 
-            //Delete the appropriate list from the front end and server.
             if(current_screen_type[0] === "page"){
-                makeRequest(ccllGlobals.currentProtocalDomain+'/wp-json/wp/v2/pages/'+current_page_id, "POST", JSON.stringify(newPageData));
-                //server side work to change visuals
+                makeRequest(ccllGlobals.currentProtocalDomain+'/wp-json/wp/v2/pages/'+current_page_id, "POST", JSON.stringify(newPageData))
+                    .then(function(request){
+                        document.location.reload();
+                    })
+                    .catch(function(error){
+                        console.log(error);
+                    });
+                    //server side work to change visuals in future
             }
             if(current_screen_type[0] === "post"){
-                makeRequest(ccllGlobals.currentProtocalDomain+'/wp-json/wp/v2/ccll-link/'+current_post_id, "POST", JSON.stringify(newPageData));
-                //server side work to change visuals
+                makeRequest(ccllGlobals.currentProtocalDomain+'/wp-json/wp/v2/ccll-link/'+current_post_id, "POST", JSON.stringify(newPageData))
+                    .then(function(request){
+                        document.location.reload();
+                    })
+                    .catch(function(error){
+                        console.log(error);
+                    });
+                    //server side work to change visuals in futue
             }
                 
 

@@ -177,12 +177,12 @@ form#addToListForm {
 button.admin-delete-button--style-2 {
     grid-row: 1;
     grid-column: 2;
-    height: 1%;
+    border: none;
     z-index: 1;
     justify-self: end;
 
     background-color: unset;
-    background-image: url(../images/cancelBtn.png) !important;
+    background-image: url(../images/cancelBtn.png);
     background-repeat: no-repeat;
     background-size: contain;
     background-position: top right;
@@ -197,6 +197,7 @@ button.admin-delete-button--style-2 {
 .vote-buttons--style-2 {
     display: grid;
     grid-template-columns: repeat(3, 40px);
+    grid-template-rows: 40px 40px 40px;
     grid-row: 1;
     grid-column: 1;
     padding: 10px;
