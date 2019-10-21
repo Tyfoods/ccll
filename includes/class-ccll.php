@@ -775,6 +775,8 @@ final class CCLL {
 			remove_role( 'library_manager' );
 		}
 
+		unregister_post_type( 'ccll_link' );
+
 		global $wpdb;
 		$table_name = $wpdb->prefix .'ccll_settings';
 		$sql = "DROP TABLE IF EXISTS ".$table_name;
