@@ -1,9 +1,12 @@
 
 let appId = (()=>{
-    if(typeof do_api_credentials_exist[1][0] !== 'undefined'){
+    if(typeof do_api_credentials_exist !== 'undefined'){
       if(typeof do_api_credentials_exist[1][0]['app_id'] !== 'undefined' && do_api_credentials_exist[1][0]['app_id'] !== null){
         return do_api_credentials_exist[1][0]['app_id'];
       }
+    }
+    else{
+      return "";
     }
   })()
   

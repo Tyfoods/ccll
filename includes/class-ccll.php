@@ -562,7 +562,7 @@ final class CCLL {
 		wp_enqueue_script( 'ccll-settingsPage',CCLL_PLUGIN_DIR.'assets/js/settingsPage.js');
 			if(!empty($results)){
 				wp_localize_script('ccll-settingsPage', 'do_api_credentials_exist', array("true", $results));
-				//wp_localize_script('fbAPI', 'do_api_credentials_exist', array("true", $results));
+				wp_localize_script('fbAPI', 'do_api_credentials_exist', array("true", $results));
 				//Commented because do_api_credentials_exist is accessible via fbAPI without it;
 			}
 			else{
