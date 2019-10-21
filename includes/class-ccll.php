@@ -496,16 +496,31 @@ final class CCLL {
 		<h2> Links </h2>
 		<p>Links are the foundation of what we do here. However, to get started you'll be placing a shortcode onto the page of your choice.</p>
 		<p>The shortcodes is: <strong>[ccll_list]</strong> </p>
-		<p>This shortcode takes attributes like [ccll_list style="1" category="pink"] </p>
-		<p>For now there is only one style, which is the default. Categories can be made from the frontend, or backend.</p>
-		<p>If you view the page this shortcode is on, you will see that you now have a default list that you can easily delete/edit, or add to.</p>
+		<p>This shortcode takes two attributes, but don't worry about them. The best way to start is just to put the shortcode on a page, or post and then edit it from the front end. </p>
+		<p>On the front end of the page the shortcode is on, you will see that you now have a default list that you can easily delete/edit, or add to.</p>
 		<p>Links can be "External" meaning they link to a website outside your own, or "Internal" meaning they link to a page within' your website</p>
 		<p>When an "Internal Link" is created, a new page is created which contains a default list. </p>
 		<p>In this way, you can create pages that contain lists of links with ease </p>
 		<p>However, such a library would be incomplete without a search bar! </p>
-		<p>Insert the shortcode: <strong>[ccll_search_engine]</strong> onto a page of your choice</p>
-		<p>Upon viewing the page, you will see a search bar you can use to search through "external links" that you, or another user has created</p>
-		<p>As mentioned previously, "internal links" will not show up here. This may be changed in a future version of CCLL </p>
+		<p>Simply click search engine button to turn the search bar on and off</p>
+		<p>When seach engine is turned on you will see a search bar you can use to search through "external links" that you, or another user has created</p>
+		<p>As hinted at previously, "internal links" will not show up here. This may be changed in a future version of CCLL </p>
+
+		<h2> Link Preview: Facebook API (Updated: 10/20/19) </h2>
+		<p>In order to get automatic link previews you must use a 3rd party API. In our case, we use Facebook's Link Preview API which is free for up to 200 requests per hour.</p>
+		<p>In the future, we'll integrate other Link Preview APIs and create an option for self-hosted Link Previews</p>
+		<p>All you need is an AppID and Access Token which is very simple to get.</p>
+		<ol>
+			<li>First go to https://developers.facebook.com/ and if you don't have an account, create one.</li>
+			<li>After creating an account, click "My App" in the top right corner and then click "create app"</li>
+			<li>Give the app a sensible name like YourDomain/LinkPreviewApp, replace "YourDomain" with your website name.</li>
+			<li>Once your app is created, you will see your AppID at the top left. Save this ID </li>
+			<li>At the top bar, click "tools" then click "Graph API Explorer"</li>
+			<li>Click the "Get Token" button, then click "Get App Token", save this token</li>
+			<li>Now that you have your App ID and App Token (access token), go to "settings" under "Crowd Curation Link Library" to the left on your wordpress dashboard. </li>
+			<li>Enter your App ID and App Token and click submit! </li>
+			<li>Now your link library will have link previews! </li>
+		</ol>
 
 		<h2> Link Management </h2>
 		<p>If you look to your left, you'll see a tab called "links". All links that are created in the front end will be present here.</p>
