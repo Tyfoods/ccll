@@ -101,18 +101,20 @@ input.ccll_search_form_input {
 
 .ccll-link-list--style-2 {
     border: solid;
+    border-color: #000;
     max-width: 500px;
     padding-bottom: 15px;
-    margin-top: 15px;
-}
+    margin-bottom: 15px;}
 
 ul.ccll-link-list__link-list--style-2 {
+    border-color: #000;
     border: none;
     margin: 0px;
 }
 
 li.link-list--style-2__link-list-item--style-2 {
     border: solid;
+    border-color: #000;
     list-style: none;
     margin: 0 auto;
     width: 95%;
@@ -126,7 +128,7 @@ form#addToListForm {
 .top-buttons-container--style-2{
     text-align: center;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     margin-top: 15px;
 }
 /* buttons */
@@ -166,11 +168,11 @@ form#addToListForm {
 
 .ccll-admin-button{
     border-color: #000;
-    background: #fff;
-    color: #000;
+    background: inherit;
+    color: inherit;
     border-style: outset;
     border-width: 1px;
-    box-shadow: 2.5px 5px;
+    box-shadow: 2.5px 5px #000;
     border-radius: 10px;
 }
 
@@ -211,7 +213,8 @@ button.admin-delete-button--style-2 {
     background-size: 1.5em;
     background-repeat: no-repeat;
     background-position: center;
-    
+    /*filter: invert(100%); */
+
     grid-column: 1;
     grid-row: 1;
     border: none;
@@ -223,6 +226,8 @@ p.up-votes-counter--style-2 {
     text-align: center;
     position: relative;
     bottom: 20%;
+    color: inherit;
+
 }
 
 .neutral-vote-button--style-2{
@@ -231,7 +236,8 @@ p.up-votes-counter--style-2 {
     background-size: 1.5em;
     background-repeat: no-repeat;
     background-position: center;
-    
+    /*filter: invert(100%); */
+
     grid-column: 2;
     grid-row: 1;
     border: none;
@@ -243,6 +249,7 @@ p.up-votes-counter--style-2 {
     background-size: 1.5em;
     background-repeat: no-repeat;
     background-position: center;
+    /*filter: invert(100%); */
 
     grid-column: 3;
     grid-row: 1;
@@ -255,6 +262,7 @@ p.down-votes-counter--style-2 {
     text-align: center;
     position: relative;
     bottom: 20%;
+    color: inherit;
 }
 /*submitted by element */
 .submitted-by--style-2{

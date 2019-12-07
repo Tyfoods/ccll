@@ -20,7 +20,7 @@ export default class BackBtn extends React.Component{
     }
 
     handleCancelBtnClick(){
-        this.setState((prevState)=>{prevState.isBackBtnClicked = true; return prevState});
+        this.setState((prevState)=>{prevState.isBackBtnClicked = false; return prevState});
     }
 
     handleClick(){

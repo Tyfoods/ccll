@@ -17,7 +17,12 @@ class DeleteLinkBtn extends React.Component{
     }
 
     handleClick(){
+        console.log(this.props.linkItemTitle);
         var listItemSlug = this.props.linkItemTitle.trim().replace(/\s/g, '-').toLowerCase();
+        console.log(this.props.linkItemTitle.trim());
+        console.log(this.props.linkItemTitle.trim().replace(/\s/g, '-'));
+        console.log(this.props.linkItemTitle.trim().replace(/\s/g, '-').toLowerCase());
+        console.log(this.props.listItemSlug);
 
         //Delete post if it exists
         let ThisDeleteLinkBtn = this;

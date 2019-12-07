@@ -54,7 +54,7 @@ window.onload=function(){
             
             
             
-            ReactDOM.render(<div className="lists-wrapper">
+            ReactDOM.render(<div className="ccll-display">
                                 {
                                 (()=>{if(typeof is_user_admin !== 'undefined' && is_user_admin[0] === "true"){
                                         return(
@@ -68,7 +68,9 @@ window.onload=function(){
                                     }
                                 })()
                                 }
-                                {listComponentsArray}
+                                <div className="lists-wrapper">
+                                    {listComponentsArray}
+                                </div>
                             </div>,
                             linkListContainer);
             j+=1;

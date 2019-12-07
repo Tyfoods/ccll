@@ -16,7 +16,7 @@ class ListStyle1 extends React.Component{
             {
             (()=>{if(typeof is_user_admin !== 'undefined' && is_user_admin[0] === "true"){
                     return(
-                            <>
+                            <div className="top-buttons-container--style-1">
                                 <DeleteListBtn shortcodeSourceId={this.props.shortcodeSourceId}
                                             setDisplayNoneOnList={this.props.setDisplayNoneOnList}
                                             listId={this.props.listId}/>
@@ -24,7 +24,7 @@ class ListStyle1 extends React.Component{
                                     listId={this.props.listId}/>
                                 <EditCategoryBtn shortcodeSourceId={this.props.shortcodeSourceId}
                                                 listId={this.props.listId}/>
-                            </>
+                            </div>
                         )
                     }
                 })()

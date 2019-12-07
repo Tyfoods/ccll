@@ -1,3 +1,12 @@
+/* Search Engine CSS */
+
+.ccll_search_form_input{
+  background-color: inherit;
+  color: inherit;
+}
+
+/* END search engine css */
+
 /* ControlBox CSS */
 
 .control-box{
@@ -9,6 +18,7 @@
 .control-buttons-container {
     width: 100%;
     display:grid;
+    margin-bottom: 10px;
 }
 
 /* Control Box CSS END */
@@ -52,6 +62,7 @@ button.back-btn{
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
+    /*filter: invert(100%); */
 
     box-shadow: none;
     border: none;
@@ -108,11 +119,11 @@ button.new-list-btn{
     margin-bottom: 15px;
     padding: 1.5%;
     border-color: #000;
-    background: #fff;
-    color: #000;
+    background: inherit;
+    color: inherit;
     border-style: outset;
     border-width: 1px;
-    box-shadow: 2.5px 5px;
+    box-shadow: 2.5px 5px #000;
     position: relative;
     display: block;
     border-radius: 10px;

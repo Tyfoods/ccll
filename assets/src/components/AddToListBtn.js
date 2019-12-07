@@ -91,7 +91,7 @@ class AddToListBtn extends React.Component{
         else{
             return(
                 <button onClick={this.handleAddToListBtnClick} className={`ccll-admin-button add-to-list-btn--style-${this.context.style}`}>
-                    Add To List Btn
+                    Add To List +
                 </button>
             )
         }

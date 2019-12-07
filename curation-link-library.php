@@ -8,6 +8,11 @@ Author URI: https://www.tyfoodsforthought.com
 Version: 1.0.0
 */
 
+
+/* 
+	Plugin uses Singleton Design Pattern for easy integration 
+*/
+
 //Exit if accessed directly
 if(!defined('ABSPATH')){
 	exit;

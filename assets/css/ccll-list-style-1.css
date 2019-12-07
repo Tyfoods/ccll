@@ -59,11 +59,11 @@ select.ccll-edit-category-btn__list-category-selector--style-1 {
  padding: 1.5%;
  border-color: #000;
  list-style: none;
- background: #fff;
+ background:inherit;
  margin: 5% 0%;
  border-style: outset;
  border-width: 1px;
- box-shadow: 2.5px 5px;
+ box-shadow: 2.5px 5px #000;
  position: relative;
  min-width: 164px;
  display:grid;
@@ -71,7 +71,7 @@ select.ccll-edit-category-btn__list-category-selector--style-1 {
 
 .link-list--style-1__link-list-item--style-1 a.link-list-item__link-list-title--style-1 {
   text-decoration: none !important;
-  color: #000;
+  color: inherit;
   display: block;
   grid-column: 1 / span 3;
   grid-row: 1;
@@ -95,16 +95,16 @@ button.link-list-item__admin-delete-button--style-1:hover{
 
 .ccll-admin-button{
   border-color: #000;
-  background: #fff;
+  background: inherit;
   color: #000;
   border-style: outset;
   border-width: 1px;
-  box-shadow: 2.5px 5px;
+  box-shadow: 2.5px 5px #000;
   border-radius: 10px;
 }
 
 .ccll-link-list--style-1 button.ccll-link-list__delete-list-btn--style-1:hover{
-  color: #fff;
+  color: inherit;
   background-color: #0C808E;
   background-size: 1.5em;
   background-repeat: no-repeat;
@@ -113,7 +113,7 @@ button.link-list-item__admin-delete-button--style-1:hover{
  }
 
 .ccll-link-list--style-1 button.ccll-link-list__ccll-edit-category-btn--style-1:hover{
-  color: #fff;
+  color: inherit;
   background-color: #0C808E;
   background-size: 1.5em;
   background-repeat: no-repeat;
@@ -238,6 +238,7 @@ button.up-vote-button--style-1 {
   background-color:unset;
   background-size: 1.5em;
   background-repeat: no-repeat;
+  /*filter: invert(100%); */
 	grid-column: 1;
 	grid-row: 2;
   background-position: center;
@@ -250,8 +251,9 @@ button.down-vote-button--style-1 {
   background-color:unset;
   background-size: 1.5em;
   background-repeat: no-repeat;
-	background-position: center;
-	grid-column: 3;
+  background-position: center;
+  /*filter: invert(100%); */
+  grid-column: 3;
   grid-row: 2;
   border: none;
 }
@@ -260,8 +262,9 @@ button.neutral-vote-button--style-1 {
   background-color:unset;
   background-size: 1.5em;
   background-repeat: no-repeat;
-	background-position: center;
-	grid-column: 2;
+  background-position: center;
+  /*filter: invert(100%); */
+  grid-column: 2;
   grid-row: 2;
   border: none;
 }
@@ -269,7 +272,7 @@ button.neutral-vote-button--style-1 {
 p.up-votes-counter--style-1 {
   grid-column: 1;
 	grid-row: 2;
-	color: #000;
+	color: inherit;
 	position: relative;
   top: 30px;
   text-align: center;
@@ -277,7 +280,7 @@ p.up-votes-counter--style-1 {
 p.down-votes-counter--style-1 {
 	grid-column: 3;
 	grid-row: 2;
-	color: #000;
+	color: inherit;
 	position: relative;
   top: 25px;
   text-align: center;
@@ -294,11 +297,11 @@ p.link-list-item__submitted-by--style-1 {
 button.add-to-list-form__submit-btn--style-1 {
     padding: 4%;
     border-color: #000;
-    background: #fff;
-    color: #000;
+    background-color: inherit;
+    color: inherit;
     border-style: outset;
     border-width: 1px;
-    box-shadow: 1.5px 1px;
+    box-shadow: 1.5px 1px #000;
     position: relative;
     border-radius: 10px;
 }
@@ -306,11 +309,11 @@ button.add-to-list-form__submit-btn--style-1 {
 button.ccll-edit-categoy-btn__submit-btn--style-1 {
   padding: 4%;
   border-color: #000;
-  background: #fff;
+  background-color: inherit;
   color: #000;
   border-style: outset;
   border-width: 1px;
-  box-shadow: 1.5px 1px;
+  box-shadow: 1.5px 1px #000;
   position: relative;
   border-radius: 10px;
 }
@@ -339,11 +342,19 @@ div.ccll-link-list--style-1{
   width: 25%;
   min-width: 192.3px;
   max-width: 200px !important;
-  margin-right: 3% !important;
+  /*margin-right: 3% !important;*/
   margin-top: 0px !important;
   border: solid 3px #000;
   border-radius: 10px;
-  margin-bottom: 1%;
+  margin-bottom: 15px;
+}
+
+.top-buttons-container--style-1{
+  display:flex;
+  flex-direction:column;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  height: 100px;
 }
 
 
@@ -351,11 +362,11 @@ div.ccll-link-list--style-1{
   margin-left: 16%;
   padding: 1.5%;
   border-color: #000;
-  background: #fff;
-  color: #000;
+  background-color: inherit;
+  color: inherit;
   border-style: outset;
   border-width: 1px;
-  box-shadow: 2.5px 5px;
+  box-shadow: 2.5px 5px #000;
   position: relative;
   border-radius: 10px;
   width: 90%;

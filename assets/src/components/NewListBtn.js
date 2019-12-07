@@ -138,7 +138,16 @@ class NewListBtn extends React.Component{
     
     render(){
         return(
-            <button onClick={this.handleClick} className={`new-list-btn ccll-admin-button`}>Add New List +</button>
+            <button onClick={this.handleClick} className={`new-list-btn ccll-admin-button`}>
+                Add New List +
+                {
+                    (()=>{
+                        if(this.props.shortcodeSourceId >= 2){
+                            return "(2)";
+                        }
+                    })()
+                }
+            </button>
         )
     }
     

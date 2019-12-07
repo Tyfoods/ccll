@@ -119,6 +119,7 @@ final class CCLL {
 	public function ccll_register_styles(){
 		//if(!is_admin()){
 		wp_register_style('ccll-control-box-style', CCLL_PLUGIN_DIR.'assets/css/ccll-control-box-style.css');
+		wp_register_style('ccll-lists-wrapper', CCLL_PLUGIN_DIR.'assets/css/ccll-lists-wrapper.css');
 
 		 wp_register_style( 'ccll-list-style-1',CCLL_PLUGIN_DIR.'assets/css/ccll-list-style-1.css');
 		 wp_register_style( 'ccll-list-style-2',CCLL_PLUGIN_DIR.'assets/css/ccll-list-style-2.css');
@@ -294,6 +295,7 @@ final class CCLL {
 			wp_enqueue_style('ccll-back-btn-style');
 			wp_enqueue_style('ccll-search-engine-btn-style');
 			wp_enqueue_style('ccll-control-box-style');
+			wp_enqueue_style('ccll-lists-wrapper');
 			return $output;
 		}
 	}
