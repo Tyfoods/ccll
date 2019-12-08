@@ -2,6 +2,7 @@ import React from 'react'
 import createNewCategoryRequest from '../../js/functions/createNewCategoryRequest'
 import updateCcllListRequest from '../../js/functions/updateCcllListRequest'
 import {DataStorageContext} from './MyProvider'
+import makeRequest from '../../js/functions/makeRequest'
 
 class EditCategoryBtn extends React.Component{
 
@@ -16,32 +17,40 @@ class EditCategoryBtn extends React.Component{
             inputValue: '',
 
         }
-        this.setComponentState = this.setComponentState.bind(this);
-        this.updateStateValue = this.updateStateValue.bind(this);
-        this.handleClick = this.handleClick.bind(this);
-        this.handleCancelBtnClick = this.handleCancelBtnClick.bind(this);
-        this.handleSubmitBtnClick = this.handleSubmitBtnClick.bind(this);
-        this.updateStateInputValue = this.updateStateInputValue.bind(this);
+
 
     }
 
-    updateStateInputValue(){
-        this.setComponentState('inputValue', event.target.value);
+    updateStateInputValue = ()=>{
+        this.setState((prevState)=>{
+            prevState.inputValue = event.target.value;
+            return prevState;
+        });
+        
         ////console.log(event.target.value);
     }
 
-    updateStateValue(){
-        this.setComponentState('value', event.target.value);
+    updateStateValue = ()=>{
+        this.setState((prevState)=>{
+            prevState.value = event.target.value;
+            return prevState;
+        });
         //If user input is not new category, don't display "category input" box.
         if(event.target.value !== 'new category'){
-            this.setComponentState('isCategoryInputCreated', false);
+            this.setState((prevState)=>{
+                prevState.isCategoryInputCreated = false;
+                return prevState;
+            });
         }
         else{
-            this.setComponentState('isCategoryInputCreated', true);
+            this.setState((prevState)=>{
+                prevState.isCategoryInputCreated = true;
+                return prevState;
+            });
         }
     }
 
-    createExistingCategoryOptionsArray(){
+    createExistingCategoryOptionsArray = () => {
         let optionArray = [];
         let i = 0;
         existing_category_names_array[0].forEach(function(category_name){
@@ -52,19 +61,19 @@ class EditCategoryBtn extends React.Component{
         return optionArray;  
     }
 
-    setComponentState(stateName, newState){
-        let EditCategoryBtnState = this.state;
-        EditCategoryBtnState[`${stateName}`] = newState
-        this.setState(EditCategoryBtnState);
+
+    handleClick = ()=>{
+
+
+        let topButtonsContainer = document.querySelector(`.${this.props.parentClassName}`);
+        this.setState((prevState)=>{
+            prevState.isClicked = true;
+            return prevState;
+        }, (()=>{topButtonsContainer.style.height = "150px";})());
+
     }
 
-
-    handleClick(){
-        this.setComponentState('isClicked', true);
-
-    }
-
-    handleSubmitBtnClick(){
+    handleSubmitBtnClick = ()=>{
         let EditCategoryBtnState = this.state;
         existing_category_names_array[0].push('new category');
         if(this.state.value === 'new category'){
@@ -103,15 +112,19 @@ class EditCategoryBtn extends React.Component{
         }
     }
 
-    handleCancelBtnClick(){
-        this.setComponentState('isClicked', false);
+    handleCancelBtnClick = ()=>{
+        let topButtonsContainer = document.querySelector(`.${this.props.parentClassName}`);
+        this.setState((prevState)=>{
+            prevState.isClicked = false;
+            return prevState;
+        }, (()=>{topButtonsContainer.style.height = "100px";})());
     }
 
     render(){
 
         if(this.state.isClicked === true){
             return(
-                <div className="ccll-admin-button edit-category-btn--style-">
+                <div className={`ccll-admin-button edit-category-btn--style-${this.context.style}`}>
                     Edit Category Btn
                     <select value={this.state.value} onChange={this.updateStateValue} className={`ccll-edit-category-btn__list-category-selector--style-${this.context.style}`}>
                         <option value="new category">New Category + </option>

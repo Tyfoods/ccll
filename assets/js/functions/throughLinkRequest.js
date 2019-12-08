@@ -1,7 +1,9 @@
 import slugify from '../functions/slugify'
 import makeRequest from '../functions/makeRequest'
 
-function throughLinkRequest(categoryId, style){
+async function throughLinkRequest(categoryId, style){
+
+	let wpSlug = await slugify(document.querySelector('[name="newListItemTitle"].add-to-list-form__add-to-list-input--style-'+style).value);
 
 	makeRequest(ccllGlobals.currentProtocalDomain+'/wp-json/wp/v2/users/'+ccllUserId[0], 'GET')
 		.then(function(request){
@@ -10,7 +12,7 @@ function throughLinkRequest(categoryId, style){
 			return objResponse.name;
 		})
 		.then(function(username){
-			makeRequest(ccllGlobals.currentProtocalDomain+'/wp-json/wp/v2/ccll-link?slug='+slugify(document.querySelector('[name="newListItemTitle"].add-to-list-form__add-to-list-input--style-'+style).value),
+			makeRequest(ccllGlobals.currentProtocalDomain+'/wp-json/wp/v2/ccll-link?slug='+wpSlug,
 						'GET')
 				.then(function(request){
 
@@ -21,7 +23,7 @@ function throughLinkRequest(categoryId, style){
 						
 						var NewLinkItemData = {
 							"title": document.querySelector('[name="newListItemTitle"].add-to-list-form__add-to-list-input--style-'+style).value,
-							"slug": "/"+document.querySelector('[name="newListItemTitle"].add-to-list-form__add-to-list-input--style-'+style).value.replace(/ /g,'-').toLowerCase(),
+							"slug": "/"+wpSlug,
 							"content": '[ccll_list]',
 							"meta" : {"URL" : ccllGlobals.currentProtocalDomain+'/link/'+document.querySelector('[name="newListItemTitle"].add-to-list-form__add-to-list-input--style-'+style).value.replace(/ /g, '-').replace(/%20/g,'-'),
 									 "link_type" : "internal link",

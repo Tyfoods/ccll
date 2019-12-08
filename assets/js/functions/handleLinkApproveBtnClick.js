@@ -1,4 +1,4 @@
-module.exports = function handleLinkApproveBtnClick(ccllApproveBtn, deps){
+export default function handleLinkApproveBtnClick(ccllApproveBtn, deps){
     const makeRequest = deps.makeRequest;
     var ccllApproveBtnCcllId = ccllApproveBtn.getAttribute('ccllid'); 
         var newLinkItemData = {};

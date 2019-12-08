@@ -2,6 +2,7 @@ import React from 'react'
 import makeRequest from '../../js/functions/makeRequest'
 import isObjEmpty from '../../js/functions/isObjEmpty'
 import {DataStorageContext} from './MyProvider'
+import slugify from '../../js/functions/slugify'
 
 class DeleteLinkBtn extends React.Component{
 
@@ -13,20 +14,19 @@ class DeleteLinkBtn extends React.Component{
 
         }
 
-        this.handleClick = this.handleClick.bind(this);
+        //this.handleClick = this.handleClick.bind(this);
     }
 
-    handleClick(){
-        console.log(this.props.linkItemTitle);
-        var listItemSlug = this.props.linkItemTitle.trim().replace(/\s/g, '-').toLowerCase();
-        console.log(this.props.linkItemTitle.trim());
-        console.log(this.props.linkItemTitle.trim().replace(/\s/g, '-'));
-        console.log(this.props.linkItemTitle.trim().replace(/\s/g, '-').toLowerCase());
-        console.log(this.props.listItemSlug);
+    handleClick = async () => {
+        //console.log(this.props.linkItemTitle);
+        var listItemSlug = await slugify(this.props.linkItemTitle);
 
+
+        console.log(listItemSlug);
+        
         //Delete post if it exists
         let ThisDeleteLinkBtn = this;
-        makeRequest(ccllGlobals.currentProtocalDomain+'/wp-json/wp/v2/ccll-link?slug='+listItemSlug, 'GET')
+        await makeRequest(ccllGlobals.currentProtocalDomain+'/wp-json/wp/v2/ccll-link?slug='+listItemSlug, 'GET')
             .then(function(request){
                 var objResponse = JSON.parse(request.responseText);
                 ////console.log(objResponse);
@@ -64,8 +64,8 @@ class DeleteLinkBtn extends React.Component{
                                                 ThisDeleteLinkBtn.props.setIsDeletedTrue();
                                             })
                                             .catch(function(error){
-                                                //console.log(error);
-                                                //console.log("Unable to remove category");
+                                                console.log(error);
+                                                console.log("Unable to remove category");
                                             });
                                     }
 
@@ -83,15 +83,15 @@ class DeleteLinkBtn extends React.Component{
                                 ThisDeleteLinkBtn.props.setIsDeletedTrue();
                             })
                             .catch(function(error){
-                                ////console.log("Failed to delete post");
-                                //console.log(error);
+                                console.log("Failed to delete post");
+                                console.log(error);
                             });
                     }
                 }
             })
             .catch(function(error){
-                //console.log("unable to get post information about list item");
-                //console.log(error);
+                console.log("unable to get post information about list item");
+                console.log(error);
             });
     }
 

@@ -39,6 +39,7 @@ class AddToListBtn extends React.Component{
     }
 
     handleSubmitBtnClick(){
+        event.preventDefault();
         handleAddToListFormSubmitBtnClick(this.props.categoryId, this.context.style);
     }
 

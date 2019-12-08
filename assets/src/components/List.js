@@ -57,7 +57,7 @@ class List extends React.Component{
                 objResponse.forEach(function(link){
                     newListState.linkItems[iterator] = {
                         "id": link.id,
-                        "title": link.title.rendered,
+                        "title": link.title.rendered.replace(/#038;/g, '').replace(/&#8211;/g, ' - '),
                         "URL": link.meta.URL,
                         "link_type": link.meta.link_type,
                         "down_votes": link.meta.down_votes,

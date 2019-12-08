@@ -51,6 +51,11 @@ final class CCLL {
 
 	public function register_ccll_rest_routes(){
 
+		register_rest_route( 'ccll-link/v1', '/generate-wp-post-slug/',array(
+			'methods'  => WP_REST_Server::EDITABLE,
+			'callback' => array($this, 'generate_wp_post_slug')
+		));
+
 		register_rest_route( 'ccll-link/v1', '/clear-fb-api-credentials/',array(
 			'methods'  => WP_REST_Server::DELETABLE,
 			'callback' => array($this, 'clear_fb_api_credentials')
@@ -924,7 +929,7 @@ final class CCLL {
 		return var_dump($wpdb_response);
 	}
 
-	/* Don't expost API credentials to JS!!!
+	/* Don't expose API credentials to JS!!!
 	public function api_credentials_request($data){
 
 		$wp_config_path = $_SERVER['DOCUMENT_ROOT'] . '/wp-config.php';
@@ -936,6 +941,12 @@ final class CCLL {
 		return $results;
 	}
 	*/
+
+	public function generate_wp_post_slug($data){
+		$data_array = json_decode($data->get_body(), true);
+		return sanitize_title_with_dashes( sanitize_title($data_array['pre_slug_name']) );
+		
+	}
 
 	public function clear_fb_api_credentials(){
 		$wp_config_path = $_SERVER['DOCUMENT_ROOT'] . '/wp-config.php';

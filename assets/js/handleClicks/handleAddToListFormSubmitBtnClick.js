@@ -24,7 +24,7 @@ function handleAddToListFormSubmitBtnClick(categoryId, style){
             }
             else
             {
-                console.log("running endlinkrequest");
+                //console.log("running endlinkrequest");
                 endLinkRequest(categoryId, style);
             }
         }

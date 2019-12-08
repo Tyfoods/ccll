@@ -1,4 +1,7 @@
-module.exports = function slugify(string){
+import makeRequest from '../functions/makeRequest'
+
+export default async function slugify(string){
+  /*
     let stringArray = [];
     
     for (var i = 0; i < string.length; i++){
@@ -22,4 +25,15 @@ module.exports = function slugify(string){
     });
     let slugString = stringArray.toString().replace(/[,]/g,'').toLowerCase();
     return slugString;
+  */
+    let wpSlug = '';
+    await makeRequest(ccllGlobals.currentProtocalDomain+'/wp-json/ccll-link/v1/generate-wp-post-slug/', 'POST', JSON.stringify({'pre_slug_name': string}))
+        .then(function(request){
+            //console.log("wp slug result: "+request.responseText);
+            wpSlug = request.responseText;
+        })
+        .catch(function(error){
+            console.log(error);
+        });
+    return wpSlug.slice(1,-1);
   }

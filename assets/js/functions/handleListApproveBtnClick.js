@@ -70,7 +70,7 @@ function createNewPageData(jsonResponse, shortcode_source_id, newCategory){
     return newPageData;
 }
 
-module.exports = function handleListApproveBtnClick(ccllListApproveBtn, deps){
+export default function handleListApproveBtnClick(ccllListApproveBtn, deps){
     //Get Title/Content I.E. Link Title Link URL based on which ApproveBtn was picked
     var ccllListApproveBtnCcllId = ccllListApproveBtn.getAttribute('ccllid'); //get ccllid of Approvebtn
     const makeRequest = deps.makeRequest;

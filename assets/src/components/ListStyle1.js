@@ -23,7 +23,8 @@ class ListStyle1 extends React.Component{
                                 <EditStyleBtn shortcodeSourceId={this.props.shortcodeSourceId}
                                     listId={this.props.listId}/>
                                 <EditCategoryBtn shortcodeSourceId={this.props.shortcodeSourceId}
-                                                listId={this.props.listId}/>
+                                                listId={this.props.listId}
+                                                parentClassName={"top-buttons-container--style-1"}/>
                             </div>
                         )
                     }
